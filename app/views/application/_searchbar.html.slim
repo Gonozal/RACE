@@ -1,0 +1,33 @@
+= form_tag "/search/autocomplete", :remote => true, :html => { :autocomplete => "off" } do
+  input#searchinput type="text" name="searchstring" value=""
+#searchresults
+  strong Characters
+  ul
+    li 
+      a href="#"Lerado Mendar
+    li 
+      a href="#"Grandor Eldoran
+    li 
+      a href="#"Xenaron
+    li 
+      a href="#"nothing more
+  strong Corporations
+  ul
+    li 
+      a href="#" Exiled.
+    li 
+      a href="#" Red
+    li 
+        a href="#"Blue
+    li 
+          a href="#"Against all Authority
+  strong Fittings
+  ul
+    li
+      a href="#"
+        | Vargur
+        span.description Codas Fitting
+    li
+      a href="#"
+        | Loki
+        span.description Xenys Fitting

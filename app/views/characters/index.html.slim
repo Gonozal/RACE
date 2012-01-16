@@ -1,0 +1,13 @@
+h2 Character overview
+
+- unless @characters.blank?
+  - for character in @characters
+    div id="character#{character.id}\"
+      strong #{character.name}
+      p
+        = link_to "edit", edit_character_path(character)
+        = link_to "destroy", character, :confirm => "Are you sure?", \
+             :remote => true, :method => :delete
+- else
+  p
+    | There are no characters

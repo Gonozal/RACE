@@ -1,0 +1,891 @@
+/* h1 is only used by the page title, so we skip that */
+$sans-serif: 'Helvetica', 'Arial', 'sans-serif';
+$border: 1px solid;
+$content-width: 900px;
+
+$nav-resolution: 48px;
+$navBorderColor: #000;
+$banner-height: 90px;
+
+$strongColor: hsl(43, 70%, 94%);
+$color: #c0c0c0;
+
+@mixin line-and-height($height) {
+  height: $height;
+  line-height: $height;
+}
+
+@mixin border($width:1px, $style:solid) {
+  border-width: $width;
+  border-style: $style;
+}
+
+@mixin border-left($width:1px, $style:solid) {
+  border-left-width: $width;
+  border-left-style: $style;
+}
+
+@mixin border-right($width:1px, $style:solid) {
+  border-right-width: $width;
+  border-right-style: $style;
+}
+
+@mixin border-top($width:1px, $style:solid) {
+  border-top-width: $width;
+  border-top-style: $style;
+}
+
+@mixin border-bottom($width:1px, $style:solid) {
+  border-bottom-width: $width;
+  border-bottom-style: $style;
+}
+
+@mixin border-radius($r:6px) {
+  -webkit-border-radius: $r;
+  -moz-border-radius: $r;
+  -o-border-radius: $r;
+  border-radius: $r;
+}
+
+@mixin sep-border-radius($r1:5px, $r2:5px, $r3:5px, $r4:5px) {
+  -webkit-border-top-left-radius: $r1;
+  -moz-border-radius-topleft: $r1;
+  border-top-left-radius: $r1;
+  -webkit-border-top-right-radius: $r2;
+  -moz-border-radius-topright: $r2;
+  border-top-right-radius: $r2;
+  -webkit-border-bottom-right-radius: $r3;
+  -moz-border-radius-bottomright: $r3;
+  border-bottom-right-radius: $r3;
+  -webkit-border-bottom-left-radius: $r4;
+  -moz-border-radius-bottomleft: $r4;
+  border-bottom-left-radius: $r4;
+}
+
+@mixin transition($trans) {
+  -webkit-transition: $trans;
+  -moz-transition: $trans;
+  -o-transition: $trans; 
+  transition: $trans;
+}
+
+@mixin box-shadow($v) {
+  box-shadow: $v;
+  -moz-box-shadow: $v;
+  -webkit-box-shadow: $v;
+  -o-box-shadow: $v;
+}
+
+@mixin inset($r) {
+  position: relative;
+  z-index:1;
+  
+  &:before {
+    @include sep-border-radius(0, 0, $r, $r);
+    border:1px solid hsla(0,0,100%,0.16);
+    border-top: none;
+    content: '';
+    height: 4px;
+    position:absolute;
+    left:-1px;
+    right:-1px;
+    bottom:-2px;
+  }
+}
+
+@mixin gradient($c1, $s1, $c2, $s2) {
+  background:$c1;
+  /* IE10 */ 
+  background-image: -ms-linear-gradient(top, $c1 $s1, $c2 $s2);
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(top, $c1 $s1, $c2 $s2);
+  /* Opera */ 
+  background-image: -o-linear-gradient(top, $c1 $s1, $c2 $s2);
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop($s1, $c1), color-stop($s2, $c2));
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(top, $c1 $s1, $c2 $s2);
+  /* Proposed W3C Markup */ 
+  background-image: linear-gradient(top, $c1 $s1, $c2 $s2);
+}
+
+@mixin naviBackground($url) {
+  > a { background: $url center center no-repeat; }
+}
+
+@mixin hover() {
+  &:hover {
+    background: transparent url('/images/nav/48/nav-hover.png') no-repeat;
+    background-position: center -8px;
+  }
+}
+
+body {
+  background: url('/images/bg-lighter.jpg');
+  font-family: $sans-serif;
+  font-weight: normal;
+  color: $color;
+  font-size: 10.5pt;
+  
+  // The Page Title / Banner / Header
+  h1#title {
+    background: #555 url('/images/logo.png') center no-repeat;
+    text-indent:-99999px;
+    border-color: $navBorderColor;
+    @include line-and-height($banner-height);
+    @include border-bottom();
+    margin-bottom: $nav-resolution + 1;
+  }
+
+  .clearfix { clear: both; height:0; width: auto; display:block; }
+  
+  // Überschriften
+  h2, h3, h4, h5 {
+    font-weight: bold;
+  }
+  
+  h2 {
+    font-size: 200%;
+    margin-top: 0.1em;
+    margin-bottom: 0.5em;
+    color: #202020;
+    text-shadow: 0px 1px 1px hsla(0,0%,100%, 0.14), -1px -1px 0px #000;
+  }
+
+  h3 {
+    font-size: 160%;
+    margin-top: 0.5em;
+    margin-bottom: 0.15em;
+    color: #282828;
+    text-shadow: -1px -1px 0px hsla(0,0%,0%, 0.8);
+  }
+
+  h4 {
+    font-size: 120%;
+    margin-top: 0.5em;
+    margin-bottom: 0.15em;
+    color: darken($color, 5%);
+    text-shadow: -1px -1px 1px #000;
+  }
+
+  h5 {
+    font-size: 110%;
+    margin-top: 0.7em;
+    margin-bottom: 0.15em;
+    color: darken($color, 5%);
+  }
+  
+  a {
+    color: #111;
+    text-shadow: none;
+    text-decoration: none;
+    text-shadow: 0 0 1px rgba(0,0,0,0.3);
+    
+    &:hover {
+      // color: #fff;
+      // background-color: hsl(0,0,8%);
+      // background-color: hsla(0,0,0,0.2);
+      text-decoration: underline;
+    }
+    
+    &:visited {
+      
+    }
+  }
+  
+  div.collapseable {
+    > :nth-child(2n - 1) {
+      cursor: pointer;
+      padding-left: 15px;
+      background-repeat: no-repeat;
+      &.collapsed {
+        background-image: url('/images/silk/bullet_arrow_right.png');
+      }
+      &.expanded {
+        background-image: url('/images/silk/bullet_arrow_down.png');
+      }
+    }
+    > ul {
+      padding-left: 15px;
+    }
+  }
+  
+  li.skills{
+    margin: 2px 0px 0px 0px;
+    > span {
+      display: block;
+      content:"\00A0"; // emtpy "Space" so images get displayed
+      background-image: url('/images/misc/skillbars.png');
+      background-repeat: no-repeat;
+      height: 14px;
+      &.l1 {
+        background-position: 0px -14px;
+      }
+      &.l2 {
+        background-position: 0px -28px;
+      }
+      &.l3 {
+        background-position: 0px -42px;
+      }
+      &.l4 {
+        background-position: 0px -56px;
+      }
+      &.l5 {
+        background-position: 0px -70px;
+      }
+    }
+  }
+  
+  & > .info, & > .success, & > .notice, & > .alert {
+    font-size: 90%;
+    display: block;
+    text-align:left;
+    line-height: 180%;
+    text-shadow: none;
+    color: #ccc;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+    
+    strong {
+      display: block;
+      width: $content-width;
+      margin: 0 auto;
+      position: relative;
+      
+      a.close {
+        background: url('/images/silk/cross_grey.png') center no-repeat;
+        text-indent: -99999px;
+        position: absolute;
+        top: 0.25em;
+        left: -20px;
+        width: 16px;
+        height: 16px;
+        display: block;
+        color: inherit;
+      }
+    }
+  }
+      
+  .success {
+    background-color: hsl(120, 80%, 13%);
+  }
+  .alert {
+    background: hsl(0, 80%, 13%);
+  }
+  .notice {
+    background: hsl(47, 90%, 20%);
+  }
+  .info {
+    background: hsl(220, 80%, 15%);
+  }
+}
+
+#content {
+  width: $content-width;
+  // height: 120%;
+  margin: 0 auto;
+  position:relative;
+  top: 15px;
+  line-height: 130%;
+  text-shadow: 0 -1px 1px #0a0a0a;
+  min-height: 200px;
+  
+  a:before {
+    content: "￫";
+  }
+}
+
+/* ########################################
+   ########### Default Forms ##############
+   ######################################## */
+#content form {
+  $label-width: 12em;
+  $line-height: 3.5em;
+  $compact-line-height: 2.2em;
+  $margin: 1em;
+  $radius: 4px;
+  
+  &.default-size {
+    width: 600px;
+  }
+  
+  div.input {
+    width: auto;
+    line-height: $line-height;
+    min-height: $line-height;
+    background-color: hsla(0,0,12,0.6);
+    border: 1px solid black;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    
+    &:nth-child(2), &.first-of-group {
+      @include sep-border-radius($radius, $radius, 0, 0);
+      border-top: 1px solid black;
+    }
+    
+    &.last-of-group {
+      border-bottom: 1px solid black;
+      @include sep-border-radius(0, 0, $radius, $radius);
+      @include inset($radius);
+    }
+    
+    &.only-of-group {
+      bottom: 1px solid black;
+      @include border-radius($radius);
+      @include inset($radius);
+    }
+  }
+  
+  div.input.compact {
+    line-height: $compact-line-height;
+    min-height: $compact-line-height;
+  }
+  
+  fieldset {
+    margin-top: 0.5em;
+    legend {
+      font-weight: bold;
+      font-size: 110%;
+      margin-top: 0.7em;
+      margin-bottom: 0.15em;
+      color: darken($color, 5%);
+    }
+    > div.input:first-of-type {
+      @include sep-border-radius($radius, $radius, 0, 0);
+      border-top: 1px solid black;
+    }
+    > div.input:last-of-type {
+      border-bottom: 1px solid black;
+      @include sep-border-radius(0, 0, $radius, $radius);
+      @include inset($radius);
+    }
+  }
+  
+  span.hint {
+    display:block;
+    font-size: 80%;
+    position: absolute;
+    line-height:1em;
+    left:0;
+    right:1em;
+    top: 3.125em;
+    height: 1em;
+    font-style: italic;
+    font-weight: normal;
+    color: #ccc;
+    text-align: right;
+  }
+  
+  label {
+    float: left;
+    margin-left: $margin;
+    font-weight: bold;
+    color: #bbb;
+    text-shadow: 0 -1px 1px black;
+    text-align: left;
+    font-weight: bold;
+    width: $label-width;
+    
+    abbr {
+      display: none;
+      float:right;
+      margin-left: 0.2em;
+    }
+  }
+  
+  input {
+    float: right;
+    margin-left: 20px;
+    margin-right: $margin;
+    &:focus {
+      outline:none;
+    }
+    &[type='checkbox']:focus, &[type='radio']:focus {
+      outline: 1px dotted gray;
+    }
+  }
+  
+  .radio {
+    label.radio {
+      height: 100%;
+    }
+    
+    label.collection_radio {
+      float: none;
+      display: block;
+      margin-left: $label-width + 1;
+      line-height: 1em;
+      padding: 0.4em 0;
+      font-weight: normal;
+      color: $color;
+      width: 22em;
+      
+      &:nth-child(2) {
+        margin-top: 0.8em;
+      }
+      
+      &:last-child {
+        margin-bottom:0.6em;
+      }
+      
+      input {
+        float: left;
+      }
+    }
+  }
+  
+  .disabled {
+    color: hsl(0, 0, 50%) !important;
+  }
+
+  #radio_placeholder.input {
+    min-height: 0;
+    display: none;
+  }
+
+  input[type="text"], input[type="email"], input[type="password"], textarea {
+    width:22em;
+    font-size: 90%;
+    height: $line-height;
+    padding: 0 3px;
+    border-width: 0px;
+    background: transparent;
+    color: #D0D0D0;
+    text-shadow: 0 0 6px rgba(255,255,255,0.15);
+    
+    &[readonly] {
+      color: #999;
+      text-shadow: 0 0 6px rgba(0,0,0,0.15);
+    }
+  }
+
+  .alert, .notice, .success, .info {
+    font-size: 90%;
+    clear:both;
+    border: 0px solid transparent;
+    display: block;
+    text-align:right;
+    line-height: 160%;
+    text-shadow: none;
+    padding-right: $margin;
+    color: #bbb;
+    border-top: 1px solid rgba(0,0,0,0.3);
+  }
+  
+  
+  
+  input[type="submit"], input[type="reset"], input[type="button"], button, div.button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    margin-top: 0.5em;
+    padding: 0.45em 0;
+    color: #ccc;
+    font-weight: bold;
+    font-size: inherit;
+    text-shadow: 0 -1px 1px black;
+    border: 1px solid black;
+    text-align: center;
+    @include border-radius($radius);
+    @include gradient(#121212, 0, #303030, 1);
+    @include inset($radius);
+    
+    &:active {
+      @include gradient(#181818, 1, #303030, 0);
+    }
+    
+    &[disabled] {
+      @include gradient(#303030, 0, #444, 1);
+      color: #999;
+    }
+  }
+  
+  div.button {
+    padding: 0;
+    a {
+      background: transparent;
+      text-decoration: none;
+      padding: 0.45em 0;
+      display: block;
+      color: inherit;
+      &:before {
+        content: " ";
+      }
+    }
+  }
+  
+  &.compact {
+    div.input {
+      line-height: $compact-line-height;
+      min-height: $compact-line-height;
+    }
+    
+    span.hint {
+      top:0;
+      bottom:0;
+      line-height: $compact-line-height / 0.8;
+      height: $compact-line-height / 0.8;
+      z-index: -1;
+      @include transition(opacity 0.15s ease-in-out)
+    }
+    
+    input:focus ~ span.hint {
+      opacity:0;
+    }
+    
+    input[type="text"], input[type="email"], input[type="password"], textarea {
+      height: $compact-line-height;
+    }
+    
+    .disabled span.hint {
+      display: none;
+    }
+  }
+}
+
+
+/* ########################################
+   ############# Navigation ###############
+   ######################################## */
+ul#navigation {
+  position: absolute;
+  top: $banner-height + 1;
+  border-bottom: 1px solid black;
+  width: 100%;
+  @include gradient(rgba(62,62,62,1), 0.6, rgba(44,44,44,1), 0);
+  z-index: 999;
+  height: $nav-resolution;
+  line-height: $nav-resolution;
+  display: block;
+  
+  a {
+    color: $color;
+    @include border-radius(0);
+    text-decoration: none;
+    
+    &:hover {
+      background-color: hsl(0,0,12%);
+      background-color: hsla(0,0,0,0.5);
+    }
+  }
+  
+    // The navigation menu points
+  > li {
+    position: relative;
+    width: $nav-resolution;
+    display:inline-block;
+    float:left;
+
+    // The main Menu icon for accessing all other sites
+    &.main {
+      width: $nav-resolution * 1.8;
+      img { float:right; margin: 0 0 0 0 }
+      
+      @include naviBackground(url('/images/nav/48/eve.png'));
+      @include border-right();
+      background-color: hsla(0,0,0,0.25);
+      border-color: $navBorderColor;
+      
+      &:hover {
+        background-color: hsla(0,0,0,0.35);
+      }
+      a { background-position: left; }
+    }
+    
+    &.login {
+      width: auto;
+      line-height: $nav-resolution / 3;
+      height: 100%;
+      padding: 0 5px;
+      float:right;
+      text-align:right;
+      
+      > a {
+        height: auto;
+        padding: 0 2px;
+        
+        &:first-child {
+          margin-top: $nav-resolution / 6;
+        }
+        
+        &:hover {
+          background: none;
+          color: #fff;
+        }
+      }
+      
+      #logout_link {
+        position: absolute;
+        right: -72px;
+        bottom: 52px;
+      }
+      
+      #searchactivator {
+        padding: 3px 7px;
+        width: 22px;
+        height: 18px;
+        display: block;
+        bottom: 0;
+        position: absolute;
+        right: 0;
+        overflow: hidden;
+        background: url('/images/magnifying_white.png') center center no-repeat;
+        &.selected {
+          background-color: hsla(0,0,0,0.25);
+          @include sep-border-radius(4px, 0, 0, 0);
+        }
+      }
+      #searchwrapper {
+        display: none;
+        position: absolute;
+        top: $nav-resolution;
+        right: -$nav-resolution * 1.6;
+        padding: 0;
+        width: 390px;
+        // min-height: 10em;
+        background: #2b2b2b;
+        @include sep-border-radius(0,0,0,4px);
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        overflow: hidden;
+        
+        form {
+          padding: 0;
+          input {
+            background: #202020;
+            border: none;
+            display:block;
+            width: 390px;
+            outline: none;
+            color: #d0d0d0;
+            font-size: 90%;
+            text-shadow: 0 0 6px rgba(255,255,255,0.15);
+            margin: 0;
+            padding: 0.2em 1em;
+            line-height: 1.1em;
+            height: 1.8em;
+          }
+        }
+        
+        #searchresults {
+          font-size: 85%;
+          
+          strong {
+            display: block;
+            width: 30%;
+            position: absolute;
+            left: 0;
+            text-align: right;
+            color: #999;
+          }
+          
+          ul, strong {
+            margin-top: 1em;
+          }
+          
+          ul:first-of-type {
+            margin-top: 0.3em;
+          }
+          
+          ul:last-child {
+            margin-bottom: 0.3em;
+          }
+          
+          strong:first-of-type {
+            margin: 0;
+          }
+          
+          li, strong {
+            line-height: 140%;
+          }
+          
+          em {
+            display: block;
+            text-align: left;
+            font-size: 100%;
+            padding: 1em 1em 1em 35%;
+            margin: 0 1em;
+          }
+          
+          a {
+            display: block;
+            padding-left: 35%;
+            padding-right: 1em;
+            outline: none;
+            
+            span.description {
+              color: #999;
+              text-shadow: none;
+              font-size: 90%;
+            }
+            
+            span.description:before {
+              content: " — ";
+            }
+            
+            &:hover {
+              background: transparent;
+            }
+          }
+          
+          li {
+            text-align: left;
+            border-bottom: 1px solid transparent;
+            &.focus {
+              @include gradient(rgba(30,30,30,1), 1, rgba(37,37,37,1), 0);
+              @include box-shadow(0 0 3px #1c1c1c);
+              border-bottom: 1px solid #202020;
+            }
+          }
+        }
+      }
+      
+      &.sub {
+        background: url('/images/silk/bullet_arrow_down_small.png') bottom center no-repeat;
+      }
+      
+      &.hoverable:hover {
+        background-color: transparent;
+        background-image: url('/images/nav/48/nav-hover.png');
+        background-repeat: no-repeat;
+        background-position: center -8px;
+      }
+      
+      &.hoverable.sub:hover {
+        background-color: transparent;
+        background-image: url('/images/nav/48/nav-hover.png'), url('/images/silk/bullet_arrow_down_small.png');
+        background-repeat: no-repeat, no-repeat;
+        background-position: center -8px, center bottom;
+      }
+      
+      // The EVE time container
+      &.time {
+        height: inherit;
+        float:right;
+        width: $nav-resolution * 1.6;
+        line-height: $nav-resolution / 3;
+        font-size: 90%;
+        background-color: hsla(0,0,0,0.25);
+        text-align: center;
+        font-weight:normal;
+        strong {
+          display: inline-block;
+          line-height: inherit;
+          margin-top: $nav-resolution / 6;
+          font-size: 140%;
+          font-weight: 500;
+        }
+      }
+    }
+    
+    &.sub {
+      background: url('/images/silk/bullet_arrow_down_small.png') bottom center no-repeat;
+    }
+    
+    &.hoverable:hover {
+      background-color: transparent;
+      background-image: url('/images/nav/48/nav-hover.png');
+      background-repeat: no-repeat;
+      background-position: center -8px;
+    }
+    
+    &.hoverable.sub:hover {
+      background-color: transparent;
+      background-image: url('/images/nav/48/nav-hover.png'), url('/images/silk/bullet_arrow_down_small.png');
+      background-repeat: no-repeat, no-repeat;
+      background-position: center -8px, center bottom;
+    }
+    
+    // The EVE time container
+    &.time {
+      height: inherit;
+      float:right;
+      width: $nav-resolution * 1.6;
+      line-height: $nav-resolution / 3;
+      font-size: 90%;
+      background-color: hsla(0,0,0,0.25);
+      text-align: center;
+      font-weight:normal;
+      strong {
+        display: inline-block;
+        line-height: inherit;
+        margin-top: $nav-resolution / 6;
+        font-size: 140%;
+        font-weight: 500;
+      }
+    }
+
+    // Don't display the text inside the anchor tags. Text is important
+    // for seo etc but would be highly distracting in our case
+    > a {
+      display: block;
+      height: 100%;
+      outline: 0 none;
+      text-indent:-99999px;
+    }
+    
+    // Unternavigation
+    > ul {
+      display: none;
+      position: absolute;
+      top: $nav-resolution + 0px;
+      left: -1px;
+      min-width: 3 * $nav-resolution + 2px;
+      font-size: 90%;
+      background: rgba(45,45,45,0.98);
+      border-color: $navBorderColor;
+      border-top-color: rgba(45,45,45,0.98);
+      @include border();
+      @include sep-border-radius(0, 0, 5px, 5px);
+      li {
+        line-height: 155%;
+        display: block;
+        a {
+          display: block;
+          padding: 0 4px 1px 3px;
+        }
+        &:last-child a {
+          padding-bottom: 2px;
+        }
+        &:first-child a {
+          padding-top: 2px;
+        }
+      }
+      &.character-select {
+        display: none;
+        > li {
+          line-height: 66px;
+          img {
+            float: left;
+            padding: 0 3px 0 0;
+          }
+        }
+      }
+    }
+  }
+  
+  // docked meaning that the bar is currently docked
+  // to the top of the screan "floating" above all other
+  // elements
+  &.docked {
+    @include box-shadow(0 0 10px rgba(0,0,0,0.45));
+    @include gradient(rgba(62,62,62,0.80), 0.6, rgba(44,44,44,0.80), 0);
+    li > ul {
+      background: rgba(44,44,44,0.9);
+      clip:rect(0px, 1000px, 1000px, -10px);
+      @include box-shadow(0 0 10px rgba(0,0,0,0.45));
+    }
+    #searchwrapper {
+      @include box-shadow(0 0 10px rgba(0,0,0,0.45));
+      clip:rect(0px, 1000px, 1000px, -10px);
+    }
+  }
+
+}
+
+
+/* ########################################
+   ############ Registration ##############
+   ######################################## */
+.singleform {
+  float:left;
+}

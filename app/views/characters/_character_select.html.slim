@@ -1,0 +1,10 @@
+.radio.optional
+  label.radio.optional for="account_character" Select Characters
+  - for character in @characters
+    - if all_characters.present? and all_characters.index(character[:name])
+      - class_disabled = "disabled"
+    - else
+      - class_disabled = ""
+    label.collection_radio for="account_character_#{character[:character_id]}" class=class_disabled
+      input.radio.optional id="account_character_#{character[:character_id]}" name="character[character_ids][]" type="checkbox" value="#{character[:character_id]}"
+      = character[:name]

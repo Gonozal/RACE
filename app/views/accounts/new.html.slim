@@ -1,0 +1,12 @@
+- content_for :headline do
+  | Registration
+
+= simple_form_for @account, :remote => true, :html => {:class => 'singleform submit-once compact' } do |f|
+  = logger.warn f.error_notification if f.error_notification
+  = f.input :name, :hint => "Do not user your EVE Online account name"
+  = f.input :password, :input_html => { :size => 40 }
+  = f.input :password_confirmation, :input_html => { :size => 40 }
+  = f.input :email, :input_html => { :size => 40 }, :hint => "A valid email adress is needed for password recovery"
+  = f.input :email_confirmation, :input_html => { :size => 40 }, :wrapper_html => { :class => "last-of-group" }
+  button#account_submit type="submit" create account
+.clearfix

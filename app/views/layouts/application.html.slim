@@ -1,0 +1,26 @@
+doctype html
+html lang="en-US"
+head
+  title RACE
+  = stylesheet_link_tag    "application"
+  = javascript_include_tag "application"
+  = csrf_meta_tag
+  meta charset="UTF-8"
+
+body
+  h1#title RACE - Allianzverwaltung
+  
+  = render :partial => 'navigation'
+  
+  - for name in [:notice, :warning, :message, :alert, :success]
+    - if flash[name]
+      == "<div class=\"#{name}\"><strong>#{flash[name]}</strong></div>"
+  
+  #content
+    
+    - if content_for? :headline
+      h2
+        = yield :headline
+    
+    / yield the content
+    = yield

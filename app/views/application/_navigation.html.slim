@@ -1,0 +1,69 @@
+ul#navigation
+  / The current EVE Time to be displayed on the right of the Navigation bar
+  li.time
+    strong#evetime_hours
+      / Current Hours (24h format)
+      = eve_time.strftime "%H:%M"
+    br
+    span#evetime_date
+      / Current Year.Month.Day
+      = eve_time.strftime "%Y.%m.%d"
+    
+  - if current_account
+    / Character portrait and eve "E"
+    li.main
+      a href="#" title="Main Menu"
+        | home
+        - if current_account.characters.any? and !current_user.blank?
+          img src="/images/api_images/characters/#{current_user.character_id}_48.jpg" alt="#{current_user.name}"
+      / Character Dropdown    
+      - if current_account.characters.any?
+        ul.character-select
+          - current_account.characters.each do |c|
+            li id="charchange_#{c.character_id}"
+              a href="/accounts/change_main_character/#{c.character_id}"
+                img src="/images/api_images/characters/#{c.character_id}_64.jpg" alt="#{c.name}"
+                = c.name
+    li class="login"
+      a#logout_link href="#{logout_path}" title="logout" logout
+      a#searchactivator href="#" title="search"
+      div#searchwrapper
+        = render :partial => 'searchbar'
+  - else 
+    / Logout link
+    li class="login"
+      a href="#{login_path}" title="login"
+        |login
+      a href="#{registration_path}" title="Register"
+        |sign up
+        
+  
+
+  / Iterate over all modules aka Navigation points
+  / Has to be done twice. First do set "show" attributes to decide,
+  / if the node or any subnodes are to be rendered, then to render it
+  
+  / First iteration: set "show" attributes
+  - user_nav.each_child do |parent|
+    - if permitted_to? parent.action.to_sym, parent.controller.to_sym
+      - parent.show = true
+    - parent.each_child do |child|
+      - if permitted_to? child.action.to_sym, child.controller.to_sym
+        - parent.show, parent.show_children = true, true
+        - child.show = true
+        
+  / Second iteration: display navigation
+  - user_nav.each_child do |nav|
+    / for each module, create a new list node
+    - if nav.show
+      li class="#{nav.show_children ? 'sub' : ''} hoverable"
+        / Just the background string.. Only been used once but I hate long lines...
+        - nav_background = "background: url('/images/nav/48/#{nav.image}') center center no-repeat;"
+        a href="#{nav.path}" title="#{nav.title}" style="#{nav_background}" #{nav.name}
+        
+        - if nav.show_children
+          ul
+            - nav.each_child do |nav|
+              - if nav.show
+                li
+                  a href="#{nav.path}" #{nav.name}

@@ -1,0 +1,5 @@
+- content_for :headline do
+  | Access Denied
+.error 
+  |You do not have the necessary permissions to acces this site <br/>
+  |Please go <a href="#{request.referer}">back</a> or return to the <a href="#{root_url}">index</a>

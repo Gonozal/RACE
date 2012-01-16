@@ -1,0 +1,14 @@
+- content_for :headline do
+  | Corporation overview
+
+- unless @corporations.blank?
+  - for corporation in @corporations
+    div id="corporation#{corporation.id}\"
+      strong #{corporation.name}
+      p
+        = link_to "edit", edit_corporation_path(corporation)
+        = link_to "destroy", corporation, :confirm => "Are you sure?", \
+             :remote => true, :method => :delete
+- else
+  p
+    | There are no Corporations

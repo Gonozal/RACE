@@ -1,0 +1,21 @@
+- content_for :headline do
+  | Add Character
+  
+/ Form for adding characters to an account
+= simple_form_for @character = Character.new, :remote => true, :html => {:class => 'singleform submit-once compact', :novalidate => "novalidate"} do |f|
+  = logger.warn f.error_notification if f.error_notification
+  = f.input :user_id, :as => :string, :label => "User ID"
+  = f.input :api_key, :label => "API Key", :hint => "Full API Key recommended", :wrapper_html => {:class => 'last-of-group'}
+  #radio_placeholder.input
+  button#character_submit type="submit" Get Characters
+  button#character_register_back disabled="disabled" Back
+.clearfix
+
+br
+h2 Character Management
+- if @characters.present?
+  = simple_form_for pseudo_character = Character.new, :remote => :true, :url => url_for(:action => 'update', :controller => 'characters'), \
+    :html => { :class => 'singleform submit-once compact', :id => 'change_api_form' } do |f|
+    = render :partial => "character_edit", :collection => @characters, :as => :c, :locals => { :f => f }
+    button#change_api type="submit" Change API
+

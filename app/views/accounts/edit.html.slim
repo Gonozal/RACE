@@ -1,0 +1,10 @@
+- content_for :headline do
+  | Change Password
+
+= simple_form_for @account, :remote => :true, :method => :post, :url => url_for(:action => 'update', :controller => 'accounts'), \
+  :html => { :class => 'singleform submit-once compact' } do |f|
+  = f.input :old_password, :wrapper_html => { :class => "first-of-group" }, :input_html => { :value => "" }
+  = f.input :password, :input_html => { :value => "" }
+  = f.input :password_confirmation, :wrapper_html => { :class => "last-of-group" }, :input_html => { :value => "" }
+  button#change_password type="submit" Change Password
+

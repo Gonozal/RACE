@@ -1,0 +1,2 @@
+module CharacterInfoHelper
+end

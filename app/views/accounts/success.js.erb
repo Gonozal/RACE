@@ -1,0 +1,23 @@
+$(function() {
+  <% if @success_type.eql? "update_account" %>
+    var redirect_url = "<%= login_url %>"
+    var success_message = 'Your Account has successfully been updated!<br />You will now be redirected to the <a href="' + redirect_url + '">Login Page</a>.';
+  <% elsif @success_type.eql? "create_account" %>
+    var redirect_url = "<%= edit_characters_url %>"
+    var success_message = 'Your Account has successfully been created!<br />You will now be redirected to the <a href="' + redirect_url + '">Character Registration Page</a>.';
+  <% end %>
+  
+  // Remove all previous error messages
+  $("form.account span.error, form.account span.warning").remove();
+  
+  $('form.account').fadeOut('350', function() {
+    $(this).after('<div class="success">'+ success_message +'<div>').end().hide().fadeIn('350');
+  });
+  
+  
+  // redirect to the login url (users need to login after creating an account)
+  setTimeout(function() {
+    window.location = redirect_url;
+  }, 5000);
+  
+});

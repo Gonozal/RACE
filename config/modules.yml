@@ -1,0 +1,104 @@
+Character:
+  path: /characters/new
+  image: icon02_16.png
+  sub:
+    Mails:
+      image: icon12_01.png
+    Skills: 
+      controller: character_info
+      image: icon36_15.png
+    Assets:
+      controller: character_info
+      image: icon55_11.png
+    Transactions:
+      controller: character_info
+      image: icon55_11.png
+    Journal:
+      controller: character_info
+      image: icon55_11.png
+    Orders:
+      controller: character_info
+      image: icon55_11.png
+  
+Corporation:
+  image: icon07_06.png
+  sub:
+    Member:
+      image: icon55_11.png
+    Statistics:
+      image: icon55_11.png
+    Transactions:
+      image: icon55_11.png
+    Journal:
+      image: icon55_11.png
+    Orders:
+      image: icon55_11.png
+      
+Alliance:
+  image: icon35_07.png
+  sub:
+    Member:
+      image: icon55_11.png
+    Statistics:
+      image: icon25_08.png
+    Rules:
+      image: icon55_11.png
+    
+Logistics:
+  image: icon09_06.png
+  sub:
+    Orders:
+      image: icon55_11.png
+    Statistics:
+      image: icon55_11.png 
+  
+
+Settings:
+  image: icon18_04.png
+  sub:
+    Account:
+      path: /accounts/edit
+      image: icon55_11.png
+    Characters:
+      path: /characters/edit
+      image: icon55_11.png
+    Corporation:
+      image: icon55_11.png
+    Alliance:
+      image: icon55_11.png
+    Admin:
+      image: icon55_11.png
+  
+Killboard: 
+  image: icon07_07.png
+  
+Forums:
+  image: icon09_02.png
+
+Fittings:
+  image: icon17_04.png
+  sub:
+    Test1:
+      image: icon55_11.png
+    Test2:
+      image: icon55_11.png
+    Test3:
+      image: icon55_11.png
+    
+POS:
+  image: icon23_04.png
+    
+Lottery:
+  image: icon06_03.png
+    
+Tools:
+  image: icon06_02.png
+  
+Help:
+  image: icon06_04.png
+  sub:
+    About:
+      image: icon33_03.png
+    Help:
+      image: icon06_04.png
+    

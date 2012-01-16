@@ -1,0 +1,275 @@
+@blackBorder: 1px solid rgba(0,0,0,1);
+@sans-serif:  'Helvetica', 'Segoe UI', 'Arial', 'sans-serif';
+@nav-resolution: 48px;
+@banner-height: 90px;
+@color: hsl(43, 70%, 94%);
+
+.box-shadow(@x:0, @y:0, @b:15px, @c:rgba(0,0,0,0.6)) {
+  @v: @x @y @b @c;
+  box-shadow: @v;
+  -moz-box-shadow: @v;
+  -webkit-box-shadow: @v;
+  -o-box-shadow: @v;
+}
+
+.box-shadow-inset(@x:0, @y:0, @b:15px, @c:rgba(0,0,0,0.6)) {
+  @v: @x @y @b @c;
+  box-shadow:inset @v;
+  -moz-box-shadow:inset @v;
+  -webkit-box-shadow:inset @v;
+  -o-box-shadow:inset @v;
+}
+
+.inset(@x:1px, @y:1px, @blur:0px, @color1:hsla(0,0,0,0.5), @color2:hsla(0,0,1,0.25)) {
+  
+}
+
+.gradient(@c1, @s1, @c2, @s2) {
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(@s1, @c1), color-stop(@s2, @c2));
+  background-image: -moz-linear-gradient(center bottom, @c1 @s1, @c2 @s2);
+}
+
+.lineAndHeight(@height) {
+  height: @height;
+  line-height: @height;
+}
+
+.border-radius(@r:6px) {
+  -webkit-border-radius: @r;
+  -moz-border-radius: @r;
+  -o-border-radius: @r;
+  border-radius: @r;
+}
+
+.sep-border-radius(@r1:5px, @r2:5px, @r3:5px, @r4:5px) {
+  -webkit-border-top-left-radius: @r1;
+  -moz-border-radius-topleft: @r1;
+  border-top-left-radius: @r1;
+  -webkit-border-top-right-radius: @r2;
+  -moz-border-radius-topright: @r2;
+  border-top-right-radius: @r2;
+  -webkit-border-bottom-right-radius: @r3;
+  -moz-border-radius-bottomright: @r3;
+  border-bottom-right-radius: @r3;
+  -webkit-border-bottom-left-radius: @r4;
+  -moz-border-radius-bottomleft: @r4;
+  border-bottom-left-radius: @r4;
+}
+
+.transition(@attribute, @time:1s, @type:ease-in) {
+  -moz-transition: @attribute @time @type;
+  -webkit-transition: @attribute @time @type;
+  -o-transition: @attribute @time @type;
+  transition: @attribute @time @type;
+}
+
+body {
+  background: url('/images/bg-lighter.jpg');
+  font-family: @sans-serif;
+  font-size: 10.5pt;
+  font-weight: normal;
+  color: @color;
+}
+
+h1#title {
+  .lineAndHeight(@banner-height);
+  background: #555 url('/images/logo.png') center no-repeat;
+  border-bottom: @blackBorder;
+  text-indent:-99999px;
+}
+h2 {
+  color: darken(@color, 14%);
+  text-shadow: 0 1px 1px hsla(0,0,0, 0.7);
+}
+h3 {
+  color: darken(@color, 10%);
+  text-shadow: 0 1px 1px hsla(0,0,0, 0.6);
+}
+h4 {
+  color: darken(@color, 6%);
+  text-shadow: 0 1px 1px hsla(0,0,0, 0.5);
+}
+h5 {
+  color: darken(@color, 3%);
+  text-shadow: 0 1px 1px hsla(0,0,0, 0.5);
+}
+ 
+div#content {
+  width: 900px;
+  height: 120%;
+  margin: 0 auto;
+  margin-top: 15px;
+  position:relative;
+  top: @nav-resolution + 1;
+  line-height: 130%;
+  text-shadow: 0 1px 1px hsla(0,0,0, 0.24);
+}
+
+// new Account Form
+#new_account {
+  @label-width: 200px;
+  float:left; 
+  @line-height: 1.4em;
+  
+  div.input {
+    line-height: @line-height;
+    margin-bottom:4px;
+  }
+  
+  label {
+    width: @label-width;
+    float: left;
+    text-align: right;
+    margin-right: 8px;
+    font-weight: bold;
+  }
+  
+  .radio label.collection_radio {
+    float: none;
+    display: block;
+    font-weight: normal;
+    text-align: left;
+    margin-left: @label-width + 8;
+    color: desaturate(@color, 100%);
+  }
+  
+  input[type="text"], input[type="password"] {
+    font-size: 90%;
+    height: 1.8em;
+    text-shadow: inherit;
+    background: #333;
+    padding: 0 3px;
+    color: desaturate(@color, 100%);
+    border: 0px solid transparent;
+    .border-radius(6px);
+    .box-shadow-inset(1px, 1px, 2px, hsla(0,0,0,0.8));
+  }
+  
+  span.hint {
+    font-size: 80%;
+    margin-bottom: 3px;
+    font-style: italic;
+    color: #ccc;
+    text-shadow: 0 0 1px rgba(0,0,0,0.1);
+    display:block;
+    text-align: right;
+    margin-right: 2px;
+  }
+  
+  .error {
+    padding: 2px 5px;
+    color: desaturate(@color, 100%);
+    border: 0px solid transparent;
+    background: hsl(0, 80%, 10%);
+    .border-radius(6px);
+    .box-shadow-inset(1px, 1px, 2px, hsla(0,0,0,0.8));
+    display: block;
+    text-align:right;
+  }
+  
+  input[type="submit"], button {
+    float:right;
+  }
+
+  #radio_placeholder {
+    height: 60px;
+    display: none;
+  }
+}
+
+// The Navigation Menu beneath the header
+// wrapped in a div to center the navigation bar
+// itself but display a continous background
+#navigation {
+  height: @nav-resolution;
+  position: absolute;
+  top: @banner-height + 1;
+  border-bottom: @blackBorder;
+  width: 100%;
+  .gradient(rgba(62,62,62,1), 0.6, rgba(44,44,44,1), 0);
+  z-index: 999;
+  color: #eee; 
+  
+  // The Navigation bar itself with all anchor tags etc
+  ul {
+    .naviBackground(@url) {
+      a { background: @url center center no-repeat; }
+    }
+    .hover() {
+      &:hover {
+        background: transparent url('/images/nav/48/nav-hover.png') center center no-repeat;
+      }
+    }
+    
+    height: @nav-resolution;
+    width: 900px;
+    margin: 0 auto;
+    line-height: @nav-resolution;
+    display: block;
+    
+    li {
+      width: @nav-resolution;
+      display:inline-block;
+      float:left;
+    
+      // The main Menu icon for accessing all other sites
+      &.main {
+        .naviBackground(url('/images/nav/48/eve.png'));
+        width: @nav-resolution * 1.8;
+        border-right: @blackBorder;       
+        background-color: hsla(0,0,0,0.25);
+        
+        &:hover {
+          background-color: hsla(0,0,0,0.35);
+        }
+        a { background-position: left; }
+        img { float:right; margin: 0 0 0 0 }
+      }
+      &.character { .naviBackground(url('/images/nav/48/icon02_16.png')); .hover; }
+      &.market { .naviBackground(url('/images/nav/48/icon18_01.png')); .hover; }
+      &.contracts { .naviBackground(url('/images/nav/48/icon64_09.png')); .hover; }
+      &.corporation { .naviBackground(url('/images/nav/48/icon07_06.png')); .hover; }
+      &.mail { .naviBackground(url('/images/nav/48/icon12_01.png')); .hover; }
+      &.settings { .naviBackground(url('/images/nav/48/icon18_04.png')); .hover; }
+      &.killboard { .naviBackground(url('/images/nav/48/icon07_07.png')); .hover; }
+      &.tools { .naviBackground(url('/images/nav/48/icon06_02.png')); .hover; }
+      &.info { .naviBackground(url('/images/nav/48/icon33_03.png')); .hover; }
+      &.help { .naviBackground(url('/images/nav/48/icon06_04.png')); .hover; }
+      // The EVE time container
+      &.time {
+        height: inherit;
+        float:right;
+        width: @nav-resolution * 1.6;
+        background-color: hsla(0,0,0,0.25);
+        text-align: center;
+        line-height: @nav-resolution / 3;
+        font-size: 90%;
+        font-weight:lighter;
+        strong {
+          display: inline-block;
+          line-height: inherit;
+          margin-top: @nav-resolution / 6;
+          font-weight: normal;
+          font-size: 140%;
+        }
+      }
+      
+      // Don't display the text inside the anchor tags. Text is important
+      // for seo etc but would be highly distracting in our case
+      a {
+        outline: 0 none;
+        text-indent:-9999px;
+        display: block;
+        height: 100%;
+      }
+    }
+  }
+  
+  // docked meaning that the bar is currently docked
+  // to the top of the screan "floating" above all other
+  // elements
+  &.docked {
+    .box-shadow(0,0,10px,rgba(0,0,0,0.4));
+    .gradient(rgba(62,62,62,0.93), 0.6, rgba(44,44,44,0.93), 0);
+  }
+}

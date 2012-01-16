@@ -1,0 +1,24 @@
+// Reset Form
+<%= render :partial => "reset_form" %>
+
+$("form.character span.validation").remove();
+$("#character_submit").removeAttr("disabled");
+
+// expandSpace where character select form fields will appear
+if($("#radio_placeholder").is(":hidden")) {
+  $('#character_register_back').removeAttr("disabled");
+  $('#new_character button[type="text"]').attr("readonly", "readonly");
+  var radio = $("#radio_placeholder");
+  radio.addClass('last-of-group').prev().removeClass('last-of-group');
+  radio.html("<%= escape_javascript render(:partial => "character_select", :locals => { :all_characters => all_characters } ) %>");
+  radio.slideDown(400, function() {
+    // Render Character selection form elements
+    $("#character_submit").html("Add Characters");
+  });
+  $("label.disabled input.radio.optional").attr("disabled", "disabled").after("[Registered]")
+} else {
+  //.hide().slideDown(3000);
+  var $errormsg = $('<span class="alert validation">Please select a character</span>').hide();
+  $("#radio_placeholder").prev().append($errormsg);
+  $errormsg.fadeIn(250);
+}

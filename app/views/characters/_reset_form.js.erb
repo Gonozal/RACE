@@ -1,0 +1,18 @@
+// re-enable form submit
+$("#change_api, #character_submit").removeAttr('disabled');
+
+// Reset "Add Character" form
+$("#character_submit").html("Get Characters")
+$("#character_register_back").attr("disabled", "disabled");
+$("#radio_placeholder").slideUp(350, function() {
+  // remove all character selection fields
+  $("#radio_placeholder > div").html("");
+});
+
+// Remove all previous error messages
+$("form.character span.validation").remove();
+
+// Remove previously disabled character fields
+$("fieldset.disabled").slideUp(350, function() {
+  $(this).remove();
+});

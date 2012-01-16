@@ -1,0 +1,1815 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: EVEAPI::API
+  
+    &mdash; Documentation by YARD 0.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (A)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../EVEAPI.html" title="EVEAPI (module)">EVEAPI</a></span></span>
+     &raquo; 
+    <span class="title">API</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: EVEAPI::API
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">EVEAPI::API</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/eve_api/api.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+Class used for basic API interaction. This is the class you should
+instantiate first.
+</p>
+<p>
+Example usage:
+</p>
+<p>
+Note: The alternativ syntax is generally prefered as it does not involve
+hacking the method_missing method
+</p>
+<p>
+More Information about the EVE API is available on the
+<a href="http://wiki.eve-id.net/Main_Page" target="_parent" title="EVE API wiki page">EVE API wiki page</a>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>
+Initialize (for account related queries)
+</p>
+</div></h4>
+      <pre class="example code"><span class='id api'>api</span> <span class='op'>=</span> <span class='const'>EVEAPI</span><span class='op'>::</span><span class='const'>API</span><span class='period'>.</span><span class='id new'>new</span>
+<span class='id api'>api</span><span class='period'>.</span><span class='id user_id'>user_id</span> <span class='op'>=</span> <span class='int'>1234567</span>
+<span class='id api'>api</span><span class='period'>.</span><span class='id api_key'>api_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A7416C2DAA5D4283AE3EE7BB8F27BDBC96F3A01B14534656842A9783AC135A8A</span><span class='tstring_end'>&quot;</span></span></pre>
+    
+      <h4><div class='inline'><p>
+Get Accounts for this cahracter:
+</p>
+</div></h4>
+      <pre class="example code"><span class='id xml'>xml</span> <span class='op'>=</span> <span class='id api'>api</span><span class='period'>.</span><span class='id account'>account</span><span class='period'>.</span><span class='const'>Characters</span><span class='period'>.</span><span class='id get'>get</span>
+<span class='id xml'>xml</span> <span class='op'>=</span> <span class='id api'>api</span><span class='period'>.</span><span class='id account'>account</span><span class='period'>.</span><span class='const'>Characters</span><span class='period'>.</span><span class='id get'>get</span><span class='lparen'>(</span><span class='symbol'>:version</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.2</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></pre>
+    
+      <h4><div class='inline'><p>
+Alternative Syntax:
+</p>
+</div></h4>
+      <pre class="example code"><span class='id xml'>xml</span> <span class='op'>=</span> <span class='id api'>api</span><span class='period'>.</span><span class='id get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>account/Characters</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> 
+<span class='id xml'>xml</span> <span class='op'>=</span> <span class='id api'>api</span><span class='period'>.</span><span class='id get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>account/Characters</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:version</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.2</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></pre>
+    
+  </div>
+
+</div>
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#alliance_id%3D-instance_method" title="#alliance_id= (instance method)">- (String) <strong>alliance_id</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    <span class="note title writeonly">writeonly</span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Can be set in order to avoid having a huge params hash in the get method.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#api_key%3D-instance_method" title="#api_key= (instance method)">- (String) <strong>api_key</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    <span class="note title writeonly">writeonly</span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Can be set in order to avoid having a huge params hash in the get method.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#character_id%3D-instance_method" title="#character_id= (instance method)">- (String) <strong>character_id</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    <span class="note title writeonly">writeonly</span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Can be set in order to avoid having a huge params hash in the get method.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#corporation_id%3D-instance_method" title="#corporation_id= (instance method)">- (String) <strong>corporation_id</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    <span class="note title writeonly">writeonly</span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Can be set in order to avoid having a huge params hash in the get method.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#extension-instance_method" title="#extension (instance method)">- (Object) <strong>extension</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute extension.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#host-instance_method" title="#host (instance method)">- (Object) <strong>host</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute host.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#image_path_array-instance_method" title="#image_path_array (instance method)">- (Object) <strong>image_path_array</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute image_path_array.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#user_id%3D-instance_method" title="#user_id= (instance method)">- (String) <strong>user_id</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    <span class="note title writeonly">writeonly</span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Can be set in order to avoid having a huge params hash in the get method.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_image-instance_method" title="#delete_image (instance method)">- (Object) <strong>delete_image</strong>(type, id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+deletes all images of a specified type.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get-instance_method" title="#get (instance method)">- (Nokogiri::XML::Document) <strong>get</strong>(query = {}, params = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Executes a query to the API server.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#image_path-instance_method" title="#image_path (instance method)">- (pathname) <strong>image_path</strong>(type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+returns the path to the image specified by the type of the image to load.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (API) <strong>initialize</strong>(params = {}) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Initializes the api host adress, extensions for api calls etc.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save_image-instance_method" title="#save_image (instance method)">- (pathname) <strong>save_image</strong>(type, id, size = 64) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Saves a Image (cpororation, character etc) from an api call and saves it to
+the file System for late usage.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="EVEAPI::API (class)">API</a></span></tt>) <strong>initialize</strong>(params = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Initializes the api host adress, extensions for api calls etc.
+</p>
+<p>
+Defaults are:
+</p>
+<pre class="code">
+  host: https://api.eveonline.com
+  extension: .xml.aspx
+  image_path: images/api_images/</pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>
+Initialize with defaults:
+</p>
+</div></h4>
+      <pre class="example code"><span class='id api'>api</span> <span class='op'>=</span> <span class='const'>EVEAPI</span><span class='op'>::</span><span class='const'>API</span><span class='period'>.</span><span class='id new'>new</span></pre>
+    
+      <h4><div class='inline'><p>
+initialize with custom host and extension:
+</p>
+</div></h4>
+      <pre class="example code"><span class='id api'>api</span> <span class='op'>=</span> <span class='const'>EVEAPI</span><span class='op'>::</span><span class='const'>API</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+  <span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://eveapi.com</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='symbol'>:extension</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.xml</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span></pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the parameter hash. Possible parameters:
+</p>
+<p>
+:host => [string] the server to which to connect
+</p>
+<p>
+:extension => [string] the extension to apply to all queries (except for a
+few specific queries like save_image etc.
+</p>
+<p>
+:image_path => [string] the path where to out the images to. Fodlers should
+be seperated with a forward slash (like in unix style OS)
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58
+59
+60
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+   <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://api.eveonline.com</span><span class='tstring_end'>&quot;</span></span>
+   <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:extension</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.xml.aspx</span><span class='tstring_end'>&quot;</span></span>
+   <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:image_path</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>images/api_images</span><span class='tstring_end'>&quot;</span></span>
+   <span class='kw'>self</span><span class='period'>.</span><span class='id host'>host</span> <span class='op'>=</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span>
+   <span class='kw'>self</span><span class='period'>.</span><span class='id extension'>extension</span> <span class='op'>=</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:extension</span><span class='rbracket'>]</span>
+   <span class='kw'>self</span><span class='period'>.</span><span class='id image_path_array'>image_path_array</span> <span class='op'>=</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:image_path</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\/|\\</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+   <span class='ivar'>@query</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice this">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+  
+    <div class="method_details first">
+  <p class="signature first" id="method_missing-instance_method">
+  
+    - (<tt>Object</tt>) <strong>method_missing</strong>(meth, *args, &amp;blk)  <span class="extras">(private)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+saves every unknown command in a query seperated with a slash.
+</p>
+<p>
+api.account.Characters results in @query =
+&#8220;account/Characters&#8221;.
+</p>
+<p>
+This query is then used as the API URI when connecting to the server. Host
+and extensions get pre/appended of course
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+298
+299
+300
+301
+302</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 298</span>
+
+<span class='kw'>def</span> <span class='id method_missing'>method_missing</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id blk'>blk</span><span class='rparen'>)</span>
+	<span class='kw'>super</span> <span class='kw'>if</span> <span class='id args'>args</span><span class='period'>.</span><span class='id length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='kw'>or</span> <span class='kw'>not</span> <span class='id blk'>blk</span><span class='period'>.</span><span class='id nil?'>nil?</span>
+	<span class='ivar'>@query</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id meth'>meth</span><span class='period'>.</span><span class='id to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>return</span> <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="alliance_id=-instance_method"></span>
+      <span id=""></span>
+      <div class="method_details first">
+  <p class="signature first" id="alliance_id=-instance_method">
+  
+    - (<tt>String</tt>) <strong>alliance_id=</strong>(value)  <span class="extras">(writeonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Can be set in order to avoid having a huge params hash in the get method.
+Maps directly to the camelCase versions of the EVE API.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The value to set
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id alliance_id='>alliance_id=</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@alliance_id</span> <span class='op'>=</span> <span class='id value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="api_key=-instance_method"></span>
+      <span id=""></span>
+      <div class="method_details ">
+  <p class="signature " id="api_key=-instance_method">
+  
+    - (<tt>String</tt>) <strong>api_key=</strong>(value)  <span class="extras">(writeonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Can be set in order to avoid having a huge params hash in the get method.
+Maps directly to the camelCase versions of the EVE API.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The value to set
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id api_key='>api_key=</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@api_key</span> <span class='op'>=</span> <span class='id value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="character_id=-instance_method"></span>
+      <span id=""></span>
+      <div class="method_details ">
+  <p class="signature " id="character_id=-instance_method">
+  
+    - (<tt>String</tt>) <strong>character_id=</strong>(value)  <span class="extras">(writeonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Can be set in order to avoid having a huge params hash in the get method.
+Maps directly to the camelCase versions of the EVE API.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The value to set
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id character_id='>character_id=</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@character_id</span> <span class='op'>=</span> <span class='id value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="corporation_id=-instance_method"></span>
+      <span id=""></span>
+      <div class="method_details ">
+  <p class="signature " id="corporation_id=-instance_method">
+  
+    - (<tt>String</tt>) <strong>corporation_id=</strong>(value)  <span class="extras">(writeonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Can be set in order to avoid having a huge params hash in the get method.
+Maps directly to the camelCase versions of the EVE API.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The value to set
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id corporation_id='>corporation_id=</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@corporation_id</span> <span class='op'>=</span> <span class='id value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="extension=-instance_method"></span>
+      <span id="extension-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="extension-instance_method">
+  
+    - (<tt>Object</tt>) <strong>extension</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute extension
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id extension'>extension</span>
+  <span class='ivar'>@extension</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="host=-instance_method"></span>
+      <span id="host-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="host-instance_method">
+  
+    - (<tt>Object</tt>) <strong>host</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute host
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id host'>host</span>
+  <span class='ivar'>@host</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="image_path_array=-instance_method"></span>
+      <span id="image_path_array-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="image_path_array-instance_method">
+  
+    - (<tt>Object</tt>) <strong>image_path_array</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute image_path_array
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id image_path_array'>image_path_array</span>
+  <span class='ivar'>@image_path_array</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="user_id=-instance_method"></span>
+      <span id=""></span>
+      <div class="method_details ">
+  <p class="signature " id="user_id=-instance_method">
+  
+    - (<tt>String</tt>) <strong>user_id=</strong>(value)  <span class="extras">(writeonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Can be set in order to avoid having a huge params hash in the get method.
+Maps directly to the camelCase versions of the EVE API.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The value to set
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id user_id='>user_id=</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@user_id</span> <span class='op'>=</span> <span class='id value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="delete_image-instance_method">
+  
+    - (<tt>Object</tt>) <strong>delete_image</strong>(type, id) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+deletes all images of a specified type
+</p>
+<p>
+Works similiar to save_image except that it deletes all possible sizes of
+images associated to this particular type and id
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the type of image you want. Possible options are:  &#8216;character&#8217;,
+&#8216;alliance&#8217;, &#8216;corporation&#8217;,
+&#8216;inventory_type&#8217; or &#8216;render&#8217;.
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the Id of the image you want. For a character this would be the character
+ID, for a alliance the alliance ID and so on.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 180</span>
+
+<span class='kw'>def</span> <span class='id delete_image'>delete_image</span><span class='lparen'>(</span><span class='id type'>type</span><span class='comma'>,</span> <span class='id id'>id</span><span class='rparen'>)</span>
+  <span class='id sizes'>sizes</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>30</span><span class='comma'>,</span><span class='int'>32</span><span class='comma'>,</span><span class='int'>64</span><span class='comma'>,</span><span class='int'>128</span><span class='comma'>,</span><span class='int'>200</span><span class='comma'>,</span><span class='int'>256</span><span class='comma'>,</span><span class='int'>512</span><span class='comma'>,</span><span class='int'>1024</span><span class='rbracket'>]</span>
+  <span class='comment'># get the required file extension: Character portraits are saved as .jpg
+</span>  <span class='comment'># everything else is a PNG image
+</span>  <span class='id file_extension'>file_extension</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id type'>type</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^character$</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>jpg</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>png</span><span class='tstring_end'>'</span></span>
+  <span class='comment'># create (if needed) the folders needed to save the images
+</span>  <span class='id delete_path'>delete_path</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id root'>root</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>public</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id image_folders'>image_folders</span> <span class='op'>=</span> <span class='id image_path_array'>image_path_array</span><span class='period'>.</span><span class='id clone'>clone</span> <span class='op'>&lt;&lt;</span> <span class='id type'>type</span><span class='period'>.</span><span class='id pluralize'>pluralize</span>
+  <span class='id image_folders'>image_folders</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id folder'>folder</span><span class='op'>|</span>
+    <span class='id delete_path'>delete_path</span> <span class='op'>=</span> <span class='id delete_path'>delete_path</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='id folder'>folder</span><span class='rparen'>)</span>
+    <span class='comment'># cancel if no directory could be found
+</span>    <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id directory?'>directory?</span><span class='lparen'>(</span><span class='id delete_path'>delete_path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># initialize empty filename string
+</span>  <span class='id filename'>filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  
+  <span class='comment'># Iterate over all sizes
+</span>  <span class='id sizes'>sizes</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id size'>size</span><span class='op'>|</span>
+    <span class='comment'># create filename
+</span>    <span class='id filename'>filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id size'>size</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='id file_extension'>file_extension</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='comment'># delete the file if it exists
+</span>    <span class='const'>File</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='id delete_path'>delete_path</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id file?'>file?</span><span class='lparen'>(</span><span class='id delete_path'>delete_path</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="get-instance_method">
+  
+    - (<tt>Nokogiri::XML::Document</tt>) <strong>get</strong>(query = {}, params = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Executes a query to the API server. Either used at the and of a hacky mess
+of method_missing calls like api.account.Characters.get or by specifing an
+API URI.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>
+&#8220;proper&#8221; syntax:
+</p>
+</div></h4>
+      <pre class="example code"><span class='id api'>api</span><span class='period'>.</span><span class='id get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>account/Characters</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:version</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.2</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></pre>
+    
+      <h4><div class='inline'><p>
+&#8220;messy&#8221; syntax:
+</p>
+</div></h4>
+      <pre class="example code"><span class='id api'>api</span><span class='period'>.</span><span class='id account'>account</span><span class='period'>.</span><span class='const'>Characters</span><span class='period'>.</span><span class='id get'>get</span><span class='lparen'>(</span><span class='symbol'>:version</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.2</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>query</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the string beeing used as the adress to the specific EVE API site.
+alternatively the params hash. (see params)
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>
+A hash containing additional key-value pairs to be transmitted to the API
+server. examples would be: { :character_id => &#8220;123456&#8221; ,
+:user_id => &#8220;654321&#8221;}. Can either be in small camelCase (EVE
+API format) or in underscore notation (as in this example)
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Document</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+a Nokogiri XML Document representing the server response
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Exception.html" title="EVEAPI::Exception (module)">EVEAPI::Exception</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+When something with the request went wrong, some exceptions are raised.
+Most noteably: EVEAPI::Exception::APIError when the eve-api responded with
+an error. These  errors come with an error code within the name and the
+description provided by the EVE API.
+</p>
+<p>
+API request that result in an EVE API error are cached to prevent spamming
+the api with invalid requests.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id get'>get</span><span class='lparen'>(</span><span class='id query'>query</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='op'>!</span><span class='id query'>query</span><span class='period'>.</span><span class='id blank?'>blank?</span> <span class='kw'>and</span> <span class='id query'>query</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id to_s'>to_s</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>String</span><span class='tstring_end'>&quot;</span></span>
+    <span class='ivar'>@query</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id query'>query</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\/</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id query'>query</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id query'>query</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+   <span class='kw'>else</span> 
+     <span class='id params'>params</span> <span class='op'>=</span> <span class='id query'>query</span>
+   <span class='kw'>end</span>
+   <span class='comment'># URI consists of the host + query + file extension
+</span>   <span class='id uri'>uri</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@host</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='ivar'>@query</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='ivar'>@extension</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+
+   <span class='comment'># query is not needed anymore and should be reset so that
+</span>   <span class='comment'># the next query can be made
+</span>   <span class='ivar'>@query</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+
+   <span class='comment'># build hash with essential post parameters
+</span>   <span class='id essentials'>essentials</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+     <span class='symbol'>:APIkey</span> <span class='op'>=&gt;</span> <span class='ivar'>@api_key</span><span class='comma'>,</span>
+     <span class='symbol'>:userID</span> <span class='op'>=&gt;</span> <span class='ivar'>@user_id</span><span class='comma'>,</span>
+     <span class='symbol'>:characterID</span> <span class='op'>=&gt;</span> <span class='ivar'>@character_id</span><span class='comma'>,</span>
+     <span class='symbol'>:allianceID</span> <span class='op'>=&gt;</span> <span class='ivar'>@alliance_id</span><span class='comma'>,</span>
+     <span class='symbol'>:corporationID</span> <span class='op'>=&gt;</span> <span class='ivar'>@corporation_id</span>
+   <span class='rbrace'>}</span><span class='period'>.</span><span class='id delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span> <span class='id v'>v</span><span class='op'>|</span> <span class='id v'>v</span><span class='period'>.</span><span class='id nil?'>nil?</span> <span class='rbrace'>}</span>
+
+   <span class='id params_new'>params_new</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+   <span class='comment'># change ruby naming conventions to API naming conventions
+</span>   <span class='id params'>params</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id key'>key</span><span class='comma'>,</span><span class='id val'>val</span><span class='op'>|</span>
+     <span class='id key_new'>key_new</span> <span class='op'>=</span> <span class='id key'>key</span><span class='period'>.</span><span class='id to_s'>to_s</span> <span class='kw'>if</span> <span class='id key'>key</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id to_s'>to_s</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Symbol</span><span class='tstring_end'>&quot;</span></span>
+     <span class='id key_new'>key_new</span> <span class='op'>=</span> <span class='id key_new'>key_new</span><span class='period'>.</span><span class='id camelcase'>camelcase</span><span class='period'>.</span><span class='id gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Id</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ID</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+     <span class='id key_new'>key_new</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id key_new'>key_new</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id downcase'>downcase</span>
+     <span class='id parasms_new'>parasms_new</span><span class='lbracket'>[</span><span class='id key_new'>key_new</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='id key'>key</span><span class='rbracket'>]</span>
+   <span class='kw'>end</span>
+   <span class='id params'>params</span> <span class='op'>=</span> <span class='id params_new'>params_new</span>
+
+   <span class='comment'># merge param hash and essentials together
+</span>   <span class='id params'>params</span><span class='period'>.</span><span class='id merge!'>merge!</span> <span class='id essentials'>essentials</span>
+   
+   <span class='id request_xml'>request_xml</span><span class='lparen'>(</span><span class='id uri'>uri</span><span class='comma'>,</span> <span class='id params'>params</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="image_path-instance_method">
+  
+    - (<tt>pathname</tt>) <strong>image_path</strong>(type) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+returns the path to the image specified by the type of the image to load
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the type of image you want. Possible options are:  &#8216;character&#8217;,
+&#8216;alliance&#8217;, &#8216;corporation&#8217;,
+&#8216;inventory_type&#8217; or &#8216;render&#8217;.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>pathname</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the path to the saved image
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+214
+215
+216
+217</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 214</span>
+
+<span class='kw'>def</span> <span class='id image_path'>image_path</span><span class='lparen'>(</span><span class='id type'>type</span><span class='rparen'>)</span>
+ <span class='id image_folders'>image_folders</span> <span class='op'>=</span> <span class='id image_path_array'>image_path_array</span><span class='period'>.</span><span class='id clone'>clone</span> <span class='op'>&lt;&lt;</span> <span class='id type'>type</span><span class='period'>.</span><span class='id pluralize'>pluralize</span>
+ <span class='const'>Rails</span><span class='period'>.</span><span class='id root'>root</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>public</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id image_folders'>image_folders</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="save_image-instance_method">
+  
+    - (<tt>pathname</tt>) <strong>save_image</strong>(type, id, size = 64) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Saves a Image (cpororation, character etc) from an api call and saves it to
+the file System for late usage.
+</p>
+<p>
+for more Information on the EVE Image API see
+<a href="http://wiki.eve-id.net/APIv2_Eve_Image_Service" target="_parent" title="the api wiki">the api wiki</a> or
+<a href="http://image.eveonline.com/" target="_parent" title="the official image api documentation">the official image api documentation</a>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt>string</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the type of image you want. Possible options are:  &#8216;character&#8217;,
+&#8216;alliance&#8217;, &#8216;corporation&#8217;,
+&#8216;inventory_type&#8217; or &#8216;render&#8217;.
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the Id of the image you want. For a character this would be the character
+ID, for a alliance the alliance ID and so on.
+</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>size</span>
+      
+      
+        <span class='type'>(<tt>integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>64</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>
+The Size the image should have. Possible options are  (for most queries,
+check the api reference for more information): 32, 64, 128, 256.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>pathname</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the path to the saved image
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/eve_api/api.rb', line 142</span>
+
+<span class='kw'>def</span> <span class='id save_image'>save_image</span><span class='lparen'>(</span><span class='id type'>type</span><span class='comma'>,</span> <span class='id id'>id</span><span class='comma'>,</span> <span class='id size'>size</span><span class='op'>=</span><span class='int'>64</span><span class='rparen'>)</span>
+  <span class='comment'># get the required file extension: Character portraits are saved as .jpg
+</span>  <span class='comment'># everything else is a PNG image
+</span>  <span class='id file_extension'>file_extension</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id type'>type</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^character$</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>jpg</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>png</span><span class='tstring_end'>'</span></span>
+  
+  <span class='comment'># create (if needed) the folders needed to save the images
+</span>  <span class='id save_path'>save_path</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id root'>root</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>public</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id image_folders'>image_folders</span> <span class='op'>=</span> <span class='id image_path_array'>image_path_array</span><span class='period'>.</span><span class='id clone'>clone</span> <span class='op'>&lt;&lt;</span> <span class='id type'>type</span><span class='period'>.</span><span class='id pluralize'>pluralize</span>
+  <span class='id image_folders'>image_folders</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id folder'>folder</span><span class='op'>|</span>
+    <span class='id save_path'>save_path</span> <span class='op'>=</span> <span class='id save_path'>save_path</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='id folder'>folder</span><span class='rparen'>)</span>
+    <span class='comment'># create the folder if it does not already exist
+</span>    <span class='const'>Dir</span><span class='period'>.</span><span class='id mkdir'>mkdir</span><span class='lparen'>(</span><span class='id save_path'>save_path</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id directory?'>directory?</span><span class='lparen'>(</span><span class='id save_path'>save_path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># create the filename consiting of the id_size.png|jpg
+</span>  <span class='id filename'>filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id size'>size</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='id file_extension'>file_extension</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  
+  <span class='comment'># the adress to connect to
+</span>  <span class='id uri'>uri</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://image.eveonline.com/</span><span class='embexpr_beg'>#{</span><span class='id type'>type</span><span class='period'>.</span><span class='id camelcase'>camelcase</span><span class='rbrace'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id filename'>filename</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id save_path'>save_path</span> <span class='op'>=</span> <span class='id save_path'>save_path</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span>
+  <span class='comment'># get the image
+</span>  <span class='id res'>res</span> <span class='op'>=</span> <span class='id connect'>connect</span><span class='lparen'>(</span><span class='id uri'>uri</span><span class='rparen'>)</span>
+  <span class='id open'>open</span><span class='lparen'>(</span><span class='id save_path'>save_path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>wb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id file'>file</span><span class='op'>|</span>
+     <span class='id file'>file</span><span class='period'>.</span><span class='id write'>write</span> <span class='id res'>res</span><span class='period'>.</span><span class='id body'>body</span>
+   <span class='rbrace'>}</span>
+   
+   <span class='id save_path'>save_path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Sun Jun 26 15:35:32 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.2 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

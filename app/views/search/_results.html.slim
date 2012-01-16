@@ -1,0 +1,13 @@
+- if results.empty?
+  em No results found
+- else
+  - results.each do |key,val|
+    strong
+      = key.to_s.capitalize
+    ul
+      - val.each do |r|
+        li 
+          a href="#{r[:path]}"
+            = r[:name]
+            - if r[:description]
+              span.description = r[:description]

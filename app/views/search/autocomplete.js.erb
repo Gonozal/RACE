@@ -1,0 +1,15 @@
+<% if @response %>
+  $('#searchresults').html("<%= escape_javascript(render :partial => 'results', :object => @response ) %>")
+  results = $('#searchresults li');
+  if(results.length > 0) {
+    $(results[0]).addClass('focus');
+    window.searchElements = results;
+    window.searchElementIndex = 0;
+  } else {
+    window.searchElements = null;
+    window.searchElementIndex = 0;
+  }
+<% else %>
+  window.searchElements = null;
+  window.searchElementIndex = 0;
+<% end %>

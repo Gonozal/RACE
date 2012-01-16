@@ -1,0 +1,17 @@
+$(function() {
+  // Reset Form
+  <%= render :partial => "reset_form" %>
+  
+  // Display Succes Message
+  var $succesmsg = $("<span class='success validation'>Your character(s) have succesfully been added to your account</span>").hide();
+  $("#radio_placeholder").prev().append($succesmsg);
+  $succesmsg.fadeIn(250);
+  
+  // Display new characters inline
+  <% simple_form_for pseudo_character = Character.new do |f| %>
+    <% @new_char_html = (render :partial => 'character_edit', :collection => @new_characters, :as => :c, :locals => { :f => f }) %>
+  <% end %>
+  var $new_char_html = $('<%=raw escape_javascript(@new_char_html) %>').hide();
+  $("#change_api").before($new_char_html);
+  $new_char_html.fadeIn(250);
+});
