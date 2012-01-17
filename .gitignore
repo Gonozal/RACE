@@ -59,3 +59,4 @@ git-daemon-export-ok
 public/images/api_images/**/*
 config/initializers/setup_mail.rb
 rerun.txt
+dump.rdb
