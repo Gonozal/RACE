@@ -4,8 +4,8 @@
 / Form for adding characters to an account
 = simple_form_for @character = Character.new, :remote => true, :html => {:class => 'singleform submit-once compact', :novalidate => "novalidate"} do |f|
   = logger.warn f.error_notification if f.error_notification
-  = f.input :user_id, :as => :string, :label => "User ID"
-  = f.input :api_key, :label => "API Key", :hint => "Full API Key recommended", :wrapper_html => {:class => 'last-of-group'}
+  = f.input :api_id, :as => :string, :label => "API ID"
+  = f.input :v_code, :label => "vCode", :hint => "Requires new Custom Access Keys", :wrapper_html => {:class => 'last-of-group'}
   #radio_placeholder.input
   button#character_submit type="submit" Get Characters
   button#character_register_back disabled="disabled" Back

@@ -22,11 +22,11 @@ class ApplicationController < ActionController::Base
 
   # From here on: Methods for the API registration process
   def api_credentials_changed?
-    session['user_id'] != params['account']['user_id'] or session['api_key'] != params['account']['api_key']
+    session['api_id'] != params['account']['api_id'] or session['v_code'] != params['account']['v_code']
   end
 
   def api_credentials_missing?
-    params['account']['user_id'].blank? or params['account']['api_key'].blank?
+    params['account']['api_id'].blank? or params['account']['v_code'].blank?
   end
   
   def api_credentials_available?
@@ -34,12 +34,12 @@ class ApplicationController < ActionController::Base
   end
 
   def save_api_sessions
-    session['user_id'] = params['account']['user_id']
-    session['api_key'] = params['account']['api_key']
+    session['api_id'] = params['account']['api_id']
+    session['v_code'] = params['account']['v_code']
   end
   
   def clear_api_sessions
-    session['user_id'] = session['api_key'] = nil
+    session['api_id'] = session['v_code'] = nil
   end
   
   def user_nav

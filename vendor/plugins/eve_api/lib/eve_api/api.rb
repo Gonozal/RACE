@@ -4,7 +4,7 @@
 # 
 # @example Initialize (for account related queries)
 #     api = EVEAPI::API.new
-#     api.user_id = 1234567
+#     api.api_id = 1234567
 #     api.api_key = "A7416C2DAA5D4283AE3EE7BB8F27BDBC96F3A01B14534656842A9783AC135A8A"
 #   
 # @example Get Accounts for this cahracter:
@@ -26,9 +26,9 @@ class EVEAPI::API
   # 
   # @param [String] value The value to set
   # @return [String]
-	attr_writer :user_id, :api_key, :character_id, :corporation_id, :alliance_id
+	attr_writer :api_id, :v_code, :character_id, :corporation_id, :alliance_id
 	attr_accessor :host, :extension, :image_path_array
-	
+
 	# Initializes the api host adress, extensions for api calls etc.
 	# 
 	# Defaults are:
@@ -69,7 +69,7 @@ class EVEAPI::API
 	#
 	# @param [String, Hash] query the string beeing used as the adress to the specific EVE API site. alternatively the params hash. (see params)
 	# @param [Hash] params A hash containing additional key-value pairs to be transmitted to the API server.
-	#   examples would be: { :character_id => "123456" , :user_id => "654321"}. Can either be in small camelCase
+	#   examples would be: { :character_id => "123456" , :api_id => "654321"}. Can either be in small camelCase
 	#   (EVE API format) or in underscore notation (as in this example)
 	# 
 	# @raise [EVEAPI::Exception] When something with the request went wrong, some exceptions are raised.
@@ -101,8 +101,8 @@ class EVEAPI::API
 
     # build hash with essential post parameters
     essentials = {
-      :APIkey => @api_key,
-      :userID => @user_id,
+      :keyID => @api_id,
+      :vCode => @v_code,
       :characterID => @character_id,
       :allianceID => @alliance_id,
       :corporationID => @corporation_id
@@ -120,7 +120,6 @@ class EVEAPI::API
 
     # merge param hash and essentials together
     params.merge! essentials
-    
     request_xml(uri, params)
 	end
 	

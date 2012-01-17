@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(:version => 20110702234822) do
   create_table "characters", :force => true do |t|
     t.integer  "account_id"
     t.string   "name"
-    t.integer  "user_id"
-    t.string   "api_key"
+    t.integer  "api_id"
+    t.string   "v_code"
     t.integer  "character_id"
     t.string   "corporation_name"
     t.integer  "corporation_id"

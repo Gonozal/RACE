@@ -7,11 +7,11 @@ class Character < ActiveRecord::Base
   validates_uniqueness_of :character_id
   validates_uniqueness_of :name
 
-  validates :user_id,     :numericality => true,
+  validates :api_id,     :numericality => true,
                           :presence => true,
                           :length => { :within => 3..32 }
   
-  validates :api_key,     :format => { :with => /^[a-zA-Z0-9]+$/, :message => "must be alphanumerical" },
+  validates :v_code,     :format => { :with => /^[a-zA-Z0-9]+$/, :message => "must be alphanumerical" },
                           :presence => true,
                           :length =>{ :within => 5..96 }
                           
@@ -28,14 +28,14 @@ class Character < ActiveRecord::Base
   end
   
   
-  # given the user_id and api_key have been stored in this account, fetches a list
+  # given the api_id and v_code have been stored in this account, fetces a list
   # of possible characters related to these API credentials.
   # uses the EVE API to get this list. Saves the result in a instance variable
   # to do some basic form of caching. That way validation methods
   # etc do not have to query the database or EVE API server again if they
   # need a list of possibly related characters
   # 
-  # @param [integer] user_id The user_id (api related) for which to query the API
+  # @param [integer] user_id The api_id (api related) for which to query the API
   # @param [string] api_key The APIKey (api related) for wihich to query the API
   # 
   # @raise [Exception] raises an Exception when there was an error with the API, internet
@@ -43,26 +43,25 @@ class Character < ActiveRecord::Base
   #   (see #valid_api_format?). For more information on possible errors see #EVEAPI::API.get
   # 
   # @return [[character]] An array of Characters
-  def self.find_by_api!(user_id, api_key)
+  def self.find_by_api!(api_id, v_code)
     return @characters unless @characters.nil?
-    unless valid_api_format?(user_id, api_key)
-      raise EVEAPI::Exception::APIError.new('Invalid API Format') 
+    unless valid_api_format?(api_id, v_code)
+      raise EVEAPI::Exception::APIError.new('Invalid API Format')
     end
-    
     api = EVEAPI::API.new
-    api.user_id = user_id
-    api.api_key = api_key
-    
-    xml = api.get("account/Characters")
+    api.api_id = api_id
+    api.v_code = v_code
+
+    xml = api.get("account/APIKeyInfo")
     characters = []
     xml.xpath("//row").each do |row|
       characters << {
-        :name => row['name'],
+        :name => row['characterName'],
         :character_id => row['characterID'],
         :corporation_name => row['corporationName'],
         :corporation_id => row['corporationID'],
-        :user_id => user_id,
-        :api_key => api_key
+        :api_id => api_id,
+        :v_code => v_code
       }
     end
     @characters = characters 
@@ -70,12 +69,12 @@ class Character < ActiveRecord::Base
   
   # About the same as #self.find_by_api! except that no exceptions are raised
   # but [] is returned.
-  def self.find_by_api(user_id, api_key)
+  def self.find_by_api(api_id, v_code)
     begin
-      find_by_api!(user_id, api_key)
+      find_by_api!(api_id, v_code)
     rescue Exception => e
       logger.error "EVE API Exception cought!"
-      logger.error e.inspect
+      # logger.error e.inspect
       []
     end
   end
@@ -84,15 +83,15 @@ class Character < ActiveRecord::Base
   # Valid means: At least access to the "skillInTraining" API
   def valid_api?
     api = EVEAPI::API.new
-    api.user_id = user_id
+    api.api_id = api_id
     api.character_id = character_id
-    api.api_key = api_key
+    api.v_vode = v_code
     
     begin
       xml = api.get("char/SkillInTraining")
     rescue Exception => e
       logger.error "EVE API Exception cought!"
-      logger.error e.inspect
+      # logger.error e.inspect
     else
       if xml.xpath('//skillInTraining').text.present?
         true
@@ -104,10 +103,10 @@ class Character < ActiveRecord::Base
   private
   # ensures that the supplied API data is valid
   def validate_api
-    # only validate if either user_id, name or api_key have been changed
+    # only validate if either api_id, name or v_code have been changed
     if user_id_changed? or api_key_changed? or name_changed?
       unless valid_api?
-        errors.add :api_key, 'invalid API Key or User ID'
+        errors.add :v_code, 'invalid vCode or Api ID'
         false
       end
     end
@@ -115,12 +114,12 @@ class Character < ActiveRecord::Base
   end
   
   # validates the API format just as 'validate_api_format' does but does not add errors
-  def self.valid_api_format?(user_id, api_key)
-    user_id.to_s =~ /^[1-9][0-9]+$/ and api_key =~ /^[a-zA-Z0-9]{5,}$/
+  def self.valid_api_format?(api_id, v_code)
+    api_id.to_s =~ /^[1-9][0-9]+$/ and v_code =~ /^[a-zA-Z0-9]{5,64}$/
   end
   
   def valid_api_format?
-    self.valid_api_format?(user_id, api_key)
+    self.valid_api_format?(api_id, v_code)
   end
   
   def save_portrait
@@ -139,9 +138,9 @@ class Character < ActiveRecord::Base
         true
       else
         api = EVEAPI::API.new
-        api.user_id = user_id
-        api.api_key = api_key
-        api.character_id = character_id
+        #api.api_id = api_id
+        #api.v_code = v_code
+        api.corporation_id = corporation_id
         
         corporation = Corporation.new
         begin
@@ -171,10 +170,10 @@ class Character < ActiveRecord::Base
   
   def add_base_roles
     self.roles.create(:title => "goon")
-    if self.name.eql? "Mr Printman"
-      self.roles.create(:title => "member")
-    elsif self.name.eql? "Jerppu3"
+    if self.name.eql? "Lerado Mendar"
       self.roles.create(:title => "admin")
+    elsif self.name.eql? "Hector Wrathic"
+      self.roles.create(:title => "member")
     end
   end
 end

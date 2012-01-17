@@ -1,8 +1,8 @@
 fieldset id="char_#{c.character_id}"
   legend = c.name
   = f.input :user_id, :label => 'User ID', \
-    :input_html => { :name => "user_id[#{c.character_id}]", :value => "#{c.user_id}", :id => "input_user_id_#{c.character_id}" }
+    :input_html => { :name => "api_id[#{c.character_id}]", :value => "#{c.api_id}", :id => "input_user_id_#{c.character_id}" }
   = f.input :character_id, :label => 'API Key', :id => "user_id_#{c.character_id}", \
-    :input_html => { :name => "api_key[#{c.character_id}]", :value => "#{c.api_key}", :id => "input_api_key_#{c.character_id}" }
+    :input_html => { :name => "v_code[#{c.character_id}]", :value => "#{c.v_code}", :id => "input_api_key_#{c.character_id}" }
   = f.input :delete, :hint => "Enter your character name here to delete it", \
     :input_html => { :name => "delete[#{c.character_id}]", :value => "", :id => "delete_#{c.character_id}" }

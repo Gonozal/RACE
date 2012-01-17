@@ -10,8 +10,8 @@ class CharacterTest < ActiveSupport::TestCase
   
   test "get character name bevore validation" do
     char = Character.new
-    char.api_key = @api_key
-    char.user_id = 1144806
+    char.v_code = @api_key
+    char.api_id = 1144806
     char.character_id = 465753202
     char.valid?
     

@@ -20,14 +20,15 @@ class CharactersController < ApplicationController
   end
    
   def create
+
     @errors = { :alert => Array.new, :notice => Array.new }
-    user_id, api_key = params['character']['user_id'], params['character']['api_key']
-    character_ids = params['character']['character_ids'];
+    api_id, v_code = params['character']['api_id'], params['character']['v_code']
+    character_ids = params['character']['character_ids']
     begin
-      @characters = Character.find_by_api!(user_id, api_key)
+      @characters = Character.find_by_api!(api_id, v_code)
     rescue Exception => e
       @errors[:alert] = e.message
-      # logger.warn e.backtrace.to_yaml
+      logger.warn e.backtrace.to_yaml
     # If user has choosen his characters, check for legitimacy
     # (prevent forging character names) and try to register those characters
     else
@@ -74,8 +75,8 @@ class CharactersController < ApplicationController
     @characters = current_account.characters.all
      
     @characters.each do |c|
-      c.user_id = params[:user_id][c.character_id.to_s]
-      c.api_key = params[:api_key][c.character_id.to_s]
+      c.api_id = params[:api_id][c.character_id.to_s]
+      c.v_code = params[:v_code][c.character_id.to_s]
       if params[:delete][c.character_id.to_s].eql? c.name
         # If user confirmed char deletion with the characters name, delete it
         c.destroy

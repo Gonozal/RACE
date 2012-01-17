@@ -1,5 +1,5 @@
 class Corporation < ActiveRecord::Base
-  attr_accessor :user_id, :api_key
+  attr_accessor :api_id, :v_code
   
   has_many :characters, :primary_key => :character_id
   
@@ -7,10 +7,10 @@ class Corporation < ActiveRecord::Base
     
   end
   
-  def extract_corporation_sheet_data(user_id, api_key)
+  def extract_corporation_sheet_data(api_id, v_code)
     api = EVEAPI::API.new
-    api.user_id = user_id
-    api.api_key = api_key
+    api.api_id = api_id
+    api.v_code = v_code
     
     begin
       xml = api.corp.CorporationSheet.get

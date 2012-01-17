@@ -11,8 +11,8 @@ class AccountTest < ActiveSupport::TestCase
   
   test "getting list of characters through EVE API" do
     char = Character.new
-    char.api_key = @api_key
-    char.user_id = @user_id
+    char.v_code = @api_key
+    char.api_id = @user_id
     chars = char.get_related_characters
     chars.map! { |c| c[:name] }
     
@@ -22,19 +22,19 @@ class AccountTest < ActiveSupport::TestCase
   
   test "API key validation with valid API key" do
     char = Character.new
-    char.api_key = @api_key
-    char.user_id = @user_id
+    char.v_code = @api_key
+    char.api_id = @user_id
     char.valid?
     
-    assert char.errors[:api_key].blank?
+    assert char.errors[:v_code].blank?
   end
   
   test "API key validation with invalid API key" do
     char = Character.new
-    char.api_key = @api_key
-    char.user_id = "some invalid stuff"
+    char.v_code = @api_key
+    char.api_id = "some invalid stuff"
     char.valid?
     
-    assert !char.errors[:api_key].blank?
+    assert !char.errors[:v_code].blank?
   end
 end
