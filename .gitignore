@@ -52,6 +52,7 @@ git-daemon-export-ok
 ########################
 .project
 .idea
+.idea/**/*
 *.tmproj
 
 # race specific #

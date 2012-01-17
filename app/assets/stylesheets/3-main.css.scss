@@ -578,7 +578,7 @@ ul#navigation {
     // The main Menu icon for accessing all other sites
     &.main {
       width: $nav-resolution * 1.8;
-      img { float:right; margin: 0 0 0 0 }
+      img { float:right; margin: 0 0 0 0; height: 48px; width: 48px }
       
       @include naviBackground(url('/images/nav/48/eve.png'));
       @include border-right();
@@ -852,10 +852,13 @@ ul#navigation {
       }
       &.character-select {
         display: none;
+        min-width: 3 * $nav-resolution + 25px;
         > li {
           line-height: 66px;
           img {
             float: left;
+            height: 64px;
+            width: 64px;
             padding: 0 3px 0 0;
           }
         }
