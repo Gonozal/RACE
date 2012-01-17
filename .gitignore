@@ -19,6 +19,7 @@
 *.rar
 *.tar
 *.zip
+*.bz2
 
 # Logs and databases #
 ######################
@@ -34,4 +35,27 @@
 ehthumbs.db
 Thumbs.db
 
+# Rails / Ruby generated files #
+################################
+.bundle
+tmp/**/*
+Gemfile.lock
+features/support/driver.rb
+.yardoc
+dump.rdb
 
+# Version control files #
+#########################
+git-daemon-export-ok
+
+# Editor project files #
+########################
+.project
+.idea
+*.tmproj
+
+# race specific #
+#################
+public/images/api_images/**/*
+config/initializers/setup_mail.rb
+rerun.txt
