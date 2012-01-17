@@ -4,12 +4,12 @@ class CharacterInfo
     Rails.logger
   end
   
-  def skills(user_id, character_id, api_key)
+  def skills(api_id, character_id, v_code)
     # Create new API object and assign API-key values
     api = EVEAPI::API.new
-    api.user_id = user_id
+    api.api_id = api_id
     api.character_id = character_id
-    api.api_key = api_key
+    api.v_code = v_code
     
     begin
       # Get Data for 

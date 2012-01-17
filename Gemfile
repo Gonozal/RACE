@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', "~> 3.1.3"
 
 
-# Bundle edge Rails instead:
+# Bundle ed ge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
@@ -22,9 +22,13 @@ gem 'nokogiri'
 gem 'simple_form'
 gem 'declarative_authorization'
 gem 'bcrypt-ruby', :require => 'bcrypt'
-gem 'resque', :require => 'resque/server', git: 'git://github.com/defunkt/resque.git'
+gem 'resque', :require => 'resque/server' #, git: 'git://github.com/defunkt/resque.git'
 gem 'devil'
 
+group :strange_dependencies do
+  gem 'ruby_parser'
+  gem 'json'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'
