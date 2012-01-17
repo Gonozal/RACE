@@ -44,11 +44,11 @@ group :development do
 end
 
 group :darwin do
-  gem 'guard'
-  gem 'growl'
-  gem 'guard-minitest'
-  gem 'guard-cucumber'
-  gem 'guard-spork'
+  # gem 'guard'
+  # gem 'growl'
+  # gem 'guard-minitest'
+  # gem 'guard-cucumber'
+  # gem 'guard-spork'
 end
 
 group :test, :development do
