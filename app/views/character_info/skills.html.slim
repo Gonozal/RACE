@@ -18,8 +18,13 @@
       
     / LI containing each individual skill
     li.skills id="skill_#{skill.id}"
-      |#{skill.name}
-      span class="l#{skill.level}"
+      / Show "Skillbook" icon depending on level of skill (lvl 5 or <5)
+      == skill_icon(Integer skill.level)
+      / Group skill details into span tags
+      span.left
+        |#{skill.name}
+      span.right
+        span.skill_level class="l#{skill.level}"
       
   / Close last UL tag (not covered by iteration through all skills, sadly)
   | </ul>

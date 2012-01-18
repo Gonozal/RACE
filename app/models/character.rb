@@ -20,7 +20,7 @@ class Character < ActiveRecord::Base
   after_destroy :destroy_portrait
   
   # return the role symbols needed for the declarative_authorization gem.
-  # Basicly loops through all the associated roles 
+  # Basically loops through all the associated roles
   # 
   # @return [symbols, []] The role symbol array.
   def role_symbols
@@ -104,7 +104,7 @@ class Character < ActiveRecord::Base
   # ensures that the supplied API data is valid
   def validate_api
     # only validate if either api_id, name or v_code have been changed
-    if user_id_changed? or api_key_changed? or name_changed?
+    if api_id_changed? or v_code_changed? or name_changed?
       unless valid_api?
         errors.add :v_code, 'invalid vCode or Api ID'
         false

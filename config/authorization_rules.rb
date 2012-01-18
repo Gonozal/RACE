@@ -8,7 +8,7 @@ authorization do
   role :member do
     includes :goon
     includes :own_account_character_info
-    includes :own_corporation_index
+    includes :own_corporation_info
   end
   
   role :goon do
@@ -63,9 +63,10 @@ authorization do
   
   # TEST ROLE FOR NAVIGATION TESTING
   # Allow access to corporation index option
-  role :own_corporation_index do
+  role :own_corporation_info do
     has_permission_on :corporations do
-      to :index
+      to :show
+      if_attribute :corporation_id => is { current_user.corporation_id }
     end
   end 
   

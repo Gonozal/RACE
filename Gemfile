@@ -7,7 +7,7 @@ gem 'rails', "~> 3.1.3"
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-
+gem 'jquery-rails'
 
 # Asset template engines
 gem 'sass-rails'
@@ -15,13 +15,16 @@ gem 'coffee-script'
 gem 'uglifier'
 gem 'slim'
 
-gem 'jquery-rails'
+# View Layer
+gem 'draper'
+gem 'simple_form'
+
+#Athorisaion and Authentication
+gem 'declarative_authorization'
+gem 'bcrypt-ruby', :require => 'bcrypt'
 
 # Custom RACE specific gems
 gem 'nokogiri'
-gem 'simple_form'
-gem 'declarative_authorization'
-gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'resque', :require => 'resque/server' #, git: 'git://github.com/defunkt/resque.git'
 gem 'devil'
 

@@ -137,6 +137,36 @@ body {
     margin-bottom: $nav-resolution + 1;
   }
 
+  li.skills{
+    > span {
+      float: left;
+    }
+    margin: 2px 0px 0px 0px;
+    span.skill_level {
+      display: block;
+      // float: left;
+      content:"\00A0"; // emtpy "Space" so images get displayed
+      background-image: url('/images/misc/skillbars.png');
+      background-repeat: no-repeat;
+      height: 14px;
+      &.l1 {
+        background-position: 0px -14px;
+      }
+      &.l2 {
+        background-position: 0px -28px;
+      }
+      &.l3 {
+        background-position: 0px -42px;
+      }
+      &.l4 {
+        background-position: 0px -56px;
+      }
+      &.l5 {
+        background-position: 0px -70px;
+      }
+    }
+  }
+
   .clearfix { clear: both; height:0; width: auto; display:block; }
   
   // Überschriften
@@ -210,32 +240,7 @@ body {
     }
   }
   
-  li.skills{
-    margin: 2px 0px 0px 0px;
-    > span {
-      display: block;
-      content:"\00A0"; // emtpy "Space" so images get displayed
-      background-image: url('/images/misc/skillbars.png');
-      background-repeat: no-repeat;
-      height: 14px;
-      &.l1 {
-        background-position: 0px -14px;
-      }
-      &.l2 {
-        background-position: 0px -28px;
-      }
-      &.l3 {
-        background-position: 0px -42px;
-      }
-      &.l4 {
-        background-position: 0px -56px;
-      }
-      &.l5 {
-        background-position: 0px -70px;
-      }
-    }
-  }
-  
+
   & > .info, & > .success, & > .notice, & > .alert {
     font-size: 90%;
     display: block;

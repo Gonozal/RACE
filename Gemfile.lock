@@ -42,6 +42,8 @@ GEM
     declarative_authorization (0.5.5)
     devil (0.1.9.5)
     devil (0.1.9.5-x86-mingw32)
+    draper (0.10.0)
+      activesupport (>= 2.3.10)
     erubis (2.7.0)
     execjs (1.2.13)
       multi_json (~> 1.0)
@@ -147,6 +149,7 @@ DEPENDENCIES
   database_cleaner
   declarative_authorization
   devil
+  draper
   jquery-rails
   json
   nokogiri
