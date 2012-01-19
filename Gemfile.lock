@@ -38,6 +38,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.2.0)
+    composite_primary_keys (4.1.2)
+      activerecord (~> 3.1)
     database_cleaner (0.7.1)
     declarative_authorization (0.5.5)
     devil (0.1.9.5)
@@ -146,6 +148,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   coffee-script
+  composite_primary_keys
   database_cleaner
   declarative_authorization
   devil

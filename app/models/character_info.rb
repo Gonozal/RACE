@@ -35,23 +35,24 @@ class CharacterInfo
   
   def skill_hash(xml)
     # Generate new hashes for later use
-    temp_data = {}
+    skills_from_api = {}
     skills = { :skills => [], :group_info => Array.new(6) { Hash.new(0) } }
     
     # start by getting all learned skills from the API
     xml.xpath("/eveapi/result/rowset[@name='skills']/row").each do |row|
-      temp_data[row['typeID']] = { :skill_points => row['skillpoints'], :level =>  row['level'] }
+      skills_from_api[row['typeID']] = { :skill_points => row['skillpoints'], :level =>  row['level'] }
     end
     
     # Query skill names and skill-group names from evedb
-    skill_names = InvType.limited.with_groups.find(temp_data.keys)
+    skill_names = InvType.limited.with_groups.find(skills_from_api.keys)
     skill_names.each do |skill|
       # Create new skill object
       skills[:skills] << Skill.new(skill.attributes)
       # assign fields not automatically assigned
       s               = skills[:skills].last
-      s.level         = temp_data[skill.typeID.to_s][:level]
-      s.skill_points  = temp_data[skill.typeID.to_s][:skill_points]
+      s.level         = Integer skills_from_api[skill.typeID.to_s][:level]
+      s.skill_points  = Integer skills_from_api[skill.typeID.to_s][:skill_points]
+      s.skill_time_constant = Integer DgmTypeAttribute.find(s.id, 275).valueFloat
       
       # Count up skill group levels
       skills[:group_info][s.level.to_i][s.group_name.to_sym] += 1

@@ -138,17 +138,38 @@ body {
   }
 
   li.skills{
-    > span {
-      float: left;
-    }
+    display: block;
     margin: 2px 0px 0px 0px;
-    span.skill_level {
+    > div {
       display: block;
+      border: 1px;
+      border-style: solid;
+      height: 34px;
+      width: 550px;
+    }
+    span { display: block; height: 34px;}
+
+    span.left {
+      float: left;
+      width: 300px;
+      > img { float: left; }
+      > span.text {
+        height: 32px;
+        padding: 6px 0px 0px 0px;
+        display: inline-block;
+      }
+    }
+    span.right {
+      float: right;
+      width: 150px;
+    }
+    span.skill_level {
       // float: left;
       content:"\00A0"; // emtpy "Space" so images get displayed
       background-image: url('/images/misc/skillbars.png');
       background-repeat: no-repeat;
       height: 14px;
+      width: 128px;
       &.l1 {
         background-position: 0px -14px;
       }

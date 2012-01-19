@@ -11,20 +11,24 @@
       - group_name_old = skill.group_name
       h4.collapsed data-collapseable="callapsed" = skill.group_name
       | <ul id="skill_group_#{skill.group_id}">
-      | Skill on level 5: #{@skills[:group_info][5][skill.group_name.to_sym]} <br/>
-      | Skill on level 4: #{@skills[:group_info][4][skill.group_name.to_sym]} <br/>
-      | Skill on level 3: #{@skills[:group_info][3][skill.group_name.to_sym]} <br/>
-      | Skill on level 2: #{@skills[:group_info][2][skill.group_name.to_sym]}
+      /| Skill on level 5: #{@skills[:group_info][5][skill.group_name.to_sym]} <br/>
+      /| Skill on level 4: #{@skills[:group_info][4][skill.group_name.to_sym]} <br/>
+      /| Skill on level 3: #{@skills[:group_info][3][skill.group_name.to_sym]} <br/>
+      /| Skill on level 2: #{@skills[:group_info][2][skill.group_name.to_sym]}
       
     / LI containing each individual skill
     li.skills id="skill_#{skill.id}"
-      / Show "Skillbook" icon depending on level of skill (lvl 5 or <5)
-      == skill_icon(Integer skill.level)
-      / Group skill details into span tags
-      span.left
-        |#{skill.name}
-      span.right
-        span.skill_level class="l#{skill.level}"
+      div
+        / Show "Skillbook" icon depending on level of skill (lvl 5 or <5)
+        / Group skill details into span tags
+        span.left
+          == skill_icon(Integer skill.level)
+          span.text
+            '#{skill.name}
+            |(#{Integer skill.skill_time_constant}x)
+        span.right
+          |#{number_format skill.skill_points} / #{number_format skill.skill_points_max }
+          span.skill_level class="l#{skill.level}"
       
   / Close last UL tag (not covered by iteration through all skills, sadly)
   | </ul>

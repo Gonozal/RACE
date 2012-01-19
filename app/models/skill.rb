@@ -1,6 +1,6 @@
 class Skill
   include Comparable
-  attr_accessor :name, :id, :group_name, :group_id, :level, :skill_points
+  attr_accessor :name, :id, :group_name, :group_id, :level, :skill_points, :skill_points_max, :skill_time_constant
   
   # add the default rails logger
   def logger
@@ -21,6 +21,22 @@ class Skill
   
   def to_s
     name
+  end
+
+  def skill_points_max
+    if level == 0
+      250 * skill_time_constant
+    elsif level == 1
+      1415 * skill_time_constant
+    elsif level == 2
+      8000 * skill_time_constant
+    elsif level == 3
+      45255 * skill_time_constant
+    elsif level >= 4
+      256000 * skill_time_constant
+    else
+      "error"
+    end
   end
   
   def <=>(other)
