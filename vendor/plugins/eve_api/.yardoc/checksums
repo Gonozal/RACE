@@ -1,4 +1,0 @@
-lib/eve_api.rb edc87dede2fc784afaf90fe049d64419c88bde6c
-lib/eve_api/api.rb 1f8d3c435def3cad4618c8b2910fc6bd7f86907a
-lib/eve_api/cache.rb 80df9672489436a09c6369966279185648fe71e7
-lib/eve_api/exception.rb d83fd4182006d0fa018f39d5ec1df6897a545a71

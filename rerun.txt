@@ -1,1 +1,0 @@
-features/login.feature features/registration.feature
