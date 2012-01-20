@@ -3,7 +3,8 @@ class Character < ActiveRecord::Base
   belongs_to :account
   belongs_to :corporation, :primary_key => :corporation_id
   has_many :roles
-  
+  has_many :skills
+
   validates_uniqueness_of :character_id
   validates_uniqueness_of :name
 

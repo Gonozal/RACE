@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110702234822) do
+ActiveRecord::Schema.define(:version => 20120119055228) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -86,8 +86,19 @@ ActiveRecord::Schema.define(:version => 20110702234822) do
   end
 
   create_table "skills", :force => true do |t|
+    t.integer  "type_id"
+    t.integer  "character_id"
+    t.string   "name"
+    t.string   "group_name"
+    t.integer  "group_id"
+    t.integer  "level"
+    t.integer  "skill_points"
+    t.integer  "skill_time_constant"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "skills", ["character_id", "type_id"], :name => "index_skills_on_character_id_and_type_id"
+  add_index "skills", ["updated_at"], :name => "index_skills_on_updated_at"
 
 end

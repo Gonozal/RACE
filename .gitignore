@@ -54,6 +54,8 @@ git-daemon-export-ok
 .idea
 .idea/**/*
 *.tmproj
+RACE.ids
+rerun.txt
 
 # race specific #
 #################

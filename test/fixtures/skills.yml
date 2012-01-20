@@ -1,11 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+one:
+  character_id: 1
+  name: MyString
+  group_name: MyString
+  group_id: 1
+  level: 1
+  skill_points: 1
+  skill_time_constant: 1
+
+two:
+  character_id: 1
+  name: MyString
+  group_name: MyString
+  group_id: 1
+  level: 1
+  skill_points: 1
+  skill_time_constant: 1

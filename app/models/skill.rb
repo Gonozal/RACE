@@ -1,24 +1,17 @@
-class Skill
+class Skill < ActiveRecord::Base
   include Comparable
-  attr_accessor :name, :id, :group_name, :group_id, :level, :skill_points, :skill_points_max, :skill_time_constant
-  
-  # add the default rails logger
-  def logger
-    Rails.logger
+  attr_accessor :skill_points_max
+  attr_accessor :typeID, :groupID, :valueFloat, :typeName, :groupName
+  belongs_to :character
+
+  def data_from_query (obj)
+    self.type_id = obj.typeID
+    self.group_id = obj.groupID
+    self.skill_time_constant = obj.valueFloat
+    self.name = obj.typeName
+    self.group_name = obj.groupName
   end
-  
-  def initialize(params = {})
-    params.stringify_keys!
-    
-    params.each do |key, val|
-      key = key.underscore.gsub /^type_/, ''
-      if respond_to?(:"#{key}=")
-        send(:"#{key}=", val)
-      end
-    end
-    self
-  end
-  
+
   def to_s
     name
   end

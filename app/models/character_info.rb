@@ -1,6 +1,7 @@
 class CharacterInfo
   # add the default rails logger
-  def logger
+  def lo
+    gger
     Rails.logger
   end
   
@@ -47,7 +48,12 @@ class CharacterInfo
     skill_names = InvType.limited.with_groups.find(skills_from_api.keys)
     skill_names.each do |skill|
       # Create new skill object
-      skills[:skills] << Skill.new(skill.attributes)
+      logger.warn skill.attributes
+      skill.attributes.each do |key, value|
+         skill.attributes.delete
+      end
+    end
+      skills[:skills] << Skill.new(skill.attributes.keys.)
       # assign fields not automatically assigned
       s               = skills[:skills].last
       s.level         = Integer skills_from_api[skill.typeID.to_s][:level]
@@ -58,7 +64,7 @@ class CharacterInfo
       skills[:group_info][s.level.to_i][s.group_name.to_sym] += 1
       skills[:group_info][s.level.to_i][:all] += 1
     end
-    
+
     skills[:skills].sort!
     
     skills

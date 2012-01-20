@@ -1,4 +1,6 @@
 Race::Application.routes.draw do
+  resources :skills
+
   match 'register' => 'accounts#new', :as => 'register'
   # alternative route for adding new characters (aka character registration)
   get "characters/add" => 'characters#new', :as => 'characters/add'
@@ -15,7 +17,7 @@ Race::Application.routes.draw do
   # Route for changing the main character of an account
   get "accounts/change_main_character/:id" => 'accounts#change_main_character', :as => 'change_main_character'
   
-  get "characters/skills" => 'character_info#skills'
+  get "characters/skills" => 'skills#index'
   
   get "characters/edit" => "characters#edit", :as => "edit_characters"
   post "characters/update" => "characters#update"
