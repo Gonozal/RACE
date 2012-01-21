@@ -12,6 +12,8 @@ class CreateSkills < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :updated_at, :character_id, :type_id
+    add_index :skills, :updated_at
+    add_index :skills, :character_id
+    add_index :skills, :type_id
   end
 end

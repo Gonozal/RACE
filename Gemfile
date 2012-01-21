@@ -20,11 +20,15 @@ gem 'slim'
 gem 'draper'
 gem 'simple_form'
 
+# Performance Booster Gems
+gem 'activerecord-import'
+
 #Athorisaion and Authentication
 gem 'declarative_authorization'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 
 # Custom RACE specific gems
+gem 'whenever'
 gem 'nokogiri'
 gem 'resque', :require => 'resque/server' #, git: 'git://github.com/defunkt/resque.git'
 gem 'devil'

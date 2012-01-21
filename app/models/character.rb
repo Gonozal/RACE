@@ -5,7 +5,7 @@ class Character < ActiveRecord::Base
   has_many :roles
   has_many :skills
 
-  validates_uniqueness_of :character_id
+  #validates_uniqueness_of :character_id
   validates_uniqueness_of :name
 
   validates :api_id,     :numericality => true,
@@ -81,24 +81,37 @@ class Character < ActiveRecord::Base
   end
   
   # Check if provided API data is valid
-  # Valid means: At least access to the "skillInTraining" API
   def valid_api?
     api = EVEAPI::API.new
-    api.api_id = api_id
-    api.character_id = character_id
-    api.v_vode = v_code
+    api.api_id, api.v_vode = api_id, v_code
     
     begin
-      xml = api.get("char/SkillInTraining")
+      xml = api.get("account/APIKeyInfo")
     rescue Exception => e
       logger.error "EVE API Exception cought!"
       # logger.error e.inspect
     else
-      if xml.xpath('//skillInTraining').text.present?
+      if xml.xpath('/eveapi/result/key')['accessMask'].present?
         true
       end
     end
     false
+  end
+
+
+  # Every time a character is saved (created or updated), his Corporation is checked.
+  # If his corporation does not yet exist, it is created
+  def check_character_corporations
+    if self.corporation_id_changed?
+      unless Corporation.find_by_corporation_id(self.corporation_id).blank?
+        true
+      else
+        corporation = Corporation.new(:corporation_id => corporation_id)
+        if corporation.attributes_from_api
+          corporation.save
+        end
+      end
+    end
   end
 
   private
@@ -131,44 +144,7 @@ class Character < ActiveRecord::Base
     Resque.enqueue(ApiImageBackgrounder, 'character', character_id, nil, true)
   end
   
-  # Every time a character is saved (created or updated), his Corporation is checked.
-  # If his corporation does not yet exist, it is created
-  def check_character_corporations
-    if self.corporation_id_changed?
-      unless Corporation.find_by_corporation_id(self.corporation_id).blank?
-        true
-      else
-        api = EVEAPI::API.new
-        #api.api_id = api_id
-        #api.v_code = v_code
-        api.corporation_id = corporation_id
-        
-        corporation = Corporation.new
-        begin
-          xml = api.get("corp/CorporationSheet")
-        rescue Exception => e
-          logger.error "EVE API Exception cought!"
-          logger.error e.inspect
-          false
-        else
-          corporation.name = xml.xpath('//corporationName').text
-          corporation.corporation_id = xml.xpath('//corporationID').text
-          corporation.ticker = xml.xpath('//ticker').text
-          corporation.ceo_name = xml.xpath('//ceoName').text
-          corporation.ceo_character_id = xml.xpath('//ceoID').text
-          corporation.description = xml.xpath('//description').text
-          corporation.url = xml.xpath('//url').text
-          corporation.alliance_id = xml.xpath('//allianceID').text
-          corporation.alliance_name = xml.xpath('//allianceName').text
-          corporation.tax_rate = xml.xpath('//taxRate').text
-          corporation.member_count = xml.xpath('//memberCount').text
-          
-          corporation.save
-        end
-      end
-    end
-  end
-  
+  # Temporary Roles allocation based on character name
   def add_base_roles
     self.roles.create(:title => "goon")
     if self.name.eql? "Lerado Mendar"

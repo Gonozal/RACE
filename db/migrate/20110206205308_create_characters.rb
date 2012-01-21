@@ -8,6 +8,7 @@ class CreateCharacters < ActiveRecord::Migration
       t.integer :character_id
       t.string :corporation_name
       t.integer :corporation_id
+      t.integer :skill_in_training
       t.timestamps
     end
     add_index :characters, :account_id

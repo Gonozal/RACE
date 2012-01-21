@@ -11,10 +11,6 @@
       - group_name_old = skill.group_name
       h4.collapsed data-collapseable="callapsed" = skill.group_name
       | <ul id="skill_group_#{skill.group_id}">
-      /| Skill on level 5: #{@skills[:group_info][5][skill.group_name.to_sym]} <br/>
-      /| Skill on level 4: #{@skills[:group_info][4][skill.group_name.to_sym]} <br/>
-      /| Skill on level 3: #{@skills[:group_info][3][skill.group_name.to_sym]} <br/>
-      /| Skill on level 2: #{@skills[:group_info][2][skill.group_name.to_sym]}
       
     / LI containing each individual skill
     li.skills id="skill_#{skill.id}"

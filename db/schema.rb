@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20120119055228) do
     t.integer  "character_id"
     t.string   "corporation_name"
     t.integer  "corporation_id"
+    t.integer  "skill_in_training"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -98,7 +99,8 @@ ActiveRecord::Schema.define(:version => 20120119055228) do
     t.datetime "updated_at"
   end
 
-  add_index "skills", ["character_id", "type_id"], :name => "index_skills_on_character_id_and_type_id"
+  add_index "skills", ["character_id"], :name => "index_skills_on_character_id"
+  add_index "skills", ["type_id"], :name => "index_skills_on_type_id"
   add_index "skills", ["updated_at"], :name => "index_skills_on_updated_at"
 
 end
