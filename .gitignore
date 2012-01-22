@@ -43,6 +43,7 @@ Gemfile.lock
 features/support/driver.rb
 .yardoc
 dump.rdb
+rerun.txt
 
 # Version control files #
 #########################
@@ -53,9 +54,15 @@ git-daemon-export-ok
 .project
 .idea
 .idea/**/*
+<<<<<<< HEAD
 *.tmproj
 RACE.ids
 rerun.txt
+=======
+*.tmproj
+*.ids
+tags
+>>>>>>> Added some files to gitignore.
 
 # race specific #
 #################

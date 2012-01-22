@@ -12,5 +12,5 @@ class SkillsController < ApplicationController
     end
     @skills[:skills].sort!
     @skills[:training] = current_user.skill_in_training
-  end 
+  end
 end
