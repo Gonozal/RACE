@@ -137,54 +137,55 @@ body {
     margin-bottom: $nav-resolution + 1;
   }
 
-  li.skills{
+  ul.skills{
     display: block;
-    margin: 2px 0px 0px 0px;
-    > div {
-      display: block;
-      border: 1px;
-      border-style: solid;
-      height: 34px;
-      width: 550px;
-    }
-    span { display: block; height: 34px;}
+    width: 550px;
+    clear: both;
 
-    span.left {
+    li.skill {
+      border-width: 0 0 1px 0;
+      border-style: solid;
+      border-color: white;
+      height: 34px;
+    }
+
+    li.summary {
+      height: 16px;
+      font-size: 95%;
+      color: $color - #222;
+      padding-left: 6px;
+      text-shadow: 0 1px 0 #0a0a0a;
+    }
+
+    div.left {
       float: left;
       width: 300px;
+      height: 100%;
       > img { float: left; }
-      > span.text {
-        height: 32px;
+      > em {
+        line-height: 34px;
         padding: 6px 0px 0px 0px;
-        display: inline-block;
       }
     }
-    span.right {
+    
+    div.right {
       float: right;
+      height: 100%;
       width: 150px;
     }
-    span.skill_level {
+
+    div.skill_level {
       // float: left;
       content:"\00A0"; // emtpy "Space" so images get displayed
       background-image: url('/images/misc/skillbars.png');
       background-repeat: no-repeat;
       height: 14px;
       width: 128px;
-      &.l1 {
-        background-position: 0px -14px;
-      }
-      &.l2 {
-        background-position: 0px -28px;
-      }
-      &.l3 {
-        background-position: 0px -42px;
-      }
-      &.l4 {
-        background-position: 0px -56px;
-      }
-      &.l5 {
-        background-position: 0px -70px;
-      }
+      &.l1 { background-position: 0px -14px; }
+      &.l2 { background-position: 0px -28px; }
+      &.l3 { background-position: 0px -42px; }
+      &.l4 { background-position: 0px -56px; }
+      &.l5 { background-position: 0px -70px; }
     }
   }
 
@@ -208,7 +209,7 @@ body {
     margin-top: 0.5em;
     margin-bottom: 0.15em;
     color: #282828;
-    text-shadow: -1px -1px 0px hsla(0,0%,0%, 0.8);
+    text-shadow: 1px 1px 0px hsla(0,0%,0%, 0.8);
   }
 
   h4 {
@@ -216,7 +217,7 @@ body {
     margin-top: 0.5em;
     margin-bottom: 0.15em;
     color: darken($color, 5%);
-    text-shadow: -1px -1px 1px #000;
+    text-shadow: 1px 1px 1px #000;
   }
 
   h5 {
@@ -312,7 +313,7 @@ body {
   position:relative;
   top: 15px;
   line-height: 130%;
-  text-shadow: 0 -1px 1px #0a0a0a;
+  text-shadow: 0 1px 1px #0a0a0a;
   min-height: 200px;
   
   a:before {
@@ -406,7 +407,7 @@ body {
     margin-left: $margin;
     font-weight: bold;
     color: #bbb;
-    text-shadow: 0 -1px 1px black;
+    text-shadow: 0 1px 1px black;
     text-align: left;
     font-weight: bold;
     width: $label-width;
@@ -508,7 +509,7 @@ body {
     color: #ccc;
     font-weight: bold;
     font-size: inherit;
-    text-shadow: 0 -1px 1px black;
+    text-shadow: 0 1px 1px black;
     border: 1px solid black;
     text-align: center;
     @include border-radius($radius);

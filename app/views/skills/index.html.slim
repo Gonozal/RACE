@@ -2,29 +2,45 @@
 .collapseable
   / display Skills grouped by categories
   - group_name_old = ""
+  - group_skills, group_skill_points = 0, 0
+  - group_lvl5, group_lvl5_skill_points = 0, 0
   - @skills[:skills].each do |skill|
     / Create new category if category changes from last skill
     - if group_name_old != skill.group_name
       / Do not close UL tag if it's the first iteration through skills
       - if group_name_old.present?
+        li.summary
+          | #{group_skills} #{skill.group_name} skills trained,
+            for a total of #{number_with_delimiter(group_skill_points)}
+            skillpoints.
+        li.summary
+          | #{pluralize(group_lvl5, 'skill')}
+            trained to level 5, for a total of
+            #{number_with_delimiter(group_lvl5_skill_points)} skillpoints.
         | </ul>
       - group_name_old = skill.group_name
+      - group_skills, group_skill_points = 0, 0
+      - group_lvl5, group_lvl5_skill_points = 0, 0
       h4.collapsed data-collapseable="callapsed" = skill.group_name
-      | <ul id="skill_group_#{skill.group_id}">
-      
+      | <ul class="skills" id="skill_group_#{skill.group_id}">
+
     / LI containing each individual skill
-    li.skills id="skill_#{skill.id}"
-      div
-        / Show "Skillbook" icon depending on level of skill (lvl 5 or <5)
-        / Group skill details into span tags
-        span.left
-          == skill_icon(Integer skill.level)
-          span.text
-            '#{skill.name}
-            |(#{Integer skill.skill_time_constant}x)
-        span.right
-          |#{number_format skill.skill_points} / #{number_format skill.skill_points_max }
-          span.skill_level class="l#{skill.level}"
-      
+    li.skill id="skill_#{skill.id}"
+      - group_skill_points += skill.skill_points
+      - group_skills += 1
+      - if skill.level.to_i == 5
+        - group_lvl5 += 1
+        - group_lvl5_skill_points += skill.skill_points
+      / Show "Skillbook" icon depending on level of skill (lvl 5 or <5)
+      / Group skill details into span tags
+      .left
+        == skill_icon(skill.level.to_i)
+        em
+          '#{skill.name}
+          |(#{Integer skill.skill_time_constant}x)
+      .right
+        |#{number_format skill.skill_points} / #{number_format skill.skill_points_max }
+        .skill_level class="l#{skill.level}"
+
   / Close last UL tag (not covered by iteration through all skills, sadly)
   | </ul>
