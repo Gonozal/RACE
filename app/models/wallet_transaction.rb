@@ -89,8 +89,9 @@ class WalletTransaction < ActiveRecord::Base
         current_transactions << mt
       end
     end
-    # Sort transactions (can be more or less randomly ordered) to prepare "Jorunal Walking" and
-    # append transactions fetches this iteration to total fetched transactions (recursion)
+    # Sort transactions (can be more or less randomly ordered) to prepare
+    # "Jorunal Walking" and append transactions fetches this iteration to total
+    # fetched transactions (recursion)
     params[:all_transactions] << current_transactions.sort!
     
     if(current_transactions.size >= 1000)
