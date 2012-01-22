@@ -23,7 +23,7 @@ class CharactersController < ApplicationController
 
     @errors = { :alert => Array.new, :notice => Array.new }
     api_id, v_code = params['character']['api_id'], params['character']['v_code']
-    character_ids = params['character']['character_ids']
+    ids = params['character']['character_ids']
     begin
       @characters = Character.find_by_api!(api_id, v_code)
     rescue Exception => e
@@ -32,7 +32,7 @@ class CharactersController < ApplicationController
     # If user has choosen his characters, check for legitimacy
     # (prevent forging character names) and try to register those characters
     else
-      if character_ids.blank?
+      if ids.blank?
         # if there are characters found for his API data, but he has not chosen
         # any as of now, display character selection boxes
         render "expand_characters", :locals => { :all_characters => Character.select(:name).all.map { |c| c.name } }
@@ -40,12 +40,14 @@ class CharactersController < ApplicationController
       else
         # Get a list of all characters to disable ones that are already registered
         # Register characters
-        @characters = @characters.select{ |c| character_ids.include? c[:character_id]}
+        @characters = @characters.select{ |c| ids.include? c[:id]}
         if @characters.present?
           @new_characters = Array.new
           @characters.each do |c|
             # Go through each character and add it to his account
-            if @character = current_account.characters.create(c)
+            @character = current_account.characters.new(c)
+            @character.id = c[:id]
+            if @character.save
               @new_characters << @character
             else
               @errors[:alert] = "Registration of character #{self.name} failed."
@@ -75,13 +77,13 @@ class CharactersController < ApplicationController
     @characters = current_account.characters.all
      
     @characters.each do |c|
-      c.api_id = params[:api_id][c.character_id.to_s]
-      c.v_code = params[:v_code][c.character_id.to_s]
-      if params[:delete][c.character_id.to_s].eql? c.name
+      c.api_id = params[:api_id][c.id.to_s]
+      c.v_code = params[:v_code][c.id.to_s]
+      if params[:delete][c.id.to_s].eql? c.name
         # If user confirmed char deletion with the characters name, delete it
         c.destroy
         c.errors.add :success, "Character #{c.name} succesfully deleted"
-      elsif not (c.api_id_changed? or c.character_id_changed?)
+      elsif not (c.api_id_changed? or c.id_changed?)
         # Do nothing if nothing was changed
         c.errors.add :notice, "API data for #{c.name} did not change"
       # Validate the API bevore trying to save it

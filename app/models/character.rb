@@ -1,11 +1,13 @@
 class Character < ActiveRecord::Base
   # FIXME: attribute_accessible missing!
   belongs_to :account
-  belongs_to :corporation, :primary_key => :corporation_id
+  belongs_to :corporation
   has_many :roles
   has_many :skills
+  has_many :wallet_transactions
+  has_many :wallet_journals
 
-  #validates_uniqueness_of :character_id
+  #validates_uniqueness_of :id
   validates_uniqueness_of :name
 
   validates :api_id,     :numericality => true,
@@ -58,7 +60,7 @@ class Character < ActiveRecord::Base
     xml.xpath("//row").each do |row|
       characters << {
         :name => row['characterName'],
-        :character_id => row['characterID'],
+        :id => row['characterID'],
         :corporation_name => row['corporationName'],
         :corporation_id => row['corporationID'],
         :api_id => api_id,
@@ -102,11 +104,12 @@ class Character < ActiveRecord::Base
   # Every time a character is saved (created or updated), his Corporation is checked.
   # If his corporation does not yet exist, it is created
   def check_character_corporations
-    if self.corporation_id_changed?
-      unless Corporation.find_by_corporation_id(self.corporation_id).blank?
+    if self.id_changed?
+      unless Corporation.find_by_id(self.id).blank?
         true
       else
-        corporation = Corporation.new(:corporation_id => corporation_id)
+        corporation = Corporation.new
+        corporation.id = corporation_id
         if corporation.attributes_from_api
           corporation.save
         end
@@ -137,11 +140,11 @@ class Character < ActiveRecord::Base
   end
   
   def save_portrait
-    Resque.enqueue(ApiImageBackgrounder, 'character', character_id, [32,64,128,256])
+    Resque.enqueue(ApiImageBackgrounder, 'character', id, [32,64,128,256])
   end
   
   def destroy_portrait
-    Resque.enqueue(ApiImageBackgrounder, 'character', character_id, nil, true)
+    Resque.enqueue(ApiImageBackgrounder, 'character', id, nil, true)
   end
   
   # Temporary Roles allocation based on character name

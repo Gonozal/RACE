@@ -60,7 +60,7 @@ class AccountsController < ApplicationController
   def change_main_character
     # new main_character has to be a registered character of the account, so filter all possible
     # characters by character_id to get a valid new main_character
-    new_main =  current_account.characters.to_a.find{ |c| c.character_id == params['id'].to_i }
+    new_main =  current_account.characters.to_a.find{ |c| c.id == params['id'].to_i }
     # If a character could be found, register it as new main_character.
     if new_main
       current_account.main_character = new_main

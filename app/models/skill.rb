@@ -44,14 +44,12 @@ class Skill < ActiveRecord::Base
     # Create new API object and assign API-key values
     api = EVEAPI::API.new
     api.api_id = character.api_id
-    api.character_id = character.character_id
+    api.id = character.id
     api.v_code = character.v_code
 
     begin
       # Get Data for all Currently learned skills
-      skills_xml = api.get("char/CharacterSheet")
-      # Skill that is currently being trained
-      training_xml = api.get("char/SkillInTraining")
+      xml = api.get("char/CharacterSheet")
     rescue Exception => e
       puts e.inspect
     else
@@ -60,7 +58,7 @@ class Skill < ActiveRecord::Base
       old_skills = {}
 
       # start by getting all learned skills from the API0
-      skills_xml.xpath("/eveapi/result/rowset[@name='skills']/row").each do |row|
+      xml.xpath("/eveapi/result/rowset[@name='skills']/row").each do |row|
         skills_from_api[row['typeID']] = { :skill_points => row['skillpoints'], :level =>  row['level'] }
       end
 
@@ -111,16 +109,16 @@ class Skill < ActiveRecord::Base
       api = EVEAPI::API.new
       api.api_id = c.api_id
       api.v_code = c.v_code
-      api.character_id = c.character_id
+      api.id = c.id
         
       begin
         # Get Data for all Currently learned skills
-        skills_xml = api.get("char/CharacterSheet")
+        xml = api.get("char/CharacterSheet")
       rescue Exception => e
         puts e.inspect
       else
         # start by parsing all learned skills from the API
-        skills_xml.xpath("/eveapi/result/rowset[@name='skills']/row").each do |row|
+        xml.xpath("/eveapi/result/rowset[@name='skills']/row").each do |row|
           api_skill_data[c.id.to_s][:skills][row['typeID']] = { :skill_points => row['skillpoints'], :level =>  row['level'] }
           skill_ids << (Integer row['typeID'])
         end
@@ -131,7 +129,7 @@ class Skill < ActiveRecord::Base
 
     # Get allready existing skills and save them in a 2D-hash
     Skill.all.each do |s|
-      old_skills[s.character_id.to_s][s.type_id.to_s] = s
+      old_skills[s.id.to_s][s.type_id.to_s] = s
     end
     
     # Query skill names and skill-group names from evedb

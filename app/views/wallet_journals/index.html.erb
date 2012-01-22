@@ -1,0 +1,21 @@
+<h1>Listing wallet_journals</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @wallet_journals.each do |wallet_journal| %>
+  <tr>
+    <td><%= link_to 'Show', wallet_journal %></td>
+    <td><%= link_to 'Edit', edit_wallet_journal_path(wallet_journal) %></td>
+    <td><%= link_to 'Destroy', wallet_journal, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Wallet journal', new_wallet_journal_path %>

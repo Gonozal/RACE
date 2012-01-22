@@ -66,7 +66,7 @@ authorization do
   role :own_corporation_info do
     has_permission_on :corporations do
       to :show
-      if_attribute :corporation_id => is { current_user.corporation_id }
+      if_attribute :corporation_id => is { current_user.id }
     end
   end 
   

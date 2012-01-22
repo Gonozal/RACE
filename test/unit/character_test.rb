@@ -12,7 +12,7 @@ class CharacterTest < ActiveSupport::TestCase
     char = Character.new
     char.v_code = @api_key
     char.api_id = 1144806
-    char.character_id = 465753202
+    char.id = 465753202
     char.valid?
     
     assert_equal @character_name, char.name, "Character name not succesfully retrieved from API Data before validation"

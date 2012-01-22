@@ -15,14 +15,14 @@ ul#navigation
       a href="#" title="Main Menu"
         | home
         - if current_account.characters.any? and !current_user.blank?
-          img src="/images/api_images/characters/#{current_user.character_id}_48.jpg" alt="#{current_user.name}"
+          img src="/images/api_images/characters/#{current_user.id}_48.jpg" alt="#{current_user.name}"
       / Character Dropdown    
       - if current_account.characters.any?
         ul.character-select
           - current_account.characters.each do |c|
-            li id="charchange_#{c.character_id}"
-              a href="/accounts/change_main_character/#{c.character_id}"
-                img src="/images/api_images/characters/#{c.character_id}_64.jpg" alt="#{c.name}"
+            li id="charchange_#{c.id}"
+              a href="/accounts/change_main_character/#{c.id}"
+                img src="/images/api_images/characters/#{c.id}_64.jpg" alt="#{c.name}"
                 = c.name
     li class="login"
       a#logout_link href="#{logout_path}" title="logout" logout

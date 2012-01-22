@@ -1,4 +1,8 @@
 Race::Application.routes.draw do
+  resources :wallet_journals
+
+  resources :wallet_transactions
+
   resources :skills
 
   match 'register' => 'accounts#new', :as => 'register'

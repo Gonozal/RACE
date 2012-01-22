@@ -5,6 +5,6 @@
       - class_disabled = "disabled"
     - else
       - class_disabled = ""
-    label.collection_radio for="account_character_#{character[:character_id]}" class=class_disabled
-      input.radio.optional id="account_character_#{character[:character_id]}" name="character[character_ids][]" type="checkbox" value="#{character[:character_id]}"
+    label.collection_radio for="account_character_#{character[:id]}" class=class_disabled
+      input.radio.optional id="account_character_#{character[:id]}" name="character[character_ids][]" type="checkbox" value="#{character[:id]}"
       = character[:name]
