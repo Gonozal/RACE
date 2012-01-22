@@ -49,14 +49,7 @@ end
 
 group :development do
   # gem 'nifty-generators'
-end
-
-group :darwin do
-  # gem 'guard'
-  # gem 'growl'
-  # gem 'guard-minitest'
-  # gem 'guard-cucumber'
-  # gem 'guard-spork'
+  gem 'foreman'
 end
 
 group :test, :development do
