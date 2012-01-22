@@ -43,10 +43,10 @@ class WalletJournal < ActiveRecord::Base
     }
     if params[:owner].instance_of?(Character)
       # If we are updating Character journals, go right ahead
-      params[:xml_path] = "char/Walletjournals"
+      params[:xml_path] = "char/Walletjournal"
       api_update_division(params)
     elsif params[:owner].instance_of?(Corporation)
-      params[:xml_path] = "corp/Walletjournals"
+      params[:xml_path] = "corp/Walletjournal"
       # If we are updating Corp journals, do it for all devisions
       7.times do |i|
         params[:account_key] = 1000 + i
