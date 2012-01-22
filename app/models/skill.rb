@@ -44,7 +44,7 @@ class Skill < ActiveRecord::Base
     # Create new API object and assign API-key values
     api = EVEAPI::API.new
     api.api_id = character.api_id
-    api.id = character.id
+    api.character_id = character.id
     api.v_code = character.v_code
 
     begin
