@@ -35,12 +35,14 @@ class WalletTransaction < ActiveRecord::Base
 
     wallet_transactions = params[:owner].wallet_transactions
     # Set some basic params for api_update_devision
-    params = {
-      :api => api,
-      :account_key => 1000,
-      :all_transactions => [],
-      :newest_transaction_time => (wallet_transactions.any?)? wallet_transactions.order("transaction_time DESC").first : 0
-    }
+    params.merge!({
+      api: api,
+      account_key: 1000,
+      all_transactions: [],
+      succesfully_saved: [],
+      newest_transaction_time: (wallet_transactions.any?)? wallet_transactions.order("transaction_time DESC").first.transaction_time : 0
+    })
+
     if params[:owner].instance_of?(Character)
       # If we are updating Character transactions, go right ahead
       params[:xml_path] = "char/WalletTransactions"
@@ -56,13 +58,25 @@ class WalletTransaction < ActiveRecord::Base
       # If owner is neither Corporation nor Character, there's nothing we can do
       false
     end
-    true
+
+    # We  should now have all Transactions stored in params[:all_transactions]
+    # Start inserting it and returning the hash with all Transactions
+    WalletTransaction.transaction do
+      params[:all_transactions].each do |t|
+        # Populate array with succesfully saved transactions
+        if t.save
+          params[:succesfully_saved] << t
+        end
+      end
+    end
+    # Return sucesfully saved Transactions
+    params[:succesfully_saved]
   end
 
   # Update a single division of :owner's wallet Transactions.
   def self.api_update_division(params = {})
     current_transactions = []
-    params[:api].accountKey = params[:account_key]
+    params[:api].account_key = params[:account_key]
     xml = params[:api].get(params[:xml_path])
     # Loop over all Transaction rows supplied by the EVE API
     xml.xpath("/eveapi/result/rowset[@name='transactions']/row").each do |row|
@@ -84,12 +98,8 @@ class WalletTransaction < ActiveRecord::Base
       params[:api].from_id = current_transactions.last.transaction_id
       api_update_division(params)
     else
-      # If we have everything done, update the transactions
-      WalletTransaction.transaction do
-        params[:all_transactions].flatten!.each do |mt|
-          mt.save
-        end
-      end
+      # If we got everything, return it for further processing
+      params[:all_transactions].flatten!
     end
   end
 

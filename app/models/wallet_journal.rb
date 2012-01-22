@@ -21,7 +21,7 @@ class WalletJournal < ActiveRecord::Base
         send(:"#{key}=", val)
       end
     end
-    self.date = Time.parse(params[:journalDateTime]).to_i
+    self.date = Time.parse(params[:date]).to_i
   end
 
   # Update wallet journals for all Divisions of provided :owner
@@ -35,12 +35,13 @@ class WalletJournal < ActiveRecord::Base
 
     wallet_journals = params[:owner].wallet_journals
     # Set some basic params for api_update_devision
-    params = {
-      :api => api,
-      :account_key => 1000,
-      :all_journals => [],
-      :newest_journal_time => (wallet_journals.any?)? wallet_journals.order("date DESC").first : 0
-    }
+    params.merge!({
+      api: api,
+      account_key: 1000,
+      all_journals: [],
+      succesfully_saved: [],
+      newest_journal_time: (wallet_journals.any?)? wallet_journals.order("date DESC").first.date : 0
+    })
     if params[:owner].instance_of?(Character)
       # If we are updating Character journals, go right ahead
       params[:xml_path] = "char/Walletjournal"
@@ -56,16 +57,28 @@ class WalletJournal < ActiveRecord::Base
       # If owner is neither Corporation nor Character, there's nothing we can do
       false
     end
-    true
+    
+    # We  should now have all Journal entries stored in params[:all_transactions]
+    # Start inserting it and returning the hash with all Journal entries 
+    WalletJournal.transaction do
+      params[:all_journals].each do |j|
+        # Populate array with succesfully saved Journal entries 
+        if j.save
+          params[:succesfully_saved] << j
+        end
+      end
+    end
+    # Return all Journal entries 
+    params[:succesfully_saved]
   end
 
   # Update a single division of :owner's wallet journals.
   def self.api_update_division(params = {})
     current_journals = []
-    params[:api].accountKey = params[:account_key]
+    params[:api].account_key = params[:account_key]
     xml = params[:api].get(params[:xml_path])
     # Loop over all journal rows supplied by the EVE API
-    xml.xpath("/eveapi/result/rowset[@name='journals']/row").each do |row|
+    xml.xpath("/eveapi/result/rowset[@name='transactions']/row").each do |row|
       mt = params[:owner].wallet_journals.new
       mt.attributes_from_row(row)
       # Only add journal to Array if it's newer than the newest
@@ -84,12 +97,8 @@ class WalletJournal < ActiveRecord::Base
       params[:api].from_id = current_journals.last.journal_id
       api_update_division(params)
     else
-      # If we have everything done, update the journals
-      Walletjournal.journal do
-        params[:all_journals].flatten!.each do |mt|
-          mt.save
-        end
-      end
+    	# If we got everything, return it for further processing
+      params[:all_journals].flatten!
     end
   end
 

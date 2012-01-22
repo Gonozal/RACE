@@ -1,6 +1,5 @@
 Race::Application.routes.draw do
   resources :wallet_journals
-
   resources :wallet_transactions
 
   resources :skills
