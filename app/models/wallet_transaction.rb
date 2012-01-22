@@ -38,7 +38,6 @@ class WalletTransaction < ActiveRecord::Base
     params = {
       :api => api,
       :account_key => 1000,
-      :owner => owner,
       :all_transactions => [],
       :newest_transaction_time => (wallet_transactions.any?)? wallet_transactions.order("transaction_time DESC").first : 0
     }

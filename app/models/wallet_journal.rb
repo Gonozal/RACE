@@ -38,7 +38,6 @@ class WalletJournal < ActiveRecord::Base
     params = {
       :api => api,
       :account_key => 1000,
-      :owner => owner,
       :all_journals => [],
       :newest_journal_time => (wallet_journals.any?)? wallet_journals.order("date DESC").first : 0
     }
