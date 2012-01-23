@@ -31,7 +31,7 @@ class Skill < ActiveRecord::Base
       "error"
     end
   end
-  
+
   def <=>(other)
     "#{group_name}#{name}" <=> "#{other.group_name}#{other.name}"
   end
