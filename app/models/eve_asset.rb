@@ -17,6 +17,7 @@ class EveAsset < ActiveRecord::Base
   # This should be faster than reading all entries, comparing them to API assets
   # and then updating/inserting/deleting entries
 	def self.api_update_own(params = {})
+    time1 = Time.now
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
     api.api_id, api.v_code = params[:owner].api_id, params[:owner].v_code
@@ -45,9 +46,10 @@ class EveAsset < ActiveRecord::Base
       eve_root_asset.save
       # If row contains a rowset, recursivle add elements
       unless row.children.blank?
-        api_update_ancestor(eve_root_asset, row.children.children)
+        api_update_ancestor(eve_root_asset, row.xpath("./rowset[@name='contents']/row"))
       end
     end
+    logger.warn "execution time: #{Time.now - time1}"
   end
 
   def self.api_update_ancestor(eve_root_asset, rows)
@@ -56,10 +58,14 @@ class EveAsset < ActiveRecord::Base
       # Create eve_child_asset as child of eve_root_asset
       eve_child_asset = eve_root_asset.children.new
       eve_child_asset.attributes_from_row(row)
+      # Set Assets character_id XOR corporation_id the same as parent asset's
+      eve_child_asset.character_id = eve_root_asset.character_id
+      eve_child_asset.corporation_id = eve_root_asset.corporation_id
+      # We need to save now so we can reference the element later on
       eve_child_asset.save
       # If eve_child_asset contains another rowset, recursivle add those
-      unless row.children.blank?
-        api_update_ancestor(eve_root_asset, row.children.children)
+      unless row.xpath("./rowset/row").blank?
+        api_update_ancestor(eve_child_asset, row.xpath("./rowset/row"))
       end
     end
   end
