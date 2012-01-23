@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120122205525) do
+ActiveRecord::Schema.define(:version => 20120123170811) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -65,6 +65,26 @@ ActiveRecord::Schema.define(:version => 20120122205525) do
 
   add_index "corporations", ["alliance_id"], :name => "index_corporations_on_alliance_id"
   add_index "corporations", ["name"], :name => "index_corporations_on_name"
+
+  create_table "eve_assets", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "corporation_id"
+    t.integer  "item_id"
+    t.integer  "location_id"
+    t.integer  "type_id"
+    t.integer  "quantity"
+    t.integer  "flag"
+    t.boolean  "singleton"
+    t.integer  "raw_quantity"
+    t.string   "ancestry"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "eve_assets", ["ancestry"], :name => "index_eve_assets_on_ancestry"
+  add_index "eve_assets", ["character_id"], :name => "index_eve_assets_on_character_id"
+  add_index "eve_assets", ["corporation_id"], :name => "index_eve_assets_on_corporation_id"
+  add_index "eve_assets", ["type_id"], :name => "index_eve_assets_on_type_id"
 
   create_table "eveapi_cache", :force => true do |t|
     t.string   "request_hash"
@@ -125,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20120122205525) do
   create_table "wallet_journals", :force => true do |t|
     t.integer  "character_id"
     t.integer  "corporation_id"
+    t.integer  "account_key"
     t.integer  "date"
     t.integer  "ref_id",          :limit => 8
     t.integer  "ref_type_id"
@@ -139,21 +160,22 @@ ActiveRecord::Schema.define(:version => 20120122205525) do
     t.string   "reason"
     t.integer  "tax_receiver_id"
     t.decimal  "tax_amount",                   :precision => 14, :scale => 2
-    t.integer  "account_key"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "wallet_journals", ["character_id", "ref_id"], :name => "index_wallet_journals_on_character_id_and_ref_id"
-  add_index "wallet_journals", ["corporation_id", "account_key"], :name => "index_wallet_journals_on_corporation_id_and_account_key"
-  add_index "wallet_journals", ["corporation_id", "ref_id"], :name => "index_wallet_journals_on_corporation_id_and_ref_id"
+  add_index "wallet_journals", ["account_key"], :name => "index_wallet_journals_on_account_key"
+  add_index "wallet_journals", ["character_id"], :name => "index_wallet_journals_on_character_id"
+  add_index "wallet_journals", ["corporation_id"], :name => "index_wallet_journals_on_corporation_id"
   add_index "wallet_journals", ["date"], :name => "index_wallet_journals_on_date"
+  add_index "wallet_journals", ["ref_id"], :name => "index_wallet_journals_on_ref_id"
   add_index "wallet_journals", ["ref_type_id"], :name => "index_wallet_journals_on_ref_type_id"
   add_index "wallet_journals", ["tax_receiver_id"], :name => "index_wallet_journals_on_tax_receiver_id"
 
   create_table "wallet_transactions", :force => true do |t|
     t.integer  "character_id"
     t.integer  "corporation_id"
+    t.integer  "account_key"
     t.integer  "transaction_time"
     t.integer  "transaction_id"
     t.integer  "quantity"
@@ -167,17 +189,15 @@ ActiveRecord::Schema.define(:version => 20120122205525) do
     t.string   "transaction_type"
     t.string   "transaction_for"
     t.integer  "journal_transaction_id", :limit => 8
-    t.integer  "account_key"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "wallet_transactions", ["character_id", "station_id"], :name => "index_wallet_transactions_on_character_id_and_station_id"
-  add_index "wallet_transactions", ["corporation_id", "account_key"], :name => "index_wallet_transactions_on_corporation_id_and_account_key"
-  add_index "wallet_transactions", ["corporation_id", "station_id"], :name => "index_wallet_transactions_on_corporation_id_and_station_id"
+  add_index "wallet_transactions", ["account_key"], :name => "index_wallet_transactions_on_account_key"
+  add_index "wallet_transactions", ["character_id"], :name => "index_wallet_transactions_on_character_id"
+  add_index "wallet_transactions", ["corporation_id"], :name => "index_wallet_transactions_on_corporation_id"
   add_index "wallet_transactions", ["station_id"], :name => "index_wallet_transactions_on_station_id"
   add_index "wallet_transactions", ["transaction_for"], :name => "index_wallet_transactions_on_transaction_for"
-  add_index "wallet_transactions", ["transaction_time"], :name => "index_wallet_transactions_on_transaction_time"
   add_index "wallet_transactions", ["type_id"], :name => "index_wallet_transactions_on_type_id"
 
 end

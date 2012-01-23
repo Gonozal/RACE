@@ -2,9 +2,12 @@ class Corporation < ActiveRecord::Base
   attr_accessor :api_id, :v_code
   
   has_many :characters
+
+  # Eve Related Relationshipss
   has_many :wallet_transactions
   has_many :wallet_journals
   has_many :market_orders
+  has_many :eve_assets
   
   def index
     

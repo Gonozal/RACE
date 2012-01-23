@@ -1,4 +1,6 @@
 Race::Application.routes.draw do
+  resources :eve_assets
+
   resources :market_orders
 
   resources :wallet_journals

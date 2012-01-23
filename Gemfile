@@ -32,6 +32,7 @@ gem 'whenever'
 gem 'nokogiri'
 gem 'resque', :require => 'resque/server' #, git: 'git://github.com/defunkt/resque.git'
 gem 'devil'
+gem 'ancestry'
 
 group :strange_dependencies do
   gem 'ruby_parser'

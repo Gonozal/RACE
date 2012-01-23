@@ -21,10 +21,11 @@ class CreateWalletJournals < ActiveRecord::Migration
       t.timestamps
     end
     add_index :wallet_journals, :ref_type_id
+    add_index :wallet_journals, :ref_id
+    add_index :wallet_journals, :character_id
+    add_index :wallet_journals, :corporation_id
+    add_index :wallet_journals, :account_key
     add_index :wallet_journals, :date
     add_index :wallet_journals, :tax_receiver_id
-    add_index :wallet_journals, [:character_id, :ref_id]
-    add_index :wallet_journals, [:corporation_id, :ref_id]
-    add_index :wallet_journals, [:corporation_id, :account_key]
   end
 end

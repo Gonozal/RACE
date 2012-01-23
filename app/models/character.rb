@@ -2,11 +2,15 @@ class Character < ActiveRecord::Base
   # FIXME: attribute_accessible missing!
   belongs_to :account
   belongs_to :corporation
+
   has_many :roles
+
+  # Eve Related Relationshipss
   has_many :skills
   has_many :wallet_transactions
   has_many :wallet_journals
   has_many :market_orders
+  has_many :eve_assets
 
   #validates_uniqueness_of :id
   validates_uniqueness_of :name

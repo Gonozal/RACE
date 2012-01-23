@@ -19,12 +19,11 @@ class CreateWalletTransactions < ActiveRecord::Migration
       t.integer :journal_transaction_id, limit: 8
       t.timestamps
     end
-    add_index :wallet_transactions, :transaction_time
     add_index :wallet_transactions, :type_id
     add_index :wallet_transactions, :station_id
     add_index :wallet_transactions, :transaction_for
-    add_index :wallet_transactions, [:character_id, :station_id]
-    add_index :wallet_transactions, [:corporation_id, :station_id]
-    add_index :wallet_transactions, [:corporation_id, :account_key]
+    add_index :wallet_transactions, :character_id
+    add_index :wallet_transactions, :corporation_id
+    add_index :wallet_transactions, :account_key
   end
 end
