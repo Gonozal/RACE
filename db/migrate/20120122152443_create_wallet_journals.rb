@@ -3,6 +3,7 @@ class CreateWalletJournals < ActiveRecord::Migration
     create_table :wallet_journals do |t|
       t.integer :character_id
       t.integer :corporation_id
+      t.integer :account_key
       t.integer :date
       t.integer :ref_id, :limit => 8
       t.integer :ref_type_id
@@ -17,7 +18,6 @@ class CreateWalletJournals < ActiveRecord::Migration
       t.string :reason
       t.integer :tax_receiver_id
       t.decimal :tax_amount, scale: 2, precision: 14
-      t.integer :account_key
       t.timestamps
     end
     add_index :wallet_journals, :ref_type_id

@@ -31,7 +31,7 @@ class WalletTransaction < ActiveRecord::Base
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
     api.api_id, api.v_code = params[:owner].api_id, params[:owner].v_code
-    api.character_id,  = params[:owner].id, 2560
+    api.character_id = params[:owner].id
 
     wallet_transactions = params[:owner].wallet_transactions
     # Set some basic params for api_update_devision

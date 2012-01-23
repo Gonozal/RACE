@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120122152443) do
+ActiveRecord::Schema.define(:version => 20120122205525) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -75,6 +75,28 @@ ActiveRecord::Schema.define(:version => 20120122152443) do
   end
 
   add_index "eveapi_cache", ["request_hash"], :name => "index_eveapi_cache_on_request_hash"
+
+  create_table "market_orders", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "corporation_id"
+    t.integer  "account_key"
+    t.integer  "order_id"
+    t.integer  "char_id"
+    t.integer  "sation_id"
+    t.integer  "vol_entered"
+    t.integer  "vol_remaining"
+    t.integer  "min_volume"
+    t.integer  "order_state"
+    t.integer  "type_id"
+    t.integer  "range"
+    t.integer  "duration"
+    t.decimal  "escrow",         :precision => 14, :scale => 2
+    t.decimal  "price",          :precision => 14, :scale => 2
+    t.boolean  "bid"
+    t.integer  "issued"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "title"

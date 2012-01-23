@@ -4,6 +4,7 @@ class Corporation < ActiveRecord::Base
   has_many :characters
   has_many :wallet_transactions
   has_many :wallet_journals
+  has_many :market_orders
   
   def index
     

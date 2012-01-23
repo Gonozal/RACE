@@ -3,6 +3,7 @@ class CreateWalletTransactions < ActiveRecord::Migration
     create_table :wallet_transactions do |t|
       t.integer :character_id
       t.integer :corporation_id
+      t.integer :account_key
       t.integer :transaction_time
       t.integer :transaction_id
       t.integer :quantity
@@ -16,7 +17,6 @@ class CreateWalletTransactions < ActiveRecord::Migration
       t.string :transaction_type
       t.string :transaction_for
       t.integer :journal_transaction_id, limit: 8
-      t.integer :account_key
       t.timestamps
     end
     add_index :wallet_transactions, :transaction_time
