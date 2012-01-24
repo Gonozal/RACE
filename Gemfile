@@ -1,18 +1,19 @@
 source 'http://rubygems.org'
 
-gem 'rails', "~> 3.1.3"
+gem 'rails', "= 3.1.3"
 
 
 # Bundle ed ge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'mysql'
 gem 'composite_primary_keys'
 gem 'jquery-rails'
 
 # Asset template engines
 gem 'sass-rails'
-gem 'coffee-script'
+gem "coffee-rails"
 gem 'uglifier'
 gem 'slim'
 

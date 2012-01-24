@@ -25,6 +25,5 @@ Race::Application.configure do
   # Do not compress assets
   config.assets.compress = false
 
-
-  config.log_level = :info
+  config.log_level = :warn
 end

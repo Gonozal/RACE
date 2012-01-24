@@ -17,7 +17,6 @@ class EveAsset < ActiveRecord::Base
   # This should be faster than reading all entries, comparing them to API assets
   # and then updating/inserting/deleting entries
 	def self.api_update_own(params = {})
-    time1 = Time.now
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
     api.api_id, api.v_code = params[:owner].api_id, params[:owner].v_code
@@ -36,20 +35,21 @@ class EveAsset < ActiveRecord::Base
       # If owner is neither Corporation nor Character, there's nothing we can do
       return false
     end
-    
     xml = api.get(params[:xml_path])
-    all_assets = []
+
     # Loop over all journal rows supplied by the EVE API
+    time = Time.now
     xml.xpath("/eveapi/result/rowset[@name='assets']/row").each do |row|
       eve_root_asset = params[:owner].eve_assets.new
       eve_root_asset.attributes_from_row(row)
+      # We need to save now so we can reference the element later on
       eve_root_asset.save
       # If row contains a rowset, recursivle add elements
       unless row.children.blank?
         api_update_ancestor(eve_root_asset, row.xpath("./rowset[@name='contents']/row"))
       end
     end
-    logger.warn "execution time: #{Time.now - time1}"
+    logger.warn "Assets Parsing Time: #{Time.now - time}"
   end
 
   def self.api_update_ancestor(eve_root_asset, rows)
