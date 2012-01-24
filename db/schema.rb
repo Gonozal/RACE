@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.integer  "main_character_id"
     t.string   "email"
     t.string   "forgot_password_hash"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   add_index "accounts", ["name"], :name => "index_accounts_on_name"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.string   "corporation_name"
     t.integer  "corporation_id"
     t.integer  "skill_in_training"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   add_index "characters", ["account_id"], :name => "index_characters_on_account_id"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
   create_table "characters_roles", :force => true do |t|
     t.integer  "character_id"
     t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "corporations", :force => true do |t|
@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.string   "alliance_name"
     t.string   "tax_rate"
     t.integer  "member_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "corporations", ["alliance_id"], :name => "index_corporations_on_alliance_id"
@@ -77,8 +77,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.boolean  "singleton"
     t.integer  "raw_quantity"
     t.string   "ancestry"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   add_index "eve_assets", ["ancestry"], :name => "index_eve_assets_on_ancestry"
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.string   "request_hash"
     t.text     "xml"
     t.datetime "cached_until"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "eveapi_cache", ["request_hash"], :name => "index_eveapi_cache_on_request_hash"
@@ -114,15 +114,15 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.decimal  "price",          :precision => 14, :scale => 2
     t.boolean  "bid"
     t.integer  "issued"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   create_table "roles", :force => true do |t|
     t.string   "title"
     t.integer  "character_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "skills", :force => true do |t|
@@ -134,8 +134,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.integer  "level"
     t.integer  "skill_points"
     t.integer  "skill_time_constant"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "skills", ["character_id"], :name => "index_skills_on_character_id"
@@ -160,8 +160,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.string   "reason"
     t.integer  "tax_receiver_id"
     t.decimal  "tax_amount",                   :precision => 14, :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
   end
 
   add_index "wallet_journals", ["account_key"], :name => "index_wallet_journals_on_account_key"
@@ -189,8 +189,8 @@ ActiveRecord::Schema.define(:version => 20120123170811) do
     t.string   "transaction_type"
     t.string   "transaction_for"
     t.integer  "journal_transaction_id", :limit => 8
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
   end
 
   add_index "wallet_transactions", ["account_key"], :name => "index_wallet_transactions_on_account_key"
