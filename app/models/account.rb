@@ -41,7 +41,7 @@ class Account < ActiveRecord::Base
   # 
   # @return [Account, nil] the authenticated account or nil if authentication was not successfull
   def self.authenticated_with_token(id, stored_salt)
-    @account = Account.find_by_id(id, :include => :characters)
+    @account = Account.includes(:characters).find_by_id(id)
     @account && @account.password.salt == stored_salt ? @account : nil
   end
   
