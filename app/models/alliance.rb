@@ -2,7 +2,6 @@ class Alliance < ActiveRecord::Base
 
   has_one :executor_corp, class_name: "Corporation", foreign_key: "id"
   has_many :corporations
-  has_many :eve_mails
 
   # Update Attributes of current object from an API row
   def attributes_from_row(params = {})

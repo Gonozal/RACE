@@ -9,6 +9,6 @@ class CreateAlliances < ActiveRecord::Migration
       t.boolean :disbanded
       t.timestamps
     end
-    add_index :executor_corp_id
+    add_index :alliances, :executor_corp_id
   end
 end

@@ -2,6 +2,7 @@ class EveMailsController < ApplicationController
   # GET /eve_mails
   # GET /eve_mails.json
   def index
+    EveMail.api_update(:owner => current_user)
     @eve_mails = EveMail.all
 
     respond_to do |format|
