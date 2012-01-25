@@ -29,51 +29,48 @@ class MailingList < ActiveRecord::Base
     # Create new API Object and set relevant attributes
     api = set_api(params)
 
-    # Delete all Mailerships for this user
-    params[:owner].mailerships.delete_all
-
     begin
       # Get Data for all Currently learned skills
       xml = api.get("/char/mailinglists")
     rescue Exception => e
       puts e.inspect
     else
-      # Get all mailing lists of the user (and create lists that are not already in the DB)
-      params[:xml] = xml
-      mailerships = get_api_mailerships(params)
+      # Delete all Mailerships for this user
+      params[:owner].mailing_lists.delete_all
 
-      # Update mailerships of user (membership in mailing lists)
-      Mailership.transaction do
-        mailerships.each do |m|
-          params[:owner].mailing_lists << m
-        end
-      end
+      # Get all mailing lists of the user
+      params[:xml] = xml
+      new_lists = get_api_mailing_lists(params)
+
+      # Update DB to reflect changes
+      update_lists(params[:owner], new_lists)
     end
   end
 
-  def self.get_api_mailerships(params = {})
-    mailerships = []
+  def self.get_api_mailing_lists(params = {})
+    new_lists = []
     params[:xml].xpath("/eveapi/result/rowset[@name='mailingLists']/row").each do |row|
       # Find or Create mailing List
       ml = MailingList.find_or_initialize_by_id(row['listID'].to_i)
       ml.display_name = row['displayName']
-      ml.save
-
-      logger.warn "INCOOMING"
-      logger.warn row['displayName']
-      logger.warn row['listID'].to_i
-      logger.warn params[:owner].id
-      logger.warn "OUTCOMING"
-      if Mailership.where("character_id = ? AND mailing_list_id = ?", params[:owner].id ,row['listID'].to_i).all.blank?
-        mailerships << ml
-        logger.warn "no match Found"
-      else 
-        logger.warn "Match found"
-      end
+      new_lists << ml
     end
-    logger.warn mailerships
-    mailerships
+    new_lists
   end
 
+  def self.update_lists(owner, new_lists)
+    # Update mailing lists (membership in mailing lists)
+      MailingList.transaction do
+        new_lists.each do |m|
+          m.save
+        end
+      end
 
+      # Update mailerships of user (membership in mailing lists)
+      Mailership.transaction do
+        new_lists.each do |m|
+          owner.mailing_lists << m
+        end
+      end
+  end
 end

@@ -1,4 +1,8 @@
 Race::Application.routes.draw do
+  resources :eve_mails
+
+  resources :alliances
+
   resources :mailing_lists
 
   resources :eve_assets

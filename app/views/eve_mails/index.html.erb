@@ -1,0 +1,21 @@
+<h1>Listing eve_mails</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @eve_mails.each do |eve_mail| %>
+  <tr>
+    <td><%= link_to 'Show', eve_mail %></td>
+    <td><%= link_to 'Edit', edit_eve_mail_path(eve_mail) %></td>
+    <td><%= link_to 'Destroy', eve_mail, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Eve mail', new_eve_mail_path %>

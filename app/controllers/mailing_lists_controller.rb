@@ -3,6 +3,7 @@ class MailingListsController < ApplicationController
   # GET /mailing_lists.json
   def index
     MailingList.api_update_own(owner: current_user)
+
     @mailing_lists = current_user.mailing_lists.all
 
     respond_to do |format|

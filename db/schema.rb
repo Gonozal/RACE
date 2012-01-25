@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120124182922) do
+ActiveRecord::Schema.define(:version => 20120125074516) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -19,11 +19,22 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
     t.integer  "main_character_id"
     t.string   "email"
     t.string   "forgot_password_hash"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "accounts", ["name"], :name => "index_accounts_on_name"
+
+  create_table "alliances", :force => true do |t|
+    t.string   "name"
+    t.string   "short_name"
+    t.integer  "executor_corp_id"
+    t.integer  "member_count"
+    t.datetime "start_date"
+    t.boolean  "disbanded"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "characters", :force => true do |t|
     t.integer  "account_id"
@@ -33,19 +44,29 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
     t.string   "corporation_name"
     t.integer  "corporation_id"
     t.integer  "skill_in_training"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "characters", ["account_id"], :name => "index_characters_on_account_id"
   add_index "characters", ["corporation_id"], :name => "index_characters_on_corporation_id"
   add_index "characters", ["name"], :name => "index_characters_on_name"
 
+  create_table "characters_eve_mails", :id => false, :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "eve_mail_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "characters_eve_mails", ["character_id"], :name => "index_characters_eve_mails_on_character_id"
+  add_index "characters_eve_mails", ["eve_mail_id"], :name => "index_characters_eve_mails_on_eve_mail_id"
+
   create_table "characters_roles", :force => true do |t|
     t.integer  "character_id"
     t.integer  "role_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "corporations", :force => true do |t|
@@ -59,8 +80,8 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
     t.string   "alliance_name"
     t.string   "tax_rate"
     t.integer  "member_count"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "corporations", ["alliance_id"], :name => "index_corporations_on_alliance_id"
@@ -77,8 +98,8 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
     t.boolean  "singleton"
     t.integer  "raw_quantity"
     t.string   "ancestry"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "eve_assets", ["ancestry"], :name => "index_eve_assets_on_ancestry"
@@ -86,17 +107,42 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
   add_index "eve_assets", ["corporation_id"], :name => "index_eve_assets_on_corporation_id"
   add_index "eve_assets", ["type_id"], :name => "index_eve_assets_on_type_id"
 
+  create_table "eve_mails", :force => true do |t|
+    t.integer  "sender_id"
+    t.datetime "sent_date"
+    t.string   "title"
+    t.integer  "corporation_id"
+    t.integer  "alliance_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "eve_mails", ["alliance_id"], :name => "index_eve_mails_on_alliance_id"
+  add_index "eve_mails", ["corporation_id"], :name => "index_eve_mails_on_corporation_id"
+  add_index "eve_mails", ["sender_id"], :name => "index_eve_mails_on_sender_id"
+  add_index "eve_mails", ["sent_date"], :name => "index_eve_mails_on_sent_date"
+
+  create_table "eve_mails_mailing_lists", :id => false, :force => true do |t|
+    t.integer  "eve_mail_id"
+    t.integer  "mailing_list_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "eve_mails_mailing_lists", ["eve_mail_id"], :name => "index_eve_mails_mailing_lists_on_eve_mail_id"
+  add_index "eve_mails_mailing_lists", ["mailing_list_id"], :name => "index_eve_mails_mailing_lists_on_mailing_list_id"
+
   create_table "eveapi_cache", :force => true do |t|
     t.string   "request_hash"
     t.text     "xml"
     t.datetime "cached_until"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "eveapi_cache", ["request_hash"], :name => "index_eveapi_cache_on_request_hash"
 
-  create_table "mailerships", :id => false, :force => true do |t|
+  create_table "mailerships", :force => true do |t|
     t.integer  "character_id"
     t.integer  "mailing_list_id"
     t.datetime "created_at",      :null => false
@@ -130,15 +176,15 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
     t.decimal  "price",          :precision => 14, :scale => 2
     t.boolean  "bid"
     t.integer  "issued"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "roles", :force => true do |t|
     t.string   "title"
     t.integer  "character_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "skills", :force => true do |t|
@@ -150,8 +196,8 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
     t.integer  "level"
     t.integer  "skill_points"
     t.integer  "skill_time_constant"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "skills", ["character_id"], :name => "index_skills_on_character_id"
@@ -176,8 +222,8 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
     t.string   "reason"
     t.integer  "tax_receiver_id"
     t.decimal  "tax_amount",                   :precision => 14, :scale => 2
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "wallet_journals", ["account_key"], :name => "index_wallet_journals_on_account_key"
@@ -205,8 +251,8 @@ ActiveRecord::Schema.define(:version => 20120124182922) do
     t.string   "transaction_type"
     t.string   "transaction_for"
     t.integer  "journal_transaction_id", :limit => 8
-    t.datetime "created_at",                                                         :null => false
-    t.datetime "updated_at",                                                         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "wallet_transactions", ["account_key"], :name => "index_wallet_transactions_on_account_key"

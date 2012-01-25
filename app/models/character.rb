@@ -14,6 +14,7 @@ class Character < ActiveRecord::Base
   # Mails & Mailing Lists
   has_many :mailerships
   has_many :mailing_lists, through: :mailerships
+  has_and_belongs_to_many :eve_mails
 
   #validates_uniqueness_of :id
   validates_uniqueness_of :name

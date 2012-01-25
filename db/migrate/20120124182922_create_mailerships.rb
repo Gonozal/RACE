@@ -1,6 +1,6 @@
 class CreateMailerships < ActiveRecord::Migration
   def change
-    create_table :mailerships, :id => false do |t|
+    create_table :mailerships do |t|
       t.integer :character_id
       t.integer :mailing_list_id
       t.timestamps
