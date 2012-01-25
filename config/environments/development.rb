@@ -33,5 +33,5 @@ Race::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.4
 
 
-  config.log_level = :info
+  # config.log_level = :info
 end

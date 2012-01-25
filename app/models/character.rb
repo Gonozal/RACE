@@ -11,6 +11,9 @@ class Character < ActiveRecord::Base
   has_many :wallet_journals
   has_many :market_orders
   has_many :eve_assets
+  # Mails & Mailing Lists
+  has_many :mailerships
+  has_many :mailing_lists, through: :mailerships
 
   #validates_uniqueness_of :id
   validates_uniqueness_of :name

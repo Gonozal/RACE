@@ -1,4 +1,6 @@
 Race::Application.routes.draw do
+  resources :mailing_lists
+
   resources :eve_assets
 
   resources :market_orders
