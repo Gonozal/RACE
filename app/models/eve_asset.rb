@@ -25,7 +25,7 @@ class EveAsset < ActiveRecord::Base
     # Delete all assets for the Owner, delete_all isntead of destroy_all because
     # we don't need to take care of relations and it's much faster this way
     params[:owner].eve_assets.scoped.delete_all()
-   
+
     if params[:owner].instance_of?(Character)
       # If we are updating Character journals, go right ahead
       params[:xml_path] = "char/AssetList"
@@ -35,38 +35,53 @@ class EveAsset < ActiveRecord::Base
       # If owner is neither Corporation nor Character, there's nothing we can do
       return false
     end
-    xml = api.get(params[:xml_path])
 
-    # Loop over all journal rows supplied by the EVE API
-    time = Time.now
-    xml.xpath("/eveapi/result/rowset[@name='assets']/row").each do |row|
-      eve_root_asset = params[:owner].eve_assets.new
-      eve_root_asset.attributes_from_row(row)
-      # We need to save now so we can reference the element later on
-      eve_root_asset.save
-      # If row contains a rowset, recursivle add elements
-      unless row.children.blank?
-        api_update_ancestor(eve_root_asset, row.xpath("./rowset[@name='contents']/row"))
+    xml = api.get(params[:xml_path]).xpath("/eveapi/result")
+
+    assets = [[]]
+    assets.last[0] = params[:owner]
+    assets.last[1] = xml
+
+    # If row contains a rowset, recursivle add elements
+    while true do
+      new_level = false
+      new_assets = []
+      assets.each do |asset|
+        unless asset[1].blank?
+          new_assets += api_update_ancestor(asset[0], asset[1])
+          new_level = true
+        end
       end
+
+      EveAsset.transaction do
+        new_assets.map { |a| a[0].save }
+      end
+
+      assets = new_assets
+      break unless new_level
     end
-    logger.warn "Assets Parsing Time: #{Time.now - time}"
   end
 
-  def self.api_update_ancestor(eve_root_asset, rows)
+  def self.api_update_ancestor(root, rows)
     # Loop over all rows in the provided array of rows
+    list = []
     rows.each do |row|
-      # Create eve_child_asset as child of eve_root_asset
-      eve_child_asset = eve_root_asset.children.new
-      eve_child_asset.attributes_from_row(row)
-      # Set Assets character_id XOR corporation_id the same as parent asset's
-      eve_child_asset.character_id = eve_root_asset.character_id
-      eve_child_asset.corporation_id = eve_root_asset.corporation_id
-      # We need to save now so we can reference the element later on
-      eve_child_asset.save
-      # If eve_child_asset contains another rowset, recursivle add those
-      unless row.xpath("./rowset/row").blank?
-        api_update_ancestor(eve_child_asset, row.xpath("./rowset/row"))
+      list << []
+      # Create eve_child_asset as child of root
+      if root.respond_to?("eve_assets")
+        asset = root.eve_assets.new
+        asset.attributes_from_row(row)
+      else
+        asset = root.children.new
+        asset.attributes_from_row(row)
+        # Set Assets character_id XOR corporation_id the same as parent asset's
+        asset.character_id = root.character_id
+        asset.corporation_id = root.corporation_id
       end
+      # We need to save now so we can reference the element later on
+      list.last[0] = asset
+      list.last[1] = row.xpath "./rowset/row"
     end
+    list
   end
 end
