@@ -1,0 +1,21 @@
+<h1>Listing eve_notifications</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @eve_notifications.each do |eve_notification| %>
+  <tr>
+    <td><%= link_to 'Show', eve_notification %></td>
+    <td><%= link_to 'Edit', edit_eve_notification_path(eve_notification) %></td>
+    <td><%= link_to 'Destroy', eve_notification, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Eve notification', new_eve_notification_path %>

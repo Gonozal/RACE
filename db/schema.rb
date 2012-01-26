@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125064043) do
+ActiveRecord::Schema.define(:version => 20120125231238) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(:version => 20120125064043) do
   add_index "characters", ["account_id"], :name => "index_characters_on_account_id"
   add_index "characters", ["corporation_id"], :name => "index_characters_on_corporation_id"
   add_index "characters", ["name"], :name => "index_characters_on_name"
+
+  create_table "characters_eve_notifications", :id => false, :force => true do |t|
+    t.integer "character_id"
+    t.integer "eve_notification_id"
+  end
+
+  add_index "characters_eve_notifications", ["character_id"], :name => "index_characters_eve_notifications_on_character_id"
+  add_index "characters_eve_notifications", ["eve_notification_id"], :name => "index_characters_eve_notifications_on_eve_notification_id"
 
   create_table "characters_roles", :force => true do |t|
     t.integer  "character_id"
@@ -114,6 +122,20 @@ ActiveRecord::Schema.define(:version => 20120125064043) do
   add_index "eve_mails", ["sender_id"], :name => "index_eve_mails_on_sender_id"
   add_index "eve_mails", ["sent_date"], :name => "index_eve_mails_on_sent_date"
   add_index "eve_mails", ["to_corp_or_alliance_id"], :name => "index_eve_mails_on_to_corp_or_alliance_id"
+
+  create_table "eve_notifications", :force => true do |t|
+    t.integer  "type_id"
+    t.integer  "sender_id"
+    t.datetime "sent_date"
+    t.boolean  "read"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "eve_notifications", ["read"], :name => "index_eve_notifications_on_read"
+  add_index "eve_notifications", ["sender_id"], :name => "index_eve_notifications_on_sender_id"
+  add_index "eve_notifications", ["type_id"], :name => "index_eve_notifications_on_type_id"
 
   create_table "eveapi_cache", :force => true do |t|
     t.string   "request_hash"

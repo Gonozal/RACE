@@ -25,6 +25,7 @@ class EVEAPI::EveCache < ActiveRecord::Base
   # 
   # returns true if save was successful, false otherwise
   def self.save(uri, params, xml)
+    Time.zone = "Iceland"
     uri_hash = request_to_hash(uri, params)
     noko = Nokogiri::XML(xml)
     return false if hash.blank? or xml.blank? or noko.blank?
@@ -35,7 +36,7 @@ class EVEAPI::EveCache < ActiveRecord::Base
     cache = EVEAPI::EveCache.new
     cache.request_hash = uri_hash
     cache.xml = xml
-    cache.cached_until = Time.parse cached_until
+    cache.cached_until = Time.zone.parse cached_until
     cache.save
   end
   
@@ -49,8 +50,9 @@ class EVEAPI::EveCache < ActiveRecord::Base
   # * Cache.clean(3.days) -  deletes all records whose cached_until value is expired or which
   # were created more than 3 days ago
   def self.clean(time = 5.days)
-    time = Time.now - time
-    self.delete_all( ["cached_until < ? OR created_at < ?", Time.now, time] )
+    Time.zone = "Iceland"
+    time = Time.zone.now - time
+    self.delete_all( ["cached_until < ? OR created_at < ?", Time.zone.now, time] )
   end
   
   private
