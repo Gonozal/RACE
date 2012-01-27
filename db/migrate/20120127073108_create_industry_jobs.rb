@@ -35,5 +35,8 @@ class CreateIndustryJobs < ActiveRecord::Migration
       t.datetime :pause_production_time
       t.timestamps
     end
+    add_index :industry_jobs, :container_id
+    add_index :industry_jobs, :installed_item_location_id
+    add_index :industry_jobs, :installer_id
   end
 end
