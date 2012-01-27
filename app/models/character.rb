@@ -11,6 +11,8 @@ class Character < ActiveRecord::Base
   has_many :wallet_journals
   has_many :market_orders
   has_many :eve_assets
+  has_many :contracts, foreign_key: :issuer_id
+  has_many :assigned_contracts, class_name: "Contract", foreign_key: :assignee_id
   # Mails & Mailing Lists
   has_many :mailerships
   has_many :mailing_lists, through: :mailerships

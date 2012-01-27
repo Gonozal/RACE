@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125231238) do
+ActiveRecord::Schema.define(:version => 20120126134147) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -68,6 +68,60 @@ ActiveRecord::Schema.define(:version => 20120125231238) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  create_table "contract_bids", :force => true do |t|
+    t.integer  "contract_id"
+    t.integer  "bidder_id"
+    t.datetime "date_bid"
+    t.decimal  "amount",      :precision => 14, :scale => 2
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
+
+  add_index "contract_bids", ["contract_id"], :name => "index_contract_bids_on_contract_id"
+
+  create_table "contract_items", :force => true do |t|
+    t.integer  "contract_id"
+    t.integer  "type_id"
+    t.integer  "quantity"
+    t.integer  "raw_quantity"
+    t.boolean  "singleton"
+    t.boolean  "included"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "contract_items", ["type_id"], :name => "index_contract_items_on_type_id"
+
+  create_table "contracts", :force => true do |t|
+    t.integer  "issuer_id"
+    t.integer  "issuer_corp_id"
+    t.integer  "assignee_id"
+    t.integer  "acceptor_id"
+    t.integer  "start_station_id"
+    t.integer  "end_station_id"
+    t.string   "contract_type"
+    t.string   "status"
+    t.string   "title"
+    t.boolean  "for_corp"
+    t.string   "availability"
+    t.datetime "date_issued"
+    t.datetime "date_expired"
+    t.datetime "date_accepted"
+    t.integer  "num_days"
+    t.datetime "date_completed"
+    t.decimal  "price",            :precision => 14, :scale => 2
+    t.decimal  "reward",           :precision => 14, :scale => 2
+    t.decimal  "collateral",       :precision => 14, :scale => 2
+    t.float    "volume"
+  end
+
+  add_index "contracts", ["acceptor_id"], :name => "index_contracts_on_acceptor_id"
+  add_index "contracts", ["assignee_id"], :name => "index_contracts_on_assignee_id"
+  add_index "contracts", ["end_station_id"], :name => "index_contracts_on_end_station_id"
+  add_index "contracts", ["issuer_id"], :name => "index_contracts_on_issuer_id"
+  add_index "contracts", ["start_station_id"], :name => "index_contracts_on_start_station_id"
+  add_index "contracts", ["status"], :name => "index_contracts_on_status"
 
   create_table "corporations", :force => true do |t|
     t.string   "name"

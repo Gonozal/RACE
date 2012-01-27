@@ -26,7 +26,8 @@ class EVEAPI::API
   # 
   # @param [String] value The value to set
   # @return [String]
-	attr_writer :api_id, :v_code, :character_id, :corporation_id, :alliance_id, :account_key, :from_id, :row_count, :version, :ids
+	attr_writer :api_id, :v_code, :character_id, :corporation_id, :alliance_id, :account_key, :from_id, :row_count, :version, :ids,
+				:contract_id
 	attr_accessor :host, :extension, :image_path_array
 
 	# Initializes the api host adress, extensions for api calls etc.
@@ -110,7 +111,8 @@ class EVEAPI::API
       :fromID => @from_id,
       :rowCount => @row_count,
       :version => @version,
-      :ids => @ids
+      :ids => @ids,
+      :contractID => @contract_id
     }.delete_if { |k, v| v.nil? }
 
     params_new = {}
