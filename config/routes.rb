@@ -1,4 +1,6 @@
 Race::Application.routes.draw do
+  resources :industry_jobs
+
   resources :contracts
 
   resources :eve_notifications

@@ -1,0 +1,21 @@
+<h1>Listing industry_jobs</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @industry_jobs.each do |industry_job| %>
+  <tr>
+    <td><%= link_to 'Show', industry_job %></td>
+    <td><%= link_to 'Edit', edit_industry_job_path(industry_job) %></td>
+    <td><%= link_to 'Destroy', industry_job, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Industry job', new_industry_job_path %>
