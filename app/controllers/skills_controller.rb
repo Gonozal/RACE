@@ -3,6 +3,7 @@ class SkillsController < ApplicationController
   # GET /skills.json
   def index
     skills = {}
+    SkillQueue.api_update(owner: current_user)
     # Get all Skills
     skills = current_user.skills.all
     if skills.length == 0

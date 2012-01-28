@@ -7,9 +7,10 @@ class EVEAPI::EveCache < ActiveRecord::Base
   # Example:
   # 
   def self.load(uri, params)
+    Time.zone = "Iceland"
     uri_hash = request_to_hash(uri, params)
     return nil if uri_hash.blank?
-    cache = EVEAPI::EveCache.find(:first, :conditions => ["request_hash = ?", uri_hash])
+    cache = EVEAPI::EveCache.find(:first, :conditions => ["request_hash = ? AND cached_until < ?", uri_hash, Time.zone.now])
     if cache.blank?
       nil
     else

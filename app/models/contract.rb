@@ -109,6 +109,7 @@ class Contract < ActiveRecord::Base
     api.character_id = params[:owner].id
     api
   end
+  
   # Decide API path (/char/ or /corp/) from :owner class
   def self.api_path(owner)
     # Get the proper path according to owner's Class

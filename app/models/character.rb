@@ -7,6 +7,7 @@ class Character < ActiveRecord::Base
 
   # Eve Related Relationshipss
   has_many :skills
+  has_many :queued_skills, class_name: "SkillQueue", foreign_key: :character_id
   has_many :wallet_transactions
   has_many :wallet_journals
   has_many :market_orders

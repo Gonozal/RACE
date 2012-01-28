@@ -1,6 +1,6 @@
 class InvType < EveData
-  set_table_name "invTypes"
-  set_primary_key "typeID"
+  self.table_name = 'invTypes'
+  self.primary_key = 'typeID'
   
   has_one :inv_group, :foreign_key => :groupID, :primary_key => :groupID
   has_one :eve_icon, :foreign_key => :iconID, :primary_key => :iconID
