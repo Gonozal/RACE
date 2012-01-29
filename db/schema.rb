@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120127074953) do
+ActiveRecord::Schema.define(:version => 20120129002711) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -46,8 +46,21 @@ ActiveRecord::Schema.define(:version => 20120127074953) do
     t.string   "corporation_name"
     t.integer  "corporation_id"
     t.integer  "skill_in_training"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "date_of_birth"
+    t.string   "race"
+    t.string   "blood_line"
+    t.string   "ancestry"
+    t.string   "gender"
+    t.string   "clone_name"
+    t.integer  "clone_skill_points"
+    t.decimal  "balance",            :precision => 14, :scale => 2
+    t.integer  "intelligence"
+    t.integer  "memory"
+    t.integer  "charisma"
+    t.integer  "perception"
+    t.integer  "willpower"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   add_index "characters", ["account_id"], :name => "index_characters_on_account_id"
@@ -191,6 +204,15 @@ ActiveRecord::Schema.define(:version => 20120127074953) do
   add_index "eve_notifications", ["sender_id"], :name => "index_eve_notifications_on_sender_id"
   add_index "eve_notifications", ["type_id"], :name => "index_eve_notifications_on_type_id"
 
+  create_table "eve_roles", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "role_id"
+    t.string   "role_name"
+    t.string   "role_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "eveapi_cache", :force => true do |t|
     t.string   "request_hash"
     t.text     "xml"
@@ -200,6 +222,14 @@ ActiveRecord::Schema.define(:version => 20120127074953) do
   end
 
   add_index "eveapi_cache", ["request_hash"], :name => "index_eveapi_cache_on_request_hash"
+
+  create_table "implants", :force => true do |t|
+    t.integer  "character_id"
+    t.string   "augmentator_name"
+    t.integer  "augmentator_value"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "industry_jobs", :force => true do |t|
     t.integer  "assembly_line_id"

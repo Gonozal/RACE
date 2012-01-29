@@ -14,6 +14,8 @@ class Character < ActiveRecord::Base
   has_many :eve_assets
   has_many :contracts, foreign_key: :issuer_id
   has_many :assigned_contracts, class_name: "Contract", foreign_key: :assignee_id
+  has_many :implants
+  has_many :eve_roles
   # Mails & Mailing Lists
   has_many :mailerships
   has_many :mailing_lists, through: :mailerships
@@ -81,6 +83,40 @@ class Character < ActiveRecord::Base
     end
     @characters = characters 
   end
+
+  # Given a Character object, updates Character data from the API
+  # Updates: Gender, Race, Bloodline, Ancestry 
+  # Updates: Clone Name, Clone SP, Attributes
+  def update_character_sheet
+    api = set_api
+    begin
+      xml = api.get("char/CharacterSheet")
+    rescue Exception => e
+      logger.error "EVE API Exception cought!"
+    else
+      # Update individual rows of API data
+      self.date_of_birth = xml.xpath('/eveapi/result/DoB').text
+      self.race = xml.xpath('/eveapi/result/race').text
+      self.blood_line = xml.xpath('/eveapi/result/bloodLine').text
+      self.ancestry = xml.xpath('/eveapi/result/ancestry').text
+      self.gender = xml.xpath('/eveapi/result/gender').text
+      self.corporation_name = xml.xpath('/eveapi/result/corporationName').text
+      self.corporation_id = xml.xpath('/eveapi/result/corporationID').text
+      self.clone_name = xml.xpath('/eveapi/result/cloneName').text
+      self.clone_skill_points = xml.xpath('/eveapi/result/cloneSkillPoints').text
+      self.balance = xml.xpath('/eveapi/result/balance').text
+      self.intelligence = xml.xpath('/eveapi/result/attributes/intelligence').text
+      self.memory = xml.xpath('/eveapi/result/attributes/memory').text
+      self.charisma = xml.xpath('/eveapi/result/attributes/charisma').text
+      self.perception = xml.xpath('/eveapi/result/attributes/perception').text
+      self.willpower = xml.xpath('/eveapi/result/attributes/willpower').text
+      self.save
+
+      # Update implants rowset
+      Implant.api_update(self, xml)
+      EveRole.api_update(self, xml)
+    end
+  end
   
   # About the same as #self.find_by_api! except that no exceptions are raised
   # but [] is returned.
@@ -127,6 +163,15 @@ class Character < ActiveRecord::Base
         end
       end
     end
+  end
+
+  # Sets API data from character object
+  def set_api
+    api = EVEAPI::API.new
+    api.api_id = api_id
+    api.v_code = v_code
+    api.character_id = id
+    api
   end
 
   private

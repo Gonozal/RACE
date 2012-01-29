@@ -5,6 +5,7 @@ class CharactersController < ApplicationController
    
   def index
     @characters = Character.all
+    current_user.update_character_sheet
   end
    
   def show
