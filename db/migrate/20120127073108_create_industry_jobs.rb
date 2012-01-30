@@ -1,6 +1,8 @@
 class CreateIndustryJobs < ActiveRecord::Migration
   def change
     create_table :industry_jobs do |t|
+      t.integer :job_id
+      t.integer :corporation_id
     	t.integer :assembly_line_id
       t.integer :container_id
       t.integer :installed_item_id, size: 8

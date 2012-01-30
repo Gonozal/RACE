@@ -16,6 +16,7 @@ class Character < ActiveRecord::Base
   has_many :assigned_contracts, class_name: "Contract", foreign_key: :assignee_id
   has_many :implants
   has_many :eve_roles
+  has_many :industry_jobs, foreign_key: :installer_id
   # Mails & Mailing Lists
   has_many :mailerships
   has_many :mailing_lists, through: :mailerships

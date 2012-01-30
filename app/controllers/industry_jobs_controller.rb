@@ -2,6 +2,7 @@ class IndustryJobsController < ApplicationController
   # GET /industry_jobs
   # GET /industry_jobs.json
   def index
+    IndustryJob.api_update(current_user)
     @industry_jobs = IndustryJob.all
 
     respond_to do |format|
