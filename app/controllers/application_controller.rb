@@ -44,6 +44,5 @@ class ApplicationController < ActionController::Base
   
   def user_nav
     @user_nav ||= Navigation.new NAV_MODULES
-  end
-  
+  end 
 end

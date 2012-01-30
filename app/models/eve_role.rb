@@ -34,7 +34,7 @@ class EveRole < ActiveRecord::Base
   # Set Atribute name and Bonus
   def self.set_role_type(character, xml, type = "")
     roles = []
-    xml.xpath("/eveapi/result/rowset[@name='corporationRoles" + type + "']").each do |role|
+    xml.xpath("/eveapi/result/rowset[@name='corporationRoles" + type + "']/row").each do |role|
       r = character.eve_roles.new
       r.role_id = role['roleID']
       r.role_name = role['roleName']

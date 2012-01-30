@@ -21,7 +21,6 @@ class EveNotification < ActiveRecord::Base
     begin
       # get mail headers XML
       xml = api.get("/char/Notifications")
-      logger.warn xml
     rescue Exception => e
       puts e.inspect
     else

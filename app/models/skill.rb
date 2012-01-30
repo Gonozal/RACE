@@ -68,7 +68,6 @@ class Skill < ActiveRecord::Base
     end
     # Iterate over all Skills retrieved from the API
     skill_names.each do |skill|
-      logger.warn skill.to_yaml
       skills << new_skill(old_skills, skill, character, skills_from_api[skill.typeID.to_s])
     end
 

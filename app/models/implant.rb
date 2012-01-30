@@ -4,7 +4,6 @@ class Implant < ActiveRecord::Base
   # Warning: Also accepts a xml file 
   def self.api_update(character, xml = false)
     # First, delete all old implants
-    logger.warn character.to_yaml
     unless xml
       begin
         api = set_api(character)

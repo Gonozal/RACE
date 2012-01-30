@@ -62,7 +62,6 @@ class Contract < ActiveRecord::Base
     db_contracts.each do |contract|
       contracts[contract.id.to_s] = contract
     end  
-    logger.warn contracts
     contracts
   end
 
@@ -78,14 +77,11 @@ class Contract < ActiveRecord::Base
         api.contract_id = row['contractID'].to_i
         begin
           xml = api.get(api_path + "ContractItems")
-          logger.warn xml
         rescue Exception => e
           puts e.inspect
         else
           # Add items to contract
-          logger.warn "item_rows"
           xml.xpath("/eveapi/result/rowset[@name='itemList']/row").each do |row|
-            logger.warn row
             ci = c.contract_items.new
             ci.update_fom_row(row)
           end
