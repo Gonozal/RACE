@@ -86,8 +86,8 @@ class EveNotification < ActiveRecord::Base
   # Sets API object with required attributes
   def self.set_api(params = {})
     api = EVEAPI::API.new
-    api.api_id = params[:owner].api_id
-    api.v_code = params[:owner].v_code
+    api.api_id = params[:owner].api_key.api_id
+    api.v_code = params[:owner].api_key.v_code
     api.character_id = params[:owner].id
     api
   end

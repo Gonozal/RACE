@@ -2,9 +2,8 @@ class CreateCharacters < ActiveRecord::Migration
   def change
     create_table :characters do |t|
       t.integer :account_id
+      t.integer :api_key_id
       t.string :name
-      t.integer :api_id
-      t.string :v_code
       t.string :corporation_name
       t.integer :corporation_id
       t.integer :skill_in_training

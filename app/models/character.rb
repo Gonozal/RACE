@@ -1,7 +1,10 @@
 class Character < ActiveRecord::Base
+  attr_accessor :api_id, :v_code 
+  
   # FIXME: attribute_accessible missing!
   belongs_to :account
   belongs_to :corporation
+  belongs_to :api_key
 
   has_many :roles
 
@@ -37,6 +40,7 @@ class Character < ActiveRecord::Base
   after_create :add_base_roles, :save_portrait
   after_destroy :destroy_portrait
   
+
   # return the role symbols needed for the declarative_authorization gem.
   # Basically loops through all the associated roles
   # 
@@ -62,7 +66,6 @@ class Character < ActiveRecord::Base
   # 
   # @return [[character]] An array of Characters
   def self.find_by_api!(api_id, v_code)
-    return @characters unless @characters.nil?
     unless valid_api_format?(api_id, v_code)
       raise EVEAPI::Exception::APIError.new('Invalid API Format')
     end
@@ -82,7 +85,7 @@ class Character < ActiveRecord::Base
         :v_code => v_code
       }
     end
-    @characters = characters 
+    characters 
   end
 
   # Given a Character object, updates Character data from the API
@@ -95,22 +98,20 @@ class Character < ActiveRecord::Base
     rescue Exception => e
       logger.error "EVE API Exception cought!"
     else
-      # Update individual rows of API data
+      # Update date of birth manually because of discrepancy between DB and API name
       self.date_of_birth = xml.xpath('/eveapi/result/DoB').text
-      self.race = xml.xpath('/eveapi/result/race').text
-      self.blood_line = xml.xpath('/eveapi/result/bloodLine').text
-      self.ancestry = xml.xpath('/eveapi/result/ancestry').text
-      self.gender = xml.xpath('/eveapi/result/gender').text
-      self.corporation_name = xml.xpath('/eveapi/result/corporationName').text
-      self.corporation_id = xml.xpath('/eveapi/result/corporationID').text
-      self.clone_name = xml.xpath('/eveapi/result/cloneName').text
-      self.clone_skill_points = xml.xpath('/eveapi/result/cloneSkillPoints').text
-      self.balance = xml.xpath('/eveapi/result/balance').text
-      self.intelligence = xml.xpath('/eveapi/result/attributes/intelligence').text
-      self.memory = xml.xpath('/eveapi/result/attributes/memory').text
-      self.charisma = xml.xpath('/eveapi/result/attributes/charisma').text
-      self.perception = xml.xpath('/eveapi/result/attributes/perception').text
-      self.willpower = xml.xpath('/eveapi/result/attributes/willpower').text
+      # Set Array containing xml paths
+      a = ["race", "bloodLine", "ancestry", "gender", "corporationName",
+        "corporationID", "cloneName", "cloneSkillPoints", "balance",
+        "attributes/intelligence", "attributes/memory", "attributes/charisma",
+        "attributes/perception", "attributes/willpower"]
+      # Update attributes using the XML paths 
+      a.each do |param|
+        param_u = param.gsub("attributes/", "").underscore
+        if respond_to?(:"#{param_u}=")
+          send(:"#{param_u}=", xml.xpath("/eveapi/result/" + param).text)
+        end
+      end
       self.save
 
       # Update implants rowset
@@ -134,16 +135,16 @@ class Character < ActiveRecord::Base
   # Check if provided API data is valid
   def valid_api?
     api = EVEAPI::API.new
-    api.api_id, api.v_vode = api_id, v_code
-    
+    api.api_id, api.v_code = api_key.api_id, api_key.v_code
+
     begin
       xml = api.get("account/APIKeyInfo")
     rescue Exception => e
       logger.error "EVE API Exception cought!"
       # logger.error e.inspect
     else
-      if xml.xpath('/eveapi/result/key')['accessMask'].present?
-        true
+      if xml.xpath("/eveapi/result/key/rowset/row[@characterName='#{name}']").present?
+        return true
       end
     end
     false
@@ -154,7 +155,7 @@ class Character < ActiveRecord::Base
   # If his corporation does not yet exist, it is created
   def check_character_corporations
     if self.id_changed?
-      unless Corporation.find_by_id(self.id).blank?
+      unless Corporation.find_by_id(self.corporation_id).blank?
         true
       else
         corporation = Corporation.new
@@ -169,8 +170,8 @@ class Character < ActiveRecord::Base
   # Sets API data from character object
   def set_api
     api = EVEAPI::API.new
-    api.api_id = api_id
-    api.v_code = v_code
+    api.api_id = api_key.api_id
+    api.v_code = api_key.v_code
     api.character_id = id
     api
   end
@@ -179,7 +180,7 @@ class Character < ActiveRecord::Base
   # ensures that the supplied API data is valid
   def validate_api
     # only validate if either api_id, name or v_code have been changed
-    if api_id_changed? or v_code_changed? or name_changed?
+    if api_key.api_id_changed? or api_key.v_code_changed? or name_changed?
       unless valid_api?
         errors.add :v_code, 'invalid vCode or Api ID'
         false

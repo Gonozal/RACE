@@ -5,6 +5,7 @@ class CreateCorporations < ActiveRecord::Migration
       t.string :ticker
       t.string :ceo_name
       t.integer :ceo_character_id
+      t.integer :api_key_id
       t.text :description
       t.string :url
       t.integer :alliance_id

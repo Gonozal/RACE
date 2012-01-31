@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  api_id: 1
+  v_code: MyString
+  character_id: 1
+  corporation_id: 1
+
+two:
+  api_id: 1
+  v_code: MyString
+  character_id: 1
+  corporation_id: 1

@@ -20,7 +20,7 @@ class EveAsset < ActiveRecord::Base
     time = Time.now
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
-    api.api_id, api.v_code = params[:owner].api_id, params[:owner].v_code
+    api.api_id, api.v_code = params[:owner].api_key.api_id, params[:owner].api_key.v_code
     api.character_id = params[:owner].id
 
     # Delete all assets for the Owner, delete_all isntead of destroy_all because

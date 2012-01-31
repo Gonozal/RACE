@@ -30,7 +30,7 @@ class WalletJournal < ActiveRecord::Base
   def self.api_update_own(params = {})
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
-    api.api_id, api.v_code = params[:owner].api_id, params[:owner].v_code
+    api.api_id, api.v_code = params[:owner].api_key.api_id, params[:owner].api_key.v_code
     api.character_id = params[:owner].id
 
     wallet_journals = params[:owner].wallet_journals

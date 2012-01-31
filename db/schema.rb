@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120129002711) do
+ActiveRecord::Schema.define(:version => 20120131142212) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -38,11 +38,17 @@ ActiveRecord::Schema.define(:version => 20120129002711) do
 
   add_index "alliances", ["executor_corp_id"], :name => "index_alliances_on_executor_corp_id"
 
-  create_table "characters", :force => true do |t|
-    t.integer  "account_id"
-    t.string   "name"
+  create_table "api_keys", :force => true do |t|
     t.integer  "api_id"
     t.string   "v_code"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "characters", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "api_key_id"
+    t.string   "name"
     t.string   "corporation_name"
     t.integer  "corporation_id"
     t.integer  "skill_in_training"
@@ -141,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20120129002711) do
     t.string   "ticker"
     t.string   "ceo_name"
     t.integer  "ceo_character_id"
+    t.integer  "api_key_id"
     t.text     "description"
     t.string   "url"
     t.integer  "alliance_id"
@@ -232,6 +239,8 @@ ActiveRecord::Schema.define(:version => 20120129002711) do
   end
 
   create_table "industry_jobs", :force => true do |t|
+    t.integer  "job_id"
+    t.integer  "corporation_id"
     t.integer  "assembly_line_id"
     t.integer  "container_id"
     t.integer  "installed_item_id"

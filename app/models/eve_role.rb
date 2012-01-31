@@ -48,8 +48,8 @@ class EveRole < ActiveRecord::Base
   # Sets API data from character object
   def self.set_api(character)
     api = EVEAPI::API.new
-    api.api_id = character.api_id
-    api.v_code = character.v_code
+    api.api_id = character.api_key.api_id
+    api.v_code = character.api_key.v_code
     api.character_id = character.id
     api
   end

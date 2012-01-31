@@ -4,17 +4,13 @@ class Corporation < ActiveRecord::Base
   has_many :characters
 
   # Eve Related Relationshipss
+  belongs_to :api_key
   has_many :wallet_transactions
   has_many :wallet_journals
   has_many :market_orders
   has_many :eve_assets
   has_many :contracts, foreign_key: :issuer_corp_id, conditions: "for_corp = 1"
   has_many :assigned_contracts, class_name: "Contract", foreign_key: :assignee_id
-  
-  def index
-    
-  end
-
 
   # Update publically available Corporation Data from API 
   def attributes_from_api
