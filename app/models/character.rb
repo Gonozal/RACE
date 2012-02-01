@@ -191,7 +191,7 @@ class Character < ActiveRecord::Base
   
   # validates the API format just as 'validate_api_format' does but does not add errors
   def self.valid_api_format?(api_id, v_code)
-    api_id.to_s =~ /^[1-9][0-9]+$/ and v_code =~ /^[a-zA-Z0-9]{5,64}$/
+    api_id.to_s =~ /^[1-9][0-9]+$/ and v_code =~ /^[a-zA-Z0-9]{64,64}$/
   end
   
   def valid_api_format?

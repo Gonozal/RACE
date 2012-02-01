@@ -58,6 +58,8 @@ group :test, :development do
   gem 'turn', :require => false
   #gem 'cucumber-rails'
   gem 'database_cleaner'
-  #gem 'rspec'
-  #gem 'factory_girl_rails'
+  gem 'rspec-rails'
+  gem "guard-rspec"
+  gem "factory_girl_rails", :require => false
+  gem "capybara"
 end

@@ -1,5 +1,5 @@
 class EVEAPI::EveCache < ActiveRecord::Base
-  set_table_name "eveapi_cache"
+  self.table_name = "eveapi_cache"
   
   # loads the requested dataset from the cache.
   # * uri (String) - host uri
