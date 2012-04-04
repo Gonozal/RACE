@@ -38,4 +38,14 @@ class Corporation < ActiveRecord::Base
       self.member_count = xml.xpath('//memberCount').text
     end
   end
+
+  # Returns total amount of tax received, grouped by character
+  def tax_amount_received(params = [])
+    params[:from] ||= Date.today - 1.months
+    params[:to] ||= Date.today
+
+    journals = WalletJournal.joins(:character).select("tax_amount, character_id, name")
+    journals = journals.where(tax_receiver_id: id, date: (params[:from]..params[:to]))
+    journals = jorunals.group(:character_id).order("character_id").all
+  end
 end

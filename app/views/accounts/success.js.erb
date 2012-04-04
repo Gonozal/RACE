@@ -10,7 +10,7 @@ $(function() {
   // Remove all previous error messages
   $("form.account span.error, form.account span.warning").remove();
   
-  $('form.account').fadeOut('350', function() {
+  $('form#new_account').fadeOut('350', function() {
     $(this).after('<div class="success">'+ success_message +'<div>').end().hide().fadeIn('350');
   });
   
@@ -18,6 +18,6 @@ $(function() {
   // redirect to the login url (users need to login after creating an account)
   setTimeout(function() {
     window.location = redirect_url;
-  }, 5000);
+  }, 3000);
   
 });

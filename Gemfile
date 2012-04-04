@@ -11,15 +11,24 @@ gem 'mysql'
 gem "composite_primary_keys", ">= 5.0.0.rc1"
 gem 'jquery-rails'
 
-# Asset template engines
-gem 'sass-rails'
-gem "coffee-rails"
-gem 'uglifier'
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer'
+
+  gem 'uglifier', '>= 1.0.3'
+  gem 'bootstrap-sass'
+end
 
 # View Layer
 gem 'draper'
 gem 'simple_form'
 gem 'slim'
+gem 'will_paginate', '~> 3.0'
 
 # Performance Booster Gems
 gem 'activerecord-import'
@@ -61,5 +70,7 @@ group :test, :development do
   gem 'rspec-rails'
   gem "guard-rspec"
   gem "factory_girl_rails", :require => false
-  gem "capybara"
+  gem 'vcr'
+  gem 'fakeweb'
+  gem 'capybara-mechanize'
 end

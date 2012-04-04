@@ -1,10 +1,10 @@
 $(function() {
   // re-enable form submit
   $('#account_submit').removeAttr('disabled');
-  $('form.account button[type*="submit"]').removeAttr('disabled');
+  $('form button[type*="submit"]').removeAttr('disabled');
   
   // Remove all previous error messages
-  $("form.account span.alert, form.account span.notice, form.account span.info, form.account span.success").remove();
+  $("form span.alert, form span.notice, form span.info, form span.success").remove();
   
   // Display validation errors in-line below the input fields
   <% if @account.present? and @account.errors.any? %>

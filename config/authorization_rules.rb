@@ -17,7 +17,7 @@ authorization do
   
   role :guest do
     has_permission_on :accounts, :to => [:new, :create]
-    has_permission_on :characters, :to => [:new, :create]
+    has_permission_on :characters, :to => [:new, :edit, :update, :create]
     has_permission_on :sessions, :to => [:new, :create]
   end
   

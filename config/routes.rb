@@ -1,4 +1,6 @@
 Race::Application.routes.draw do
+  resources :fittings
+
   resources :industry_jobs
 
   resources :contracts
@@ -38,7 +40,7 @@ Race::Application.routes.draw do
   
   get "characters/skills" => 'skills#index'
   
-  get "characters/edit" => "characters#edit", :as => "edit_characters"
+  get "characters/new" => "characters#new", :as => "new_characters"
   post "characters/update" => "characters#update"
   
   # search and autocomplete routes

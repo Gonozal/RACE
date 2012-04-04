@@ -11,7 +11,7 @@ SimpleForm.setup do |config|
   # config.hint_class = :hint
 
   # Default tag used on errors.
-  config.error_class = :alert
+  # config.error_class = :alert
 
   # Default tag used on errors.
   # config.error_tag = :span
@@ -73,7 +73,7 @@ SimpleForm.setup do |config|
   config.default_input_size = 40
 
   # disables html 5 attributes in form fields
-  config.html5 = false
+  # config.html5 = false
   
   # When false, do not use translations for labels, hints or placeholders.
   # config.translate = true

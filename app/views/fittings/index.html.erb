@@ -1,0 +1,21 @@
+<h1>Listing fittings</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @fittings.each do |fitting| %>
+  <tr>
+    <td><%= link_to 'Show', fitting %></td>
+    <td><%= link_to 'Edit', edit_fitting_path(fitting) %></td>
+    <td><%= link_to 'Destroy', fitting, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Fitting', new_fitting_path %>

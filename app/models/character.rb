@@ -134,6 +134,7 @@ class Character < ActiveRecord::Base
   
   # Check if provided API data is valid
   def valid_api?
+    #Set API object
     api = EVEAPI::API.new
     api.api_id, api.v_code = api_key.api_id, api_key.v_code
 
@@ -144,6 +145,7 @@ class Character < ActiveRecord::Base
       # logger.error e.inspect
     else
       if xml.xpath("/eveapi/result/key/rowset/row[@characterName='#{name}']").present?
+        # If EVE API response contains the character name, return true
         return true
       end
     end
@@ -195,6 +197,8 @@ class Character < ActiveRecord::Base
   end
   
   def valid_api_format?
+    api_id ||= api_key.api_id
+    v_code ||= api_key.v_code
     self.valid_api_format?(api_id, v_code)
   end
   
