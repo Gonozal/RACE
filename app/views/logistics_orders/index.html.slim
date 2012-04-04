@@ -1,0 +1,14 @@
+- content_for :headline do
+  | Logistics
+
+- unless @logistics_orders.blank?
+  - for logistics_order in @logistics_orders
+    div id="logistics_order#{corporation.id}\"
+      strong #{logistics_order.name}
+      p
+        = link_to "edit", edit_logistics_order_path(logistics_order)
+        = link_to "destroy", logistics_order, :confirm => "Are you sure?", \
+             :remote => true, :method => :delete
+- else
+  p
+    | There are no Orders

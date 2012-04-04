@@ -22,6 +22,8 @@ Race::Application.routes.draw do
 
   resources :skills
 
+  resources :logistics_orders
+
   match 'register' => 'accounts#new', :as => 'register'
   # alternative route for adding new characters (aka character registration)
   get "characters/add" => 'characters#new', :as => 'characters/add'

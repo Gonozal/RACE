@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131142212) do
+ActiveRecord::Schema.define(:version => 20120403163814) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -230,6 +230,27 @@ ActiveRecord::Schema.define(:version => 20120131142212) do
 
   add_index "eveapi_cache", ["request_hash"], :name => "index_eveapi_cache_on_request_hash"
 
+  create_table "fitting_modules", :force => true do |t|
+    t.integer  "fitting_id"
+    t.integer  "slot"
+    t.string   "type"
+    t.integer  "type_id"
+    t.integer  "charge_type_id"
+    t.integer  "amount"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "fittings", :force => true do |t|
+    t.integer  "character_id"
+    t.boolean  "corp_approved"
+    t.boolean  "alliance_approved"
+    t.integer  "ship_type_id"
+    t.text     "description"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "implants", :force => true do |t|
     t.integer  "character_id"
     t.string   "augmentator_name"
@@ -281,6 +302,30 @@ ActiveRecord::Schema.define(:version => 20120131142212) do
   add_index "industry_jobs", ["installed_item_location_id"], :name => "index_industry_jobs_on_installed_item_location_id"
   add_index "industry_jobs", ["installer_id"], :name => "index_industry_jobs_on_installer_id"
 
+  create_table "logistics_destinations", :force => true do |t|
+    t.integer  "station_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "logistics_order_items", :force => true do |t|
+    t.integer  "logistics_order_id"
+    t.integer  "type_id"
+    t.integer  "amount",             :default => 1
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  create_table "logistics_orders", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "postman_id"
+    t.boolean  "submitted",      :default => false
+    t.string   "status"
+    t.integer  "destination_id"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
   create_table "mailerships", :force => true do |t|
     t.integer  "character_id"
     t.integer  "mailing_list_id"
@@ -317,6 +362,14 @@ ActiveRecord::Schema.define(:version => 20120131142212) do
     t.integer  "issued"
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
+  end
+
+  create_table "market_prices", :force => true do |t|
+    t.integer  "type_id"
+    t.integer  "character_id",                                :default => 0
+    t.decimal  "price",        :precision => 14, :scale => 2
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -358,6 +411,11 @@ ActiveRecord::Schema.define(:version => 20120131142212) do
   add_index "skills", ["character_id"], :name => "index_skills_on_character_id"
   add_index "skills", ["type_id"], :name => "index_skills_on_type_id"
   add_index "skills", ["updated_at"], :name => "index_skills_on_updated_at"
+
+  create_table "so_awesomes", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "wallet_journals", :force => true do |t|
     t.integer  "character_id"
