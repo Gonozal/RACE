@@ -1,8 +1,0 @@
-- content_for :headline do
-  | Please Chhose a new password?
-
-= simple_form_for @account, :remote => :true, :url => url_for(:action => 'update', :controller => 'forget'), \
-  :method => :post, :html => { :class => 'singleform submit-once compact' } do |f|
-  = f.input :password, :hint => "please choose your new password"
-  = f.input :password_confirmation, :wrapper_html => { :class => "last-of-group" }
-  button type="submit" change password
