@@ -39,6 +39,7 @@ gem 'activerecord-import'
 # Athorisaion and Authentication
 gem 'declarative_authorization'
 gem 'bcrypt-ruby'
+gem 'devise'
 
 # Custom RACE specific gems
 gem 'nokogiri'
