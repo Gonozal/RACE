@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
     @account = current_account
     if @account.password == params[:account][:old_password] 
       if @account.update_attributes(:password => params[:account][:password], :password_confirmation => params[:account][:password_confirmation])
-        cookies.permanent.signed[:logged_in] = [@account.id, @account.password.salt]
+        cookies.permanent.signed[:logged_in] = [@account.id, @account.password_digest.salt]
         @success_type = "update_account"
         render "success"
       else 
@@ -42,7 +42,7 @@ class AccountsController < ApplicationController
     @account = Account.new(params['account'])
     if @account.save
       account = Account.find_by_name(@account.name)
-      cookies.permanent.signed[:logged_in] = [account.id, account.password.salt]
+      cookies.permanent.signed[:logged_in] = [account.id, account.password_digest.salt]
       @success_type = "create_account"
       render "success"
     else

@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20120403163814) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
-    t.string   "password_hash"
+    t.string   "password_digest"
     t.integer  "main_character_id"
     t.string   "email"
     t.string   "forgot_password_hash"
@@ -41,8 +41,9 @@ ActiveRecord::Schema.define(:version => 20120403163814) do
   create_table "api_keys", :force => true do |t|
     t.integer  "api_id"
     t.string   "v_code"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "registration_token"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "characters", :force => true do |t|

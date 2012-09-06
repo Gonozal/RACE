@@ -1,0 +1,12 @@
+- content_for :headline do
+  | Registration Step 1 of 2
+
+= semantic_form_for @api_key, url: wizard_path, html: { method: :put } do |f|
+  div class="input string"
+    = f.input :api_id, as: :string, label: "API ID"
+  div class="input string"
+    = f.input :v_code, label: "V Code"
+
+  = f.actions do
+    = f.action :submit, as: :button
+    

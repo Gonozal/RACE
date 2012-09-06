@@ -1,0 +1,13 @@
+- content_for :headline do
+  | Registration Step 2 of 3
+
+= semantic_form_for Character.new, url: wizard_path, html: { method: :put } do |f|
+  div class="input string"
+    = f.input :api_id, label: "Supplied API ID", input_html: { disabled: true, value: @api_key.api_id }
+
+  div class="input string"
+    = f.input :main_character, as: :select,
+      collection: Hash[@api_key.fetch_characters.map{ |c| [c[:name], c[:id]] }]
+
+  = f.actions do
+    = f.action :submit, as: :button

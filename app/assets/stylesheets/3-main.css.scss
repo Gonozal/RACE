@@ -329,7 +329,7 @@ body {
    ########### Default Forms ##############
    ######################################## */
 #content form {
-  $label-width: 12em;
+  $label-width: 14em;
   $line-height: 3.5em;
   $compact-line-height: 2.2em;
   $margin: 1em;
@@ -424,9 +424,9 @@ body {
   }
   
   input {
-    float: right;
-    margin-left: 20px;
-    margin-right: $margin;
+    // float: right;
+    // margin-left: 20px;
+    // margin-right: $margin;
     &:focus {
       outline:none;
     }
@@ -474,7 +474,7 @@ body {
   }
 
   input[type="text"], input[type="email"], input[type="password"], textarea {
-    width:22em;
+    width:45em;
     font-size: 90%;
     height: $line-height;
     padding: 0 3px;

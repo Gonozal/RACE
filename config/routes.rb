@@ -24,12 +24,14 @@ Race::Application.routes.draw do
 
   resources :logistics_orders
 
+  resources :registration
+
   match 'register' => 'accounts#new', :as => 'register'
   # alternative route for adding new characters (aka character registration)
   get "characters/add" => 'characters#new', :as => 'characters/add'
   get "login" => "sessions#new", :as => "login"
   get "logout" => "sessions#destroy", :as => "logout"
-  get "registration" => "accounts#new", :as => "registration"
+  get "registration_old" => "accounts#new", :as => "registration"
   
   # routes for the "forgot password" and "reset password" functionality
   get 'forget' => 'forget#show', :as => "forget"

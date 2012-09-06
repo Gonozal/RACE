@@ -1,15 +1,17 @@
 source 'http://rubygems.org'
 
-gem 'rails', "~> 3.2.0"
+gem 'rails', "3.2.6"
 
-
-# Bundle ed ge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
+# Database Gems
 gem 'sqlite3'
 gem 'mysql'
+
+# Composite Pirmary Keys on a model level
 gem "composite_primary_keys", ">= 5.0.0.rc1"
+
+# Jquery JS library
 gem 'jquery-rails'
+gem 'wicked'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -27,21 +29,30 @@ end
 # View Layer
 gem 'draper'
 gem 'simple_form'
+gem 'formtastic'
 gem 'slim'
 gem 'will_paginate', '~> 3.0'
 
 # Performance Booster Gems
 gem 'activerecord-import'
 
-#Athorisaion and Authentication
+# Athorisaion and Authentication
 gem 'declarative_authorization'
-gem 'bcrypt-ruby', :require => 'bcrypt'
+gem 'bcrypt-ruby'
 
 # Custom RACE specific gems
-gem 'whenever'
 gem 'nokogiri'
+
+# Scheduler
+gem 'whenever'
+
+# Background Jobs
 gem 'resque', :require => 'resque/server' #, git: 'git://github.com/defunkt/resque.git'
-gem 'devil'
+
+# Images
+gem 'rmagick'
+
+# Ancestry for recursive assets in containers
 gem 'ancestry'
 
 group :strange_dependencies do

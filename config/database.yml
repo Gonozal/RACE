@@ -17,7 +17,7 @@ development:
 
 eve_development:
   adapter: sqlite3
-  database: db/evedb.db
+  database: db/inferno12.db
   pool: 5
   timeout: 5000
 
@@ -32,7 +32,7 @@ test: &test
 
 eve_test:
   adapter: sqlite3
-  database: db/evedb.db
+  database: db/inferno12.db
   pool: 5
   timeout: 5000
 

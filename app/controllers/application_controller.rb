@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   
   protect_from_forgery
-  helper_method :current_user, :current_account, :user_nav, :eve_time
+  before_filter :instantiate_controller_and_action_names
+  helper_method :current_user, :current_account, :user_nav, :eve_time, :logged_in?
   
   
   private
@@ -17,7 +18,7 @@ class ApplicationController < ActionController::Base
   
   # Return Account Character of logged in user
   def current_account
-    @current_account ||= Account.authenticated_with_token(*cookies.signed[:logged_in]) if cookies.signed[:logged_in]
+    @current_account ||= Account.find_by_auth_token(cookies[:auth_token]) if cookies[:auth_token]
   end
 
   # From here on: Methods for the API registration process
@@ -45,4 +46,19 @@ class ApplicationController < ActionController::Base
   def user_nav
     @user_nav ||= Navigation.new NAV_MODULES
   end 
+
+  def logged_in?
+    !! current_account
+  end
+
+  def instantiate_controller_and_action_names
+    @current_action = action_name
+    @current_controller = controller_name
+  end
+
+  def logout!(msg = true)
+    cookies.delete :auth_token
+    flash[:notice] = 'Your password or email have changed. Please login again' if msg
+    redirect_to login_url
+  end
 end
