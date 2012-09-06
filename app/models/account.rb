@@ -1,19 +1,19 @@
-# The account Class. Holds all information for a user account including authentication 
+# The account Class. Holds all information for a user account including authentication
 # information (name, password, email address etc).
-# 
+#
 # One Account can have many characters which need to be valid EVE Online characters. (see Character)
 # An Account also has only one main_character
 class Account < ActiveRecord::Base
   attr_accessor :main_character_name
   # Hash password
   attr_accessible :name, :email, :email_confirmation, :password, :password_confirmation
-  
+
   has_secure_password
-  
+
   validates_uniqueness_of   :name
   validates_format_of       :name, with: /^\w[\w\d ]+$/
   validates_length_of       :name, within: 3..24
-                    
+
   validates_presence_of     :password, on: :create
   validates_length_of       :password, minimum: 5, on: :create
 

@@ -1,10 +1,8 @@
 class ApplicationController < ActionController::Base
-  
   protect_from_forgery
   before_filter :instantiate_controller_and_action_names
   helper_method :current_user, :current_account, :user_nav, :eve_time, :logged_in?
-  
-  
+
   private
   # saves the EVE Online time in an instance variable to be accessed i.e. by the view
   def eve_time
@@ -15,10 +13,12 @@ class ApplicationController < ActionController::Base
   def current_user
     current_account.blank? ? nil : current_account.main_character
   end
-  
+
   # Return Account Character of logged in user
   def current_account
-    @current_account ||= Account.find_by_auth_token(cookies[:auth_token]) if cookies[:auth_token]
+    if cookies[:auth_token]
+      @current_account ||= Account.find_by_auth_token(cookies[:auth_token])
+    end
   end
 
   # From here on: Methods for the API registration process
