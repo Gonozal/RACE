@@ -15,11 +15,11 @@ class ApplicationController < ActionController::Base
   end
 
   # Return Account Character of logged in user
-  def current_account
-    if cookies[:auth_token]
-      @current_account ||= Account.find_by_auth_token(cookies[:auth_token])
-    end
-  end
+  # def current_account
+  #   if cookies[:auth_token]
+  #     @current_account ||= Account.find_by_auth_token(cookies[:auth_token])
+  #   end
+  # end
 
   # From here on: Methods for the API registration process
   def api_credentials_changed?

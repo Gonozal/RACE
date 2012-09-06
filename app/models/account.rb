@@ -7,15 +7,12 @@ class Account < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :lockable, :confirmable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessor :main_character_name
   devise :database_authenticatable, :confirmable, :recoverable, :registerable,
-    :rememberable, :trackable, :vaidateable, :lockable
+    :rememberable, :trackable, :validatable, :lockable
 
   has_many :characters, :dependent => :destroy, :include => :roles
   belongs_to :main_character, :class_name => "Character"
