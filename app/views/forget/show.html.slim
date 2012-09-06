@@ -1,7 +1,0 @@
-- content_for :headline do
-  | Forgot your password?
-
-= simple_form_for @account = Account.new, :remote => true, :url => url_for(:action => 'mail', :controller => 'forget'), \
-  :method => :post, :html => { :class => 'singleform', :id => 'mail_password' } do |f|
-  = f.input :email, :hint => "the link to reset your password will be sent to your email address", :wrapper_html => { :class => "only-of-group" }
-  button type="submit" change password
