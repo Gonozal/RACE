@@ -37,7 +37,7 @@ gem 'activerecord-import'
 
 # Athorisaion and Authentication
 gem 'declarative_authorization'
-gem 'bcrypt-ruby'
+# gem 'bcrypt-ruby'
 gem 'devise'
 
 # Custom RACE specific gems
@@ -56,8 +56,8 @@ gem 'rmagick'
 gem 'ancestry'
 
 group :strange_dependencies do
-  gem 'ruby_parser'
-  gem 'json'
+  gem 'ruby_parser' # wird benötigt von resque
+  # gem 'json'
 end
 
 # Use unicorn as the web server

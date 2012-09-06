@@ -4,6 +4,15 @@
 # One Account can have many characters which need to be valid EVE Online characters. (see Character)
 # An Account also has only one main_character
 class Account < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :lockable, :confirmable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessor :main_character_name
   # Hash password
   attr_accessible :name, :email, :email_confirmation, :password, :password_confirmation

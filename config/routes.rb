@@ -1,4 +1,6 @@
 Race::Application.routes.draw do
+  devise_for :accounts
+
   resources :fittings
 
   resources :industry_jobs

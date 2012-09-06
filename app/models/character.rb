@@ -1,6 +1,6 @@
 class Character < ActiveRecord::Base
   attr_accessor :api_id, :v_code, :main_character
-  
+
   # FIXME: attribute_accessible missing!
   belongs_to :account
   belongs_to :corporation
@@ -69,7 +69,7 @@ class Character < ActiveRecord::Base
       EveRole.api_update(self, xml)
     end
   end
-  
+
   # Sets API data from character object
   def set_api
     api = EVEAPI::API.new
@@ -83,11 +83,11 @@ class Character < ActiveRecord::Base
   def save_portrait
     Resque.enqueue(ApiImageBackgrounder, 'character', id, [32,64,128,256])
   end
-  
+
   def destroy_portrait
     Resque.enqueue(ApiImageBackgrounder, 'character', id, nil, true)
   end
-  
+
   # Temporary Roles allocation based on character name
   def add_base_roles
     self.roles.create(:title => "goon")
