@@ -6,15 +6,13 @@
     = f.input :main_character_name, label: "Registration for", 
         input_html: { disabled: true, value: @character[:name] }
   div class="input string"
-    = f.input :name, label: "Account name", hint: "Do not use your EVE Online Account Name"
+    = f.input :email, label: "Email", required: true
   div class="input string"
-    = f.input :password, label: "Password"
+    = f.input :email_confirmation, label: "Email Confirmation", required: true
   div class="input string"
-    = f.input :password_confirmation, label: "Password Confirmation"
+    = f.input :password, label: "Password", required: true
   div class="input string"
-    = f.input :email, label: "Email"
-  div class="input string"
-    = f.input :email_confirmation, label: "Email Confirmation"
+    = f.input :password_confirmation, label: "Password Confirmation", required: true
 
   = f.actions do
     = f.action :submit, as: :button

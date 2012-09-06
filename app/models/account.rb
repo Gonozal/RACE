@@ -14,6 +14,8 @@ class Account < ActiveRecord::Base
   devise :database_authenticatable, :confirmable, :recoverable, :registerable,
     :rememberable, :trackable, :validatable, :lockable
 
+  validates_confirmation_of :email
+
   has_many :characters, :dependent => :destroy, :include => :roles
   belongs_to :main_character, :class_name => "Character"
 end

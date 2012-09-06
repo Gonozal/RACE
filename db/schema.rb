@@ -24,16 +24,23 @@ ActiveRecord::Schema.define(:version => 20120403163814) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "name"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        :default => 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
     t.integer  "main_character_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end
 
+  add_index "accounts", ["confirmation_token"], :name => "index_accounts_on_confirmation_token", :unique => true
   add_index "accounts", ["email"], :name => "index_accounts_on_email", :unique => true
   add_index "accounts", ["main_character_id"], :name => "index_accounts_on_main_character_id"
-  add_index "accounts", ["name"], :name => "index_accounts_on_name"
   add_index "accounts", ["reset_password_token"], :name => "index_accounts_on_reset_password_token", :unique => true
+  add_index "accounts", ["unlock_token"], :name => "index_accounts_on_unlock_token", :unique => true
 
   create_table "alliances", :force => true do |t|
     t.string   "name"
