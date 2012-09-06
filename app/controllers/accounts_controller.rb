@@ -10,8 +10,8 @@ class AccountsController < ApplicationController
   def new
     if current_account.blank?
       @account = Account.new
-    else 
-      redirect_to login_url
+    else
+      redirect_to account_session_url
     end
   end
 

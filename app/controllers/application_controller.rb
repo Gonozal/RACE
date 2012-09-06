@@ -59,6 +59,6 @@ class ApplicationController < ActionController::Base
   def logout!(msg = true)
     cookies.delete :auth_token
     flash[:notice] = 'Your password or email have changed. Please login again' if msg
-    redirect_to login_url
+    redirect_to account_session_url
   end
 end

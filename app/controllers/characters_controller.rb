@@ -14,7 +14,7 @@ class CharactersController < ApplicationController
    
   def new
     if current_account.blank?
-      redirect_to login_url
+      redirect_to account_session_url
     else
       @character = Character.new
     end
@@ -86,7 +86,7 @@ class CharactersController < ApplicationController
         # If user confirmed char deletion with the characters name, delete it
         c.destroy
         c.errors.add :success, "Character #{c.name} succesfully deleted"
-      elsif not (c.api_key.v_code_changed? or c.api_key.api_id_changed?)
+      elsif not(c.api_key.v_code_changed? or c.api_key.api_id_changed?)
         # Do nothing if nothing was changed
         c.errors.add :notice, "API data for #{c.name} did not change"
       # Validate the API bevore trying to save it
