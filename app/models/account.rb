@@ -27,7 +27,7 @@ class Account < ActiveRecord::Base
   # Authenticate user with name and password
   def self.authenticate(name, password)
     account = find_by_name(name)
-    return account if account and authenticate(password)
+    return account if account and account.authenticate password
   end
 
   private
