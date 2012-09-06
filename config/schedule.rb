@@ -26,3 +26,7 @@ every 65.seconds do
     puts "Skills updated"
   end
 end
+
+every 30.seconds do
+  ApiKey.where(:registration_token)
+end

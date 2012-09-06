@@ -24,10 +24,6 @@ class Account < ActiveRecord::Base
   has_many :characters, :dependent => :destroy, :include => :roles
   belongs_to :main_character, :class_name => "Character"
 
-  before_create do
-    generate_token([:auth_token, :email_verification_token])
-  end
-  
   # Authenticate user with name and password
   def self.authenticate(name, password)
     account = find_by_name(name)

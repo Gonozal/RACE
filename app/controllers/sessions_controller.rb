@@ -1,8 +1,8 @@
 class SessionsController < ApplicationController
   def new
-  	if current_account
-  		redirect_to root_url
- 	 end
+    if current_account
+      redirect_to root_url
+    end
   end
 
   # Create new session if login credentials are valid (login)
