@@ -9,7 +9,7 @@ class Account < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :email_confirmation, :password, :password_confirmation, :remember_me
   attr_accessor :main_character_name
   devise :database_authenticatable, :confirmable, :recoverable, :registerable,
     :rememberable, :trackable, :validatable, :lockable

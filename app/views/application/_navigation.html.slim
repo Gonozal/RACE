@@ -27,7 +27,7 @@ ul#navigation
                 / img src="/images/api_images/characters/#{c.id}_64.jpg" alt="#{c.name}"
                 = c.name
     li class="login"
-      a#logout_link href="#{logout_path}" title="logout" logout
+      a#logout_link href="#{destroy_account_session_path}" title="logout" logout
       a#searchactivator href="#" title="search"
       div#searchwrapper
         = render :partial => 'searchbar'
