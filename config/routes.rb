@@ -34,27 +34,27 @@ Race::Application.routes.draw do
   get "login" => "sessions#new", :as => "login"
   get "logout" => "sessions#destroy", :as => "logout"
   get "registration_old" => "accounts#new", :as => "registration"
-  
+
   # routes for the "forgot password" and "reset password" functionality
   get 'forget' => 'forget#show', :as => "forget"
   post 'forget' => 'forget#mail'
   get 'forget/:reset_hash' => 'forget#reset'
   post 'forget/:reset_hash' => 'forget#update'
-  
+
   # Route for changing the main character of an account
   get "accounts/change_main_character/:id" => 'accounts#change_main_character', :as => 'change_main_character'
-  
+
   get "characters/skills" => 'skills#index'
-  
+
   get "characters/new" => "characters#new", :as => "new_characters"
   post "characters/update" => "characters#update"
-  
+
   # search and autocomplete routes
   post "search/autocomplete"
-  
+
   get "accounts/edit" => "accounts#edit", :as => "edit_accounts"
   post "accounts/update" => "accounts#update"
-  
+
   # set site root
   root :to => 'application#index', :as => 'root'
 
@@ -65,7 +65,7 @@ Race::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  # Sample of regular route:key => "value", 
+  # Sample of regular route:key => "value",
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
 

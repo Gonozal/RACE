@@ -8,7 +8,7 @@ ul#navigation
     span#evetime_date
       / Current Year.Month.Day
       = eve_time.strftime "%Y.%m.%d"
-    
+
   - if current_account
     / Character portrait and eve "E"
     li.main
@@ -17,7 +17,7 @@ ul#navigation
         - if current_account.characters.any? and !current_user.blank?
           == char_image(current_user.id, 48, current_user.name)
           / img src="/images/api_images/characters/#{current_user.id}_48.jpg" alt="#{current_user.name}"
-      / Character Dropdown    
+      / Character Dropdown
       - if current_account.characters.any?
         ul.character-select
           - current_account.characters.each do |c|
@@ -31,20 +31,19 @@ ul#navigation
       a#searchactivator href="#" title="search"
       div#searchwrapper
         = render :partial => 'searchbar'
-  - else 
+  - else
     / Logout link
     li class="login"
       a href="#{login_path}" title="login"
         |login
       a href="#{registration_path}" title="Register"
         |sign up
-        
-  
+
 
   / Iterate over all modules aka Navigation points
   / Has to be done twice. First do set "show" attributes to decide,
   / if the node or any subnodes are to be rendered, then to render it
-  
+
   / First iteration: set "show" attributes
   - user_nav.each_child do |parent|
     - if permitted_to? parent.action.to_sym, parent.controller.to_sym
@@ -53,7 +52,7 @@ ul#navigation
       - if permitted_to? child.action.to_sym, child.controller.to_sym
         - parent.show, parent.show_children = true, true
         - child.show = true
-        
+
   / Second iteration: display navigation
   - user_nav.each_child do |nav|
     / for each module, create a new list node
@@ -62,7 +61,7 @@ ul#navigation
         / Just the background string.. Only been used once but I hate long lines...
         - nav_background = "background: url('/images/nav/48/#{nav.image}') center center no-repeat;"
         a href="#{nav.path}" title="#{nav.title}" style="#{nav_background}" #{nav.name}
-        
+
         - if nav.show_children
           ul
             - nav.each_child do |nav|
