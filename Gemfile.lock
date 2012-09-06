@@ -238,7 +238,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-import
   ancestry
-  bootstrap-sass
+  bootstrap-sass (~> 2.1.0)
   capybara-mechanize
   coffee-rails (~> 3.2.1)
   composite_primary_keys (>= 5.0.0.rc1)
