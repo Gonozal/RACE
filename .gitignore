@@ -41,7 +41,6 @@ Thumbs.db
 ################################
 .bundle
 tmp/**/*
-Gemfile.lock
 features/support/driver.rb
 .yardoc
 dump.rdb
