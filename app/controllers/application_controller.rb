@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   def api_credentials_missing?
     params['account']['api_id'].blank? or params['account']['v_code'].blank?
   end
-  
+
   def api_credentials_available?
     not api_credentials_missing?
   end
@@ -38,14 +38,14 @@ class ApplicationController < ActionController::Base
     session['api_id'] = params['account']['api_id']
     session['v_code'] = params['account']['v_code']
   end
-  
+
   def clear_api_sessions
     session['api_id'] = session['v_code'] = nil
   end
-  
+
   def user_nav
     @user_nav ||= Navigation.new NAV_MODULES
-  end 
+  end
 
   def logged_in?
     !! current_account

@@ -65,7 +65,7 @@ $color: #c0c0c0;
 @mixin transition($trans) {
   -webkit-transition: $trans;
   -moz-transition: $trans;
-  -o-transition: $trans; 
+  -o-transition: $trans;
   transition: $trans;
 }
 
@@ -79,7 +79,7 @@ $color: #c0c0c0;
 @mixin inset($r) {
   position: relative;
   z-index:1;
-  
+
   &:before {
     @include sep-border-radius(0, 0, $r, $r);
     border:1px solid hsla(0,0,100%,0.16);
@@ -95,17 +95,17 @@ $color: #c0c0c0;
 
 @mixin gradient($c1, $s1, $c2, $s2) {
   background:$c1;
-  /* IE10 */ 
+  /* IE10 */
   background-image: -ms-linear-gradient(top, $c1 $s1, $c2 $s2);
-  /* Mozilla Firefox */ 
+  /* Mozilla Firefox */
   background-image: -moz-linear-gradient(top, $c1 $s1, $c2 $s2);
-  /* Opera */ 
+  /* Opera */
   background-image: -o-linear-gradient(top, $c1 $s1, $c2 $s2);
-  /* Webkit (Safari/Chrome 10) */ 
+  /* Webkit (Safari/Chrome 10) */
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop($s1, $c1), color-stop($s2, $c2));
-  /* Webkit (Chrome 11+) */ 
+  /* Webkit (Chrome 11+) */
   background-image: -webkit-linear-gradient(top, $c1 $s1, $c2 $s2);
-  /* Proposed W3C Markup */ 
+  /* Proposed W3C Markup */
   background-image: linear-gradient(top, $c1 $s1, $c2 $s2);
 }
 
@@ -126,7 +126,7 @@ body {
   font-weight: normal;
   color: $color;
   font-size: 10.5pt;
-  
+
   // The Page Title / Banner / Header
   h1#title {
     background: #555 url('/images/logo.png') center no-repeat;
@@ -167,7 +167,7 @@ body {
         padding: 6px 0px 0px 0px;
       }
     }
-    
+
     div.right {
       float: right;
       height: 100%;
@@ -194,12 +194,12 @@ body {
   }
 
   .clearfix { clear: both; height:0; width: auto; display:block; }
-  
+
   // Überschriften
   h2, h3, h4, h5 {
     font-weight: bold;
   }
-  
+
   h2 {
     font-size: 200%;
     margin-top: 0.1em;
@@ -230,25 +230,25 @@ body {
     margin-bottom: 0.15em;
     color: darken($color, 5%);
   }
-  
+
   a {
     color: #111;
     text-shadow: none;
     text-decoration: none;
     text-shadow: 0 0 1px rgba(0,0,0,0.3);
-    
+
     &:hover {
       // color: #fff;
       // background-color: hsl(0,0,8%);
       // background-color: hsla(0,0,0,0.2);
       text-decoration: underline;
     }
-    
+
     &:visited {
-      
+
     }
   }
-  
+
   div.collapseable {
     > :nth-child(2n - 1) {
       cursor: pointer;
@@ -265,7 +265,7 @@ body {
       padding-left: 15px;
     }
   }
-  
+
 
   & > .info, & > .success, & > .notice, & > .alert {
     font-size: 90%;
@@ -275,13 +275,13 @@ body {
     text-shadow: none;
     color: #ccc;
     border-bottom: 1px solid rgba(0,0,0,0.4);
-    
+
     strong {
       display: block;
       width: $content-width;
       margin: 0 auto;
       position: relative;
-      
+
       a.close {
         background: url('/images/silk/cross_grey.png') center no-repeat;
         text-indent: -99999px;
@@ -295,7 +295,7 @@ body {
       }
     }
   }
-      
+
   .success {
     background-color: hsl(120, 80%, 13%);
   }
@@ -319,7 +319,7 @@ body {
   line-height: 130%;
   text-shadow: 0 1px 1px #0a0a0a;
   min-height: 200px;
-  
+
   a:before {
     content: "￫";
   }
@@ -334,11 +334,11 @@ body {
   $compact-line-height: 2.2em;
   $margin: 1em;
   $radius: 4px;
-  
+
   &.default-size {
     width: 600px;
   }
-  
+
   div.input {
     width: auto;
     line-height: $line-height;
@@ -347,30 +347,30 @@ body {
     border: 1px solid black;
     border-top: 1px solid rgba(255,255,255,0.1);
     position: relative;
-    
+
     &:nth-child(2), &.first-of-group {
       @include sep-border-radius($radius, $radius, 0, 0);
       border-top: 1px solid black;
     }
-    
+
     &.last-of-group {
       border-bottom: 1px solid black;
       @include sep-border-radius(0, 0, $radius, $radius);
       @include inset($radius);
     }
-    
+
     &.only-of-group {
       bottom: 1px solid black;
       @include border-radius($radius);
       @include inset($radius);
     }
   }
-  
+
   div.input.compact {
     line-height: $compact-line-height;
     min-height: $compact-line-height;
   }
-  
+
   fieldset {
     margin-top: 0.5em;
     legend {
@@ -390,7 +390,7 @@ body {
       @include inset($radius);
     }
   }
-  
+
   span.hint {
     display:block;
     font-size: 80%;
@@ -405,7 +405,7 @@ body {
     color: #ccc;
     text-align: right;
   }
-  
+
   label {
     float: left;
     margin-left: $margin;
@@ -415,14 +415,14 @@ body {
     text-align: left;
     font-weight: bold;
     width: $label-width;
-    
+
     abbr {
       display: none;
       float:right;
       margin-left: 0.2em;
     }
   }
-  
+
   input {
     // float: right;
     // margin-left: 20px;
@@ -434,12 +434,12 @@ body {
       outline: 1px dotted gray;
     }
   }
-  
+
   .radio {
     label.radio {
       height: 100%;
     }
-    
+
     label.collection_radio {
       float: none;
       display: block;
@@ -449,21 +449,21 @@ body {
       font-weight: normal;
       color: $color;
       width: 22em;
-      
+
       &:nth-child(2) {
         margin-top: 0.8em;
       }
-      
+
       &:last-child {
         margin-bottom:0.6em;
       }
-      
+
       input {
         float: left;
       }
     }
   }
-  
+
   .disabled {
     color: hsl(0, 0, 50%) !important;
   }
@@ -482,7 +482,7 @@ body {
     background: transparent;
     color: #D0D0D0;
     text-shadow: 0 0 6px rgba(255,255,255,0.15);
-    
+
     &[readonly] {
       color: #999;
       text-shadow: 0 0 6px rgba(0,0,0,0.15);
@@ -501,9 +501,9 @@ body {
     color: #bbb;
     border-top: 1px solid rgba(0,0,0,0.3);
   }
-  
-  
-  
+
+
+
   input[type="submit"], input[type="reset"], input[type="button"], button, div.button {
     display: block;
     width: 100%;
@@ -519,17 +519,17 @@ body {
     @include border-radius($radius);
     @include gradient(#121212, 0, #303030, 1);
     @include inset($radius);
-    
+
     &:active {
       @include gradient(#181818, 1, #303030, 0);
     }
-    
+
     &[disabled] {
       @include gradient(#303030, 0, #444, 1);
       color: #999;
     }
   }
-  
+
   div.button {
     padding: 0;
     a {
@@ -543,13 +543,13 @@ body {
       }
     }
   }
-  
+
   &.compact {
     div.input {
       line-height: $compact-line-height;
       min-height: $compact-line-height;
     }
-    
+
     span.hint {
       top:0;
       bottom:0;
@@ -558,15 +558,15 @@ body {
       z-index: -1;
       @include transition(opacity 0.15s ease-in-out)
     }
-    
+
     input:focus ~ span.hint {
       opacity:0;
     }
-    
+
     input[type="text"], input[type="email"], input[type="password"], textarea {
       height: $compact-line-height;
     }
-    
+
     .disabled span.hint {
       display: none;
     }
@@ -587,18 +587,18 @@ ul#navigation {
   height: $nav-resolution;
   line-height: $nav-resolution;
   display: block;
-  
+
   a {
     color: $color;
     @include border-radius(0);
     text-decoration: none;
-    
+
     &:hover {
       background-color: hsl(0,0,12%);
       background-color: hsla(0,0,0,0.5);
     }
   }
-  
+
     // The navigation menu points
   > li {
     position: relative;
@@ -610,18 +610,18 @@ ul#navigation {
     &.main {
       width: $nav-resolution * 1.8;
       img { float:right; margin: 0 0 0 0; height: 48px; width: 48px }
-      
+
       @include naviBackground(url('/images/nav/48/eve.png'));
       @include border-right();
       background-color: hsla(0,0,0,0.25);
       border-color: $navBorderColor;
-      
+
       &:hover {
         background-color: hsla(0,0,0,0.35);
       }
       a { background-position: left; }
     }
-    
+
     &.login {
       width: auto;
       line-height: $nav-resolution / 3;
@@ -629,27 +629,27 @@ ul#navigation {
       padding: 0 5px;
       float:right;
       text-align:right;
-      
+
       > a {
         height: auto;
         padding: 0 2px;
-        
+
         &:first-child {
           margin-top: $nav-resolution / 6;
         }
-        
+
         &:hover {
           background: none;
           color: #fff;
         }
       }
-      
+
       #logout_link {
         position: absolute;
         right: -72px;
         bottom: 52px;
       }
-      
+
       #searchactivator {
         padding: 3px 7px;
         width: 22px;
@@ -678,7 +678,7 @@ ul#navigation {
         border-left: 1px solid black;
         border-bottom: 1px solid black;
         overflow: hidden;
-        
+
         form {
           padding: 0;
           input {
@@ -696,10 +696,10 @@ ul#navigation {
             height: 1.8em;
           }
         }
-        
+
         #searchresults {
           font-size: 85%;
-          
+
           strong {
             display: block;
             width: 30%;
@@ -708,27 +708,27 @@ ul#navigation {
             text-align: right;
             color: #999;
           }
-          
+
           ul, strong {
             margin-top: 1em;
           }
-          
+
           ul:first-of-type {
             margin-top: 0.3em;
           }
-          
+
           ul:last-child {
             margin-bottom: 0.3em;
           }
-          
+
           strong:first-of-type {
             margin: 0;
           }
-          
+
           li, strong {
             line-height: 140%;
           }
-          
+
           em {
             display: block;
             text-align: left;
@@ -736,28 +736,28 @@ ul#navigation {
             padding: 1em 1em 1em 35%;
             margin: 0 1em;
           }
-          
+
           a {
             display: block;
             padding-left: 35%;
             padding-right: 1em;
             outline: none;
-            
+
             span.description {
               color: #999;
               text-shadow: none;
               font-size: 90%;
             }
-            
+
             span.description:before {
               content: " — ";
             }
-            
+
             &:hover {
               background: transparent;
             }
           }
-          
+
           li {
             text-align: left;
             border-bottom: 1px solid transparent;
@@ -769,25 +769,25 @@ ul#navigation {
           }
         }
       }
-      
+
       &.sub {
         background: url('/images/silk/bullet_arrow_down_small.png') bottom center no-repeat;
       }
-      
+
       &.hoverable:hover {
         background-color: transparent;
         background-image: url('/images/nav/48/nav-hover.png');
         background-repeat: no-repeat;
         background-position: center -8px;
       }
-      
+
       &.hoverable.sub:hover {
         background-color: transparent;
         background-image: url('/images/nav/48/nav-hover.png'), url('/images/silk/bullet_arrow_down_small.png');
         background-repeat: no-repeat, no-repeat;
         background-position: center -8px, center bottom;
       }
-      
+
       // The EVE time container
       &.time {
         height: inherit;
@@ -807,25 +807,25 @@ ul#navigation {
         }
       }
     }
-    
+
     &.sub {
       background: url('/images/silk/bullet_arrow_down_small.png') bottom center no-repeat;
     }
-    
+
     &.hoverable:hover {
       background-color: transparent;
       background-image: url('/images/nav/48/nav-hover.png');
       background-repeat: no-repeat;
       background-position: center -8px;
     }
-    
+
     &.hoverable.sub:hover {
       background-color: transparent;
       background-image: url('/images/nav/48/nav-hover.png'), url('/images/silk/bullet_arrow_down_small.png');
       background-repeat: no-repeat, no-repeat;
       background-position: center -8px, center bottom;
     }
-    
+
     // The EVE time container
     &.time {
       height: inherit;
@@ -853,7 +853,7 @@ ul#navigation {
       outline: 0 none;
       text-indent:-99999px;
     }
-    
+
     // Unternavigation
     > ul {
       display: none;
@@ -896,7 +896,7 @@ ul#navigation {
       }
     }
   }
-  
+
   // docked meaning that the bar is currently docked
   // to the top of the screan "floating" above all other
   // elements
