@@ -1,45 +1,24 @@
 Race::Application.routes.draw do
   devise_for :accounts
 
+  # character and models a character can belong to
+  resources  :characters, :corporations, :alliances
+
+  # resources directly associated with the EVE api
+  resources :industry_jobs, :contracts, :eve_notifications,
+    :eve_mails, :mailing_lists, :eve_assets, :market_orders, :wallet_journals,
+    :wallet_transactions, :skills
+
+  # Fittings and associated controllers
   resources :fittings
 
-  resources :industry_jobs
-
-  resources :contracts
-
-  resources :eve_notifications
-
-  resources :eve_mails
-
-  resources :alliances
-
-  resources :mailing_lists
-
-  resources :eve_assets
-
-  resources :market_orders
-
-  resources :wallet_journals
-  resources :wallet_transactions
-
-  resources :skills
-
+  # Logistics and everything associated with it
   resources :logistics_orders
 
   resources :registration
 
-  match 'register' => 'accounts#new', :as => 'register'
   # alternative route for adding new characters (aka character registration)
   get "characters/add" => 'characters#new', :as => 'characters/add'
-  get "login" => "sessions#new", :as => "login"
-  get "logout" => "sessions#destroy", :as => "logout"
-  get "registration_old" => "accounts#new", :as => "registration"
-
-  # routes for the "forgot password" and "reset password" functionality
-  get 'forget' => 'forget#show', :as => "forget"
-  post 'forget' => 'forget#mail'
-  get 'forget/:reset_hash' => 'forget#reset'
-  post 'forget/:reset_hash' => 'forget#update'
 
   # Route for changing the main character of an account
   get "accounts/change_main_character/:id" => 'accounts#change_main_character', :as => 'change_main_character'
@@ -52,13 +31,8 @@ Race::Application.routes.draw do
   # search and autocomplete routes
   post "search/autocomplete"
 
-  get "accounts/edit" => "accounts#edit", :as => "edit_accounts"
-  post "accounts/update" => "accounts#update"
-
   # set site root
   root :to => 'application#index', :as => 'root'
-
-  resources :accounts, :characters, :sessions, :corporations
 
   mount Resque::Server, :at => "/resque"
 
