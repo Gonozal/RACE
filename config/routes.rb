@@ -1,24 +1,8 @@
 Race::Application.routes.draw do
-<<<<<<< HEAD
   devise_for :accounts
 
-  resources :fittings
-
-  resources :industry_jobs
-
-  resources :contracts
-
-  resources :eve_notifications
-
-  resources :eve_mails
-
-  resources :alliances
-
-  resources :mailing_lists
-=======
   # character and models a character can belong to
-  resources :accounts, :characters, :corporations, :alliances
->>>>>>> Cleared up a whole lot of mess in routes.rb
+  resources  :characters, :corporations, :alliances
 
   # resources directly associated with the EVE api
   resources :industry_jobs, :contracts, :eve_notifications,
