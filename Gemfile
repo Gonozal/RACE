@@ -51,6 +51,7 @@ gem 'resque', :require => 'resque/server' #, git: 'git://github.com/defunkt/resq
 
 # Images
 gem 'rmagick'
+gem 'carrierwave'
 
 # Ancestry for recursive assets in containers
 gem 'ancestry'

@@ -91,9 +91,9 @@ class Character < ActiveRecord::Base
   # Temporary Roles allocation based on character name
   def add_base_roles
     self.roles.create(:title => "goon")
-    if self.name.eql? "Lerado Mendar"
+    if self.name.eql? "Grandor Eldoran"
       self.roles.create(:title => "admin")
-    elsif self.name.eql? "Hector Wrathic"
+    elsif self.name.eql? "Test2 Test2"
       self.roles.create(:title => "member")
     end
   end

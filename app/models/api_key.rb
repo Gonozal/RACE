@@ -29,8 +29,13 @@ class ApiKey < ActiveRecord::Base
     new_characters = []
     fetch_characters.map do |c|
       if character_ids.include? c[:id].to_i
+        existing_character = Character.find_by_id(c[:id].to_i)
+        if existing_character.present?
+          existing_character.destroy unless existing_character.account_id
+        end
         nc = characters.new
         nc.name = c[:name]
+        nc.id = c[:id].to_i
         nc.update_character_sheet
         new_characters << nc
       end

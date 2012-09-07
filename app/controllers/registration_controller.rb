@@ -20,6 +20,15 @@ class RegistrationController < ApplicationController
       @character = @api_key.characters.first
       @account = Account.new(params[:account])
       @account.main_character_id = @account.id
+      # IF account can be succesfully saved, update character and api key
+      if @account.save
+        @character.account_id = @account.id
+        @character.save
+        @api_key.registration_token = nil
+        @api_key.save
+      else
+        flash[:warning] = "Account could not be saved"
+      end
       render_wizard @account
     else render_wizard
     end

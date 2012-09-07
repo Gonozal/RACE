@@ -49,6 +49,9 @@ GEM
     capybara-mechanize (0.3.0)
       capybara (~> 1.1)
       mechanize (~> 2.3)
+    carrierwave (0.6.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
     childprocess (0.3.5)
       ffi (~> 1.0, >= 1.0.6)
     chronic (0.6.7)
@@ -240,6 +243,7 @@ DEPENDENCIES
   ancestry
   bootstrap-sass
   capybara-mechanize
+  carrierwave
   coffee-rails (~> 3.2.1)
   composite_primary_keys (>= 5.0.0.rc1)
   database_cleaner
