@@ -64,27 +64,47 @@ ActiveRecord::Schema.define(:version => 20120403163814) do
   end
 
   create_table "characters", :force => true do |t|
+    t.string   "name"
+    t.decimal  "balance",                        :precision => 14, :scale => 2
     t.integer  "account_id"
     t.integer  "api_key_id"
-    t.string   "name"
-    t.string   "corporation_name"
     t.integer  "corporation_id"
-    t.integer  "skill_in_training"
-    t.datetime "date_of_birth"
+    t.string   "gender"
     t.string   "race"
     t.string   "blood_line"
     t.string   "ancestry"
-    t.string   "gender"
-    t.string   "clone_name"
+    t.datetime "date_of_birth"
+    t.integer  "skill_in_training"
     t.integer  "clone_skill_points"
-    t.decimal  "balance",            :precision => 14, :scale => 2
+    t.string   "clone_name"
+    t.integer  "skill_points"
     t.integer  "intelligence"
     t.integer  "memory"
     t.integer  "charisma"
     t.integer  "perception"
     t.integer  "willpower"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "last_character_sheet_update"
+    t.boolean  "auto_character_sheet_update",                                   :default => true
+    t.datetime "last_skill_update"
+    t.boolean  "auto_skill_update",                                             :default => true
+    t.datetime "last_skill_queue_update"
+    t.boolean  "auto_skill_queue_update",                                       :default => true
+    t.datetime "last_asset_update"
+    t.boolean  "auto_asset_update",                                             :default => true
+    t.datetime "last_contract_update"
+    t.boolean  "auto_contract_update",                                          :default => true
+    t.datetime "last_mail_update"
+    t.boolean  "auto_mail_update",                                              :default => true
+    t.datetime "last_notification_update"
+    t.boolean  "auto_notification_update",                                      :default => true
+    t.datetime "last_market_order_update"
+    t.boolean  "auto_market_order_update",                                      :default => true
+    t.datetime "last_wallet_journal_update"
+    t.boolean  "auto_wallet_journal_update",                                    :default => true
+    t.datetime "last_wallet_transaction_update"
+    t.boolean  "auto_wallet_transaction_update",                                :default => true
+    t.datetime "created_at",                                                                      :null => false
+    t.datetime "updated_at",                                                                      :null => false
   end
 
   add_index "characters", ["account_id"], :name => "index_characters_on_account_id"
@@ -271,10 +291,18 @@ ActiveRecord::Schema.define(:version => 20120403163814) do
 
   create_table "implants", :force => true do |t|
     t.integer  "character_id"
-    t.string   "augmentator_name"
-    t.integer  "augmentator_value"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.string   "intelligence_name"
+    t.integer  "intelligence_value"
+    t.string   "memory_name"
+    t.integer  "memory_value"
+    t.string   "charisma_name"
+    t.integer  "charisma_value"
+    t.string   "perception_name"
+    t.integer  "perception_value"
+    t.string   "willpower_name"
+    t.integer  "willpower_value"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "industry_jobs", :force => true do |t|

@@ -1,0 +1,58 @@
+div class="character_infobox"
+  div class="row"
+    div class="span3"
+      img src="#{character.portrait_path(256)}" alt="Portrait"
+    div class="span6"
+      div class="row"
+        / Corp, Race, Alliance (if applicable) logos
+        div class="span1"
+          ul class="thumbnails"
+            li class="span1"
+              == character.corporation.logo_tag(64)
+            li class="span1"
+              img src="#{}"
+            li class="span1"
+              img src="#{}"
+        / table with basic character information
+        div class="span5"
+          table class="table table-condensed"
+            tr
+              td Corporation
+              td #{character.corporation.name}
+            tr
+              td Alliance
+              td #{character.corporation.alliance.name}
+            tr
+              td Date Of Birth
+              td #{character.date_of_birth}
+            tr
+              td Race
+              td #{character.race}
+            tr
+              dt Clone
+              - if character.clone_skill_points < skilltree.skill_points
+                td class="warning" #{character.clone_name}
+              - else
+                td #{character.clone_name}
+            tr
+              td Skill Points
+              td #{skilltree.skill_points}
+            tr
+              td ISK
+              td #{character.isk_string}
+  div class="row"
+    table class="table table-condensed"
+      thead
+        tr
+          th Attribute
+          th Total
+          th Base
+          th Implant
+      tbody
+        - ["Intelligence", "Perception", "Charisma", "Willpower", "Memory"].each do |attribute|
+          tr
+            td #{attribute}
+            td #{character.send(attribute) + 0}
+            td #{character.send(attribute)}
+            td 0
+

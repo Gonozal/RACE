@@ -9,7 +9,8 @@ class CharactersController < ApplicationController
   end
    
   def show
-    @character = current_account.characters.all
+    @character = CharacterDecorator.decorate current_user
+    @skilltree = Skilltree.new current_user.skills
   end
    
   def new
@@ -33,8 +34,6 @@ class CharactersController < ApplicationController
   # This is because arbitrary seperation of "edit" and "delete"
   # is kinda pointless in this case
   def update
-    # Create instance variables that can be accessed by the views
-    @characters = current_account.characters.all
   end
    
   def destroy

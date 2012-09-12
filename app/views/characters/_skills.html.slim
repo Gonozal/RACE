@@ -1,0 +1,28 @@
+h3 Skills
+/ Group everaything in a div for CSS easieness
+.collapseable
+  / display Skills grouped by categories
+  - skilltree.groups.each do |group|
+    h4.collapsed data-collapseable="callapsed" = group.name
+    ul.skills
+      - group.skills.each do |skill|
+        / LI containing each individual skill
+        li.skill id="skill_#{skill.id}"
+          / Show "Skillbook" icon depending on level of skill (lvl 5 or <5)
+          / Group skill details into span tags
+          .left
+            == skill_icon(skill.level.to_i)
+            em = "#{skill.name} (#{skill.skill_time_constant}x)"
+          .right
+            | #{number_format skill.skill_points} /
+            | #{number_format skill.skill_points_max }
+            .skill_level class="l#{skill.level}"
+      li.summary
+        | #{group.skills.size} #{group.name} skills trained,
+          for a total of #{number_with_delimiter(group.skill_points)}
+          skillpoints.
+      li.summary
+        | #{pluralize(group.lvl5s, 'skill')}
+          trained to level 5, for a total of
+          #{number_with_delimiter(group.lvl5_skill_points)} skillpoints.
+

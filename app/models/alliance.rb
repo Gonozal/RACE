@@ -15,6 +15,25 @@ class Alliance < ActiveRecord::Base
     send(:id=, params['allianceID'])
   end
 
+  def attributes_from_api
+    api = EVEAPI::API.new
+
+    begin
+      xml = api.get("/eve/AllianceList")
+    rescue Exception => e
+      puts e.inspect
+    else
+      alliance_row = xml.xpath("/eveapi/result/rowset[@name='alliances']/row[@allianceID='#{self.id}']")
+      attributes_from_row(alliance_row)
+
+      corporation_ids = []
+      xml.xpath("/eveapi/result/rowset/row[@allianceID='#{self.id}']/rowset/row").each do |row|
+        corporation_ids << row['corporationID']
+      end
+      Resque.enqueue(CreateCorporationBackgrounder, corporation_ids)
+    end
+  end
+
   def self.api_update
     api = EVEAPI::API.new
     api.version = 1

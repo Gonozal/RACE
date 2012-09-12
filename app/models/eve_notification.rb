@@ -13,7 +13,7 @@ class EveNotification < ActiveRecord::Base
   end
 
   # Update new notifications from the eve API
-  def self.api_update(params = {})
+  def self.api_update_for(params = {})
     # create new API object
     api = set_api(params)
     new_notifications = {}

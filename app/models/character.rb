@@ -17,7 +17,7 @@ class Character < ActiveRecord::Base
   has_many :eve_assets
   has_many :contracts, foreign_key: :issuer_id
   has_many :assigned_contracts, class_name: "Contract", foreign_key: :assignee_id
-  has_many :implants
+  has_one :implant
   has_many :eve_roles
   has_many :industry_jobs, foreign_key: :installer_id
   # Mails & Mailing Lists
@@ -26,7 +26,6 @@ class Character < ActiveRecord::Base
   has_and_belongs_to_many :eve_notifications
 
   # before_save :check_character_corporations
-  after_create :add_base_roles, :save_portrait
   after_destroy :destroy_portrait
 
   # return the role symbols needed for the declarative_authorization gem.
@@ -45,17 +44,17 @@ class Character < ActiveRecord::Base
     begin
       xml = api.get("char/CharacterSheet")
     rescue Exception => e
-      logger.error "EVE API Exception cought!"
       logger.error e.inspect
     else
       # Update date of birth manually because of discrepancy between DB and API name
       self.date_of_birth = xml.xpath('/eveapi/result/DoB').text
       # Set Array containing xml paths
-      a = ["race", "bloodLine", "ancestry", "gender", "corporationName",
-        "corporationID", "cloneName", "cloneSkillPoints", "balance",
-        "attributes/intelligence", "attributes/memory", "attributes/charisma",
-        "attributes/perception", "attributes/willpower"]
-      # Update attributes using the XML paths 
+      a = ["race", "bloodLine", "ancestry", "gender", "corporationID",
+           "cloneName", "cloneSkillPoints", "balance",
+           "attributes/intelligence", "attributes/memory",
+           "attributes/charisma", "attributes/perception",
+           "attributes/willpower"]
+      # Update attributes using the XML paths
       a.each do |param|
         param_u = param.gsub("attributes/", "").underscore
         if respond_to?(:"#{param_u}=")
@@ -65,7 +64,7 @@ class Character < ActiveRecord::Base
       self.save
 
       # Update implants rowset
-      Implant.api_update(self, xml)
+      implant.api_update
       EveRole.api_update(self, xml)
     end
   end
@@ -79,22 +78,21 @@ class Character < ActiveRecord::Base
     api
   end
 
-  private
+  # Temporary Roles allocation based on character name
+  def update_roles
+    self.roles.create(:title => "admin")
+    if self.name.eql? "Grandor Eldoran"
+      self.roles.create(:title => "admin")
+    elsif self.name.eql? "Test2 Test2"
+      self.roles.create(:title => "member")
+    end
+  end
+
   def save_portrait
     Resque.enqueue(ApiImageBackgrounder, 'character', id, [32,64,128,256])
   end
 
   def destroy_portrait
     Resque.enqueue(ApiImageBackgrounder, 'character', id, nil, true)
-  end
-
-  # Temporary Roles allocation based on character name
-  def add_base_roles
-    self.roles.create(:title => "goon")
-    if self.name.eql? "Grandor Eldoran"
-      self.roles.create(:title => "admin")
-    elsif self.name.eql? "Test2 Test2"
-      self.roles.create(:title => "member")
-    end
   end
 end

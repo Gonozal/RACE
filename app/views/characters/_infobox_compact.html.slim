@@ -1,0 +1,29 @@
+div class="character_infobox"
+  div class="row"
+    div class="span2"
+      = character.name + "<br/>"
+      img src="#{character.portrait_path(128)}"
+    div class="span7"
+      div class="row"
+        div class="span4"
+          table class="table table-condensed"
+            tr
+              td Corporation
+              td character.corporation.name
+            tr
+              td Alliance
+              td character.corporation.name
+            tr
+              td Location
+              td character.location
+        div class="span3"
+          table class="table table-condensed"
+            tr
+              td "Balance"
+              td character.balance
+            tr
+              td "Skillpoints"
+              td character.skill_points
+            tr
+              td "Learning"
+              td character.skill_in_training

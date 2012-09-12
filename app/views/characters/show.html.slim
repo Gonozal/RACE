@@ -1,2 +1,4 @@
-h2 Accounts#show
-p Find me in app/views/character/show.html.erb
+h2 Character Information for #{@character.name}
+
+= render partial: "infobox", locals: { character: @character, skilltree: @skilltree }
+= render partial: "skills", locals: { skilltree: @skilltree }

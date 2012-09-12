@@ -27,13 +27,12 @@ include Comparable
   # Update Market Orders for all Divisions of provided :owner
   # This is possible for Characters and Corporations
   # TODO: Check if Corp Transactions are handled correctly
-  def self.api_update_own(params = {})
+  def self.api_update_for(params = {})
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
     api.api_id, api.v_code = params[:owner].api_key.api_id, params[:owner].api_key.v_code
     api.character_id = params[:owner].id
 
-    market_orders = params[:owner].market_orders
     # Set some basic params for api_update_devision
     params.merge!({
       api: api,

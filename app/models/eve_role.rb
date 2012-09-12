@@ -9,7 +9,7 @@ class EveRole < ActiveRecord::Base
         api = set_api(character)
         xml = api.get("char/CharacterSheet")
       rescue Exception => e
-        logger.error "EVE API Exception cought!"
+        logger.warn e.inspect
       end
     end
     roles = []
@@ -20,7 +20,6 @@ class EveRole < ActiveRecord::Base
     roles << set_role_type(character, xml, "AtHQ")
     roles << set_role_type(character, xml, "AtBase")
     roles << set_role_type(character, xml, "AtOther")
-
 
     roles.flatten!
     # Save implants

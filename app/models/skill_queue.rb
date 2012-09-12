@@ -12,7 +12,7 @@ class SkillQueue < ActiveRecord::Base
   end
 
   # Update Skill Queue from the eve API
-  def self.api_update(params = {})
+  def self.api_update_for(params = {})
     queued_skills = []
     # create new API object
     api = set_api(params)

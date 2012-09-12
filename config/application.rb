@@ -38,7 +38,13 @@ module Race
     config.action_mailer.default_url_options = { :host => "localhost:3000" }
     config.action_mailer.perform_deliveries = true
     config.action_mailer.raise_delivery_errors = true
+
+    # Put Observers into seperate directory
+    config.autoload_paths += %W(#{config.root}/app/observers)
     
+    # Observers
+    config.active_record.observers = :character_observer, :corporation_observer 
+
     # Configure the default encoding used in templates for Ruby 1.9.x
     config.encoding = "utf-8"
 

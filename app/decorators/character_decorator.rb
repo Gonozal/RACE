@@ -1,5 +1,6 @@
 class CharacterDecorator < ApplicationDecorator
   decorates :character
+  decorates_association :corporation
 
   # Accessing Helpers
   #   You can access any helper via a proxy
@@ -29,4 +30,20 @@ class CharacterDecorator < ApplicationDecorator
   #     h.content_tag :span, time.strftime("%a %m/%d/%y"),
   #                   :class => 'timestamp'
   #   end
+  def portrait_path(size)
+    path = "/images/api_images/characters/"
+    if FileTest.exist?("#{Rails.root}/public#{path}#{id}_#{size}.jpg")
+      img_url = "#{path}#{id}_#{size}.jpg"
+    else
+      img_url = "#{path}000000000_#{size}.jpg"
+    end
+  end
+
+  def date_of_birth
+    character.date_of_birth.strftime("%m/%d/%Y %H:%M")
+  end
+
+  def isk_string
+    h.number_to_currency(balance, unit: "ISK", seperator: ",", delimeter: ".", format: "%n %u")
+  end
 end

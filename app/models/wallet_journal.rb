@@ -27,7 +27,7 @@ class WalletJournal < ActiveRecord::Base
   # Update wallet journals for all Divisions of provided :owner
   # This is possible for Characters and Corporations
   # TODO: Check if Corp journals are handled correctly
-  def self.api_update_own(params = {})
+  def self.api_update_for(params = {})
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
     api.api_id, api.v_code = params[:owner].api_key.api_id, params[:owner].api_key.v_code

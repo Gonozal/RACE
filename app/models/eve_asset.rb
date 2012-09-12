@@ -16,8 +16,7 @@ class EveAsset < ActiveRecord::Base
   # Procedure for now: Delete all current assets and insert them from the API
   # This should be faster than reading all entries, comparing them to API assets
   # and then updating/inserting/deleting entries
-	def self.api_update_own(params = {})
-    time = Time.now
+  def self.api_update_own(params = {})
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
     api.api_id, api.v_code = params[:owner].api_key.api_id, params[:owner].api_key.v_code
@@ -38,8 +37,6 @@ class EveAsset < ActiveRecord::Base
     end
 
     xml = api.get(params[:xml_path]).xpath("/eveapi/result")
-
-    time2 = Time.now
 
     assets = [[]]
     assets.last[0] = params[:owner]
