@@ -42,35 +42,27 @@ class Account < ActiveRecord::Base
   # Checks if account is still allowed to be active and updates
   # character data if this is the case
   def api_update
-    if authorized?
-      characters.each do |character|
-        params = { owner: character }
-        if character.auto_character_sheet_update and character.last_character_sheet_update < 61.minutes.ago
-          character.update_character_sheet
-        end
-        if character.auto_skill_queue_update and character.last_skill_queue_update < 16.minutes.ago
-          SkillQueue.api_update_for(params)
-        end
-        if character.auto_asset_update and character.last_asset_update < (23.hours + 1.minutes).ago
-          Eve_Asset.api_update_for(params)
-        end
-        if character.auto_cpntract_update and character.last_contract_update < 16.minutes.ago
-          Contract.api_update_for(params)
-        end
-        if character.auto_mail_update and character.last_mail_update < 31.minutes
-          EveMail.api_update_for(params)
-        end
-        if character.auto_notification_update and character.last_notification_update < 31.minutes
-          EveNotification.api_update_for(params)
-        end
-        if character.auto_market_order_update and character.last_market_order_update < 61.minutes
-          MarketOrder.api_update_for(params)
-        end
-        if character.auto_wallet_journal_update and character.last_wallet_journal_updat < 16.minutes
-          WalletJournal.api_update_own(params)
-        end
-        if character.auto_wallet_transaction_update and character.last_wallet_transaction_update < 16.minutes
-          WalletTransaction.api_update_own(params)
+    unless authorized?
+      return false
+    end
+
+    characters.each do |character|
+      check_hash = {
+        character: 60.minutes,
+        skill_queue: 15.minutes,
+        eve_asset: 23.hours,
+        contract: 15.minutes,
+        eve_mail: 30.minuites,
+        eve_notification: 30.minutes,
+        market_order: 60.minutes,
+        wallet_journal: 15.minutes,
+        wallet_transaction: 16.minutes
+      }
+
+      check_hash.each do |type, time|
+        if character.send(:"auto_#{type}_update") and
+            character.send(:"last_#{type}_update") < (time + 1.minutes).ago
+          type.classify.constantize.api_update_for({ owner: character })
         end
       end
     end

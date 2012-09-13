@@ -39,7 +39,7 @@ class Character < ActiveRecord::Base
   # Given a Character object, updates Character data from the API
   # Updates: Gender, Race, Bloodline, Ancestry 
   # Updates: Clone Name, Clone SP, Attributes
-  def update_character_sheet
+  def api_update_for(not_needed_params = {})
     api = set_api
     begin
       xml = api.get("char/CharacterSheet")

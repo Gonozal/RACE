@@ -12,9 +12,4 @@ class CharacterObserver < ActiveRecord::Observer
     character.update_roles
     character.save_portrait
   end
-
-  def after_initialize(character)
-    # Check if API pulled data is up to date
-    character.update_related_apis
-  end
 end

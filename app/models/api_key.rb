@@ -36,7 +36,7 @@ class ApiKey < ActiveRecord::Base
         nc = characters.new
         nc.name = c[:name]
         nc.id = c[:id].to_i
-        nc.update_character_sheet
+        nc.api_update_for
         new_characters << nc
       end
     end

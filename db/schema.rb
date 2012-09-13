@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20120403163814) do
     t.string   "ancestry"
     t.datetime "date_of_birth"
     t.integer  "skill_in_training"
-    t.integer  "clone_skill_points"
+    t.integer  "clone_skill_pointm"
     t.string   "clone_name"
     t.integer  "skill_points"
     t.integer  "intelligence"
@@ -83,20 +83,18 @@ ActiveRecord::Schema.define(:version => 20120403163814) do
     t.integer  "charisma"
     t.integer  "perception"
     t.integer  "willpower"
-    t.datetime "last_character_sheet_update"
-    t.boolean  "auto_character_sheet_update",                                   :default => true
-    t.datetime "last_skill_update"
-    t.boolean  "auto_skill_update",                                             :default => true
+    t.datetime "last_character_update"
+    t.boolean  "auto_character_update",                                         :default => true
     t.datetime "last_skill_queue_update"
     t.boolean  "auto_skill_queue_update",                                       :default => true
-    t.datetime "last_asset_update"
-    t.boolean  "auto_asset_update",                                             :default => true
+    t.datetime "last_eve_asset_update"
+    t.boolean  "auto_eve_asset_update",                                         :default => true
     t.datetime "last_contract_update"
     t.boolean  "auto_contract_update",                                          :default => true
-    t.datetime "last_mail_update"
-    t.boolean  "auto_mail_update",                                              :default => true
-    t.datetime "last_notification_update"
-    t.boolean  "auto_notification_update",                                      :default => true
+    t.datetime "last_eve_mail_update"
+    t.boolean  "auto_eve_mail_update",                                          :default => true
+    t.datetime "last_eve_notification_update"
+    t.boolean  "auto_eve_notifiction_update",                                   :default => true
     t.datetime "last_market_order_update"
     t.boolean  "auto_market_order_update",                                      :default => true
     t.datetime "last_wallet_journal_update"
