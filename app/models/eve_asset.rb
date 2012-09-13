@@ -17,6 +17,7 @@ class EveAsset < ActiveRecord::Base
   # This should be faster than reading all entries, comparing them to API assets
   # and then updating/inserting/deleting entries
   def self.api_update_own(params = {})
+    time1 = Time.now
     # We need to be able to access the owner pretty much anywhere
     @owner = params[:owner]
     # Create new API object and assign API-related values
@@ -45,6 +46,7 @@ class EveAsset < ActiveRecord::Base
 
     # Flatten array
     assets[:new].flatten!
+    time2 = Time.now
 
     # Save Assets inside of Transaction to save some time through mass inserts
     EveAsset.transaction do
@@ -58,6 +60,9 @@ class EveAsset < ActiveRecord::Base
         asset.destroy
       end
     end
+    logger.warn "###############"
+    logger.warn "Before Transactions: #{time2 - time1}"
+    logger.warn "After Transactions: #{Time.now - time2}"
   end
 
   def set_reference_id(owner)
