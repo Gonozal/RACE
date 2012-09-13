@@ -17,14 +17,15 @@ class EveAsset < ActiveRecord::Base
   # This should be faster than reading all entries, comparing them to API assets
   # and then updating/inserting/deleting entries
   def self.api_update_own(params = {})
-    EveAsset.delete_all
-    time1 = Time.now
     # We need to be able to access the owner pretty much anywhere
     @owner = params[:owner]
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
     api.api_id, api.v_code = @owner.api_key.api_id, @owner.api_key.v_code
     api.character_id = @owner.id
+
+    # get Asset XML from API (or cache)
+    xml = api.get(xml_path_for(@owner))
 
     # Create assets hash with entries for arrays that'll be filled
     assets = { new: [], old: {} }
@@ -38,8 +39,6 @@ class EveAsset < ActiveRecord::Base
       assets[:old][old_asset.item_id] = old_asset
     end
 
-    # get Asset XML from API (or cache)
-    xml = api.get(xml_path_for(@owner))
     assets[:unparsed] = xml.xpath("/eveapi/result/rowset[@name='assets']/row")
 
     # Parse assets from XML
@@ -47,7 +46,6 @@ class EveAsset < ActiveRecord::Base
 
     # Flatten array
     assets[:new].flatten!
-    time2 = Time.now
 
     # Save Assets inside of Transaction to save some time through mass inserts
     EveAsset.transaction do
@@ -61,9 +59,6 @@ class EveAsset < ActiveRecord::Base
         asset.destroy
       end
     end
-    logger.warn "###############"
-    logger.warn "Before Transactions: #{time2 - time1}"
-    logger.warn "After Transactions: #{Time.now - time2}"
   end
 
   def set_reference_id(owner)
@@ -97,13 +92,14 @@ class EveAsset < ActiveRecord::Base
       next if row.blank?
       # If asset already exists, load it and remove entry from hash
       # Else create new asset
-      if assets[:old].delete(row['itemID'].to_i).present?
+      if assets[:old].key? row['itemID'].to_i
         asset = assets[:old][row['itemID'].to_i]
+        assets[:old].delete(row['itemID'].to_i)
       else
         asset = EveAsset.new
       end
       # Set ancestry and let attributes_from_row handle the rest
-      asset.parent = assets[:parent]
+      asset.parent = assets[:parent] if assets[:parent].present?
       asset.attributes_from_row(row)
       asset.set_reference_id(@owner)
       # If asset functions as container, do recursion
@@ -111,7 +107,7 @@ class EveAsset < ActiveRecord::Base
       child_rows = row.children.children
       if child_rows.present?
         # We need to save the asset now so we can perform tree ancestry operations
-        asset.save
+        asset.save if asset.changed?
         # Recursively add child elements
         child_hash = { parent: asset, unparsed: child_rows, old: assets[:old] }
         recursion_hash = api_parse_rowset(child_hash)

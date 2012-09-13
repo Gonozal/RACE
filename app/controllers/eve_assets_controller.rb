@@ -8,9 +8,7 @@ class EveAssetsController < ApplicationController
     logger.warn "Total API update & query time: #{Time.now - time}"
     respond_to do |format|
       format.html # index.html.erb
-      time = Time.now
       format.json { render json: @eve_assets }
-      logger.warn "Total Render time: #{Time.now - time}"
     end
   end
 
