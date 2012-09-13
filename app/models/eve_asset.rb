@@ -3,13 +3,13 @@ class EveAsset < ActiveRecord::Base
 
   # Update Attributes of current MT object from 
   def attributes_from_row(params = {})
-    # Try to do as much as possible automated
-    params.each do |key, val|
-      key = key.to_s.underscore
-      if respond_to?(:"#{key}=")
-        send(:"#{key}=", val)
-      end
-    end
+    self.flag = params['flag']
+    self.item_id = params['itemID']
+    self.location_id = params['locationID']
+    self.quantity = params['quantity']
+    self.raw_quantity = params['rawQuantity']
+    self.singleton = params['singleton']
+    self.type_id = params['typeID']
   end
 
   # Update all Assets for a single Entity. 
@@ -17,6 +17,7 @@ class EveAsset < ActiveRecord::Base
   # This should be faster than reading all entries, comparing them to API assets
   # and then updating/inserting/deleting entries
   def self.api_update_own(params = {})
+    EveAsset.delete_all
     time1 = Time.now
     # We need to be able to access the owner pretty much anywhere
     @owner = params[:owner]
@@ -26,7 +27,7 @@ class EveAsset < ActiveRecord::Base
     api.character_id = @owner.id
 
     # Create assets hash with entries for arrays that'll be filled
-    assets = { old: {}, new: [], unparsed: [], parent: nil}
+    assets = { new: [], old: {} }
 
     # Get all existing assets for the user in order to decide
     # if eve_asset/eve_asset_from_xml  has to be updated, destroyed or created
@@ -96,9 +97,8 @@ class EveAsset < ActiveRecord::Base
       next if row.blank?
       # If asset already exists, load it and remove entry from hash
       # Else create new asset
-      if assets[:old].key? row['itemID'].to_i
+      if assets[:old].delete(row['itemID'].to_i).present?
         asset = assets[:old][row['itemID'].to_i]
-        assets[:old].delete(row['itemID'].to_i)
       else
         asset = EveAsset.new
       end
@@ -108,11 +108,12 @@ class EveAsset < ActiveRecord::Base
       asset.set_reference_id(@owner)
       # If asset functions as container, do recursion
       # otherwise add asset to array to be saved later
-      if row.children.children.present?
+      child_rows = row.children.children
+      if child_rows.present?
         # We need to save the asset now so we can perform tree ancestry operations
         asset.save
         # Recursively add child elements
-        child_hash = { parent: asset, unparsed: row.children.children, old: assets[:old] }
+        child_hash = { parent: asset, unparsed: child_rows, old: assets[:old] }
         recursion_hash = api_parse_rowset(child_hash)
         assets[:new] << recursion_hash[:new]
         assets[:old] = recursion_hash[:old]
