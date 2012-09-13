@@ -17,71 +17,105 @@ class EveAsset < ActiveRecord::Base
   # This should be faster than reading all entries, comparing them to API assets
   # and then updating/inserting/deleting entries
   def self.api_update_own(params = {})
+    # We need to be able to access the owner pretty much anywhere
+    @owner = params[:owner]
     # Create new API object and assign API-related values
     api = EVEAPI::API.new
-    api.api_id, api.v_code = params[:owner].api_key.api_id, params[:owner].api_key.v_code
-    api.character_id = params[:owner].id
+    api.api_id, api.v_code = @owner.api_key.api_id, @owner.api_key.v_code
+    api.character_id = @owner.id
 
-    # Delete all assets for the Owner, delete_all isntead of destroy_all because
-    # we don't need to take care of relations and it's much faster this way
-    params[:owner].eve_assets.scoped.delete_all()
+    # Create assets hash with entries for arrays that'll be filled
+    assets = { old: {}, new: [], unparsed: [], parent: nil}
 
-    if params[:owner].instance_of?(Character)
-      # If we are updating Character journals, go right ahead
-      params[:xml_path] = "char/AssetList"
-    elsif params[:owner].instance_of?(Corporation)
-      params[:xml_path] = "corp/AssetList"
-    else
-      # If owner is neither Corporation nor Character, there's nothing we can do
-      return false
+    # Get all existing assets for the user in order to decide
+    # if eve_asset/eve_asset_from_xml  has to be updated, destroyed or created
+    old_assets = @owner.eve_assets.scoped.all()
+
+    # Iterate over old_assets and save it in an {item_id: EveAsset} hash
+    old_assets.each do |old_asset|
+      assets[:old][old_asset.item_id] = old_asset
     end
 
-    xml = api.get(params[:xml_path]).xpath("/eveapi/result")
+    # get Asset XML from API (or cache)
+    xml = api.get(xml_path_for(@owner))
+    assets[:unparsed] = xml.xpath("/eveapi/result/rowset[@name='assets']/row")
 
-    assets = [[]]
-    assets.last[0] = params[:owner]
-    assets.last[1] = xml
+    # Parse assets from XML
+    assets = api_parse_rowset(assets)
 
-    # If row contains a rowset, recursivle add elements
-    while true do
-      new_level = false
-      new_assets = []
-      assets.each do |asset|
-        unless asset[1].blank?
-          new_assets += api_update_ancestor(asset[0], asset[1])
-          new_level = true
-        end
+    # Flatten array
+    assets[:new].flatten!
+
+    # Save Assets inside of Transaction to save some time through mass inserts
+    EveAsset.transaction do
+      assets[:new].each do |asset|
+        asset.save
       end
-
-      EveAsset.transaction do
-        new_assets.map { |a| a[0].save }
+    end
+    # Now delete all the old assets that are still in the old_assets hash
+    EveAsset.transaction do
+      assets[:old].each do |id, asset|
+        asset.destroy
       end
-
-      assets = new_assets
-      break unless new_level
     end
   end
 
-  def self.api_update_ancestor(root, rows)
-    # Loop over all rows in the provided array of rows
-    list = []
-    rows.each do |row|
-      list << []
-      # Create eve_child_asset as child of root
-      if root.respond_to?("eve_assets")
-        asset = root.eve_assets.new
-        asset.attributes_from_row(row)
-      else
-        asset = root.children.new
-        asset.attributes_from_row(row)
-        # Set Assets character_id XOR corporation_id the same as parent asset's
-        asset.character_id = root.character_id
-        asset.corporation_id = root.corporation_id
-      end
-      # We need to save now so we can reference the element later on
-      list.last[0] = asset
-      list.last[1] = row.xpath "./rowset/row"
+  def set_reference_id(owner)
+    if owner.instance_of?(Character)
+      self.character_id = owner.id
+    elsif owner.instance_of?(Corporation)
+      self.corporation_id = owner.id
+    else
+      raise ArgumentError, "Assets can only be retrieved for Characters or Corporations"
     end
-    list
+  end
+
+  def self.xml_path_for(object)
+    # Query character or corp assets depending on owner
+    if object.instance_of?(Character)
+      "char/AssetList"
+    elsif object.instance_of?(Corporation)
+      "corp/AssetList"
+    else
+      raise ArgumentError, "Assets can only be retrieved for Characters or Corporations"
+    end
+  end
+
+
+  def self.api_parse_rowset(assets)
+    # Reset new asset array
+    assets[:new] = []
+    # Define new_assets hash to make adding elements easier
+    assets[:unparsed].each do |row|
+      # skip element if it is empty
+      next if row.blank?
+      # If asset already exists, load it and remove entry from hash
+      # Else create new asset
+      if assets[:old].key? row['itemID'].to_i
+        asset = assets[:old][row['itemID'].to_i]
+        assets[:old].delete(row['itemID'].to_i)
+      else
+        asset = EveAsset.new
+      end
+      # Set ancestry and let attributes_from_row handle the rest
+      asset.parent = assets[:parent]
+      asset.attributes_from_row(row)
+      asset.set_reference_id(@owner)
+      # If asset functions as container, do recursion
+      # otherwise add asset to array to be saved later
+      if row.children.children.present?
+        # We need to save the asset now so we can perform tree ancestry operations
+        asset.save
+        # Recursively add child elements
+        child_hash = { parent: asset, unparsed: row.children.children, old: assets[:old] }
+        recursion_hash = api_parse_rowset(child_hash)
+        assets[:new] << recursion_hash[:new]
+        assets[:old] = recursion_hash[:old]
+      else
+        # add asset to new assets array
+        assets[:new] << asset
+      end
+    end
+    assets
   end
 end

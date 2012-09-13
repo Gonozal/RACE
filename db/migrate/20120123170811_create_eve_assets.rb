@@ -6,9 +6,9 @@ class CreateEveAssets < ActiveRecord::Migration
       t.integer :item_id, size: 8
       t.integer :location_id, size: 8
       t.integer :type_id
-      t.integer :quantity
-      t.integer :flag
-      t.boolean :singleton
+      t.integer :quantity, default: 0
+      t.integer :flag, default: 0
+      t.boolean :singleton, default: 0
       t.integer :raw_quantity
       t.string :ancestry
       t.timestamps
