@@ -8,7 +8,7 @@ class CreateEveAssets < ActiveRecord::Migration
       t.integer :type_id
       t.integer :quantity, default: 0
       t.integer :flag, default: 0
-      t.boolean :singleton, default: 0
+      t.boolean :singleton, default: false
       t.integer :raw_quantity
       t.string :ancestry
       t.timestamps

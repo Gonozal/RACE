@@ -4,6 +4,7 @@ gem 'rails', "3.2.8"
 
 # Database Gems
 gem 'sqlite3'
+gem 'pg'
 
 # Composite Pirmary Keys on a model level
 gem "composite_primary_keys", ">= 5.0.0.rc1"

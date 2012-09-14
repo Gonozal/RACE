@@ -21,13 +21,14 @@ class EveAsset < ActiveRecord::Base
     # We need to be able to access the owner pretty much anywhere
     @owner = params[:owner]
     # Create new API object and assign API-related values
+    pre_eve_api = Time.now
     api = EVEAPI::API.new
     api.api_id, api.v_code = @owner.api_key.api_id, @owner.api_key.v_code
     api.character_id = @owner.id
-
     # get Asset XML from API (or cache)
     xml = api.get(xml_path_for(@owner))
 
+    post_eve_api = Time.now
     # Create assets hash with entries for arrays that'll be filled
     assets = { new: [], old: {} }
 
@@ -47,7 +48,7 @@ class EveAsset < ActiveRecord::Base
 
     # Flatten array
     assets[:new].flatten!
-
+    post_model = Time.now
     # Save Assets inside of Transaction to save some time through mass inserts
     EveAsset.transaction do
       assets[:new].each do |asset|
@@ -60,6 +61,14 @@ class EveAsset < ActiveRecord::Base
         asset.destroy
       end
     end
+    post_transactions = Time.now
+    logger.warn "##########################"
+    logger.warn "##########################"
+    logger.warn "EveAPI time: #{post_eve_api - pre_eve_api}s"
+    logger.warn "Model Time: #{post_model - post_eve_api}s"
+    logger.warn "Transaction Time: #{post_transactions - post_model}s"
+    logger.warn "##########################"
+    logger.warn "##########################"
   end
 
   def set_reference_id(owner)

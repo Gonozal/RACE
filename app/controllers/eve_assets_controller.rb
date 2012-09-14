@@ -5,10 +5,11 @@ class EveAssetsController < ApplicationController
     time = Time.now
     EveAsset.api_update_own(owner: current_user)
     @eve_assets = current_user.eve_assets.scoped.arrange
-    logger.warn "Total API update & query time: #{Time.now - time}"
+    time2 = Time.now
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @eve_assets }
+      logger.warn "Total API update & query time: #{time2 - time}"
     end
   end
 

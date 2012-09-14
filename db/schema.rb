@@ -203,13 +203,13 @@ ActiveRecord::Schema.define(:version => 20120914000605) do
     t.integer  "item_id"
     t.integer  "location_id"
     t.integer  "type_id"
-    t.integer  "quantity"
-    t.integer  "flag"
-    t.boolean  "singleton"
+    t.integer  "quantity",       :default => 0
+    t.integer  "flag",           :default => 0
+    t.boolean  "singleton",      :default => false
     t.integer  "raw_quantity"
     t.string   "ancestry"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "eve_assets", ["ancestry"], :name => "index_eve_assets_on_ancestry"
