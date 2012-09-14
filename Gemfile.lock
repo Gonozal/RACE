@@ -125,6 +125,9 @@ GEM
     nokogiri (1.5.5)
     ntlm-http (0.1.1)
     orm_adapter (0.4.0)
+    paper_trail (2.6.3)
+      activerecord (~> 3.0)
+      railties (~> 3.0)
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -257,6 +260,7 @@ DEPENDENCIES
   guard-rspec
   jquery-rails
   nokogiri
+  paper_trail
   rails (= 3.2.8)
   resque
   rmagick

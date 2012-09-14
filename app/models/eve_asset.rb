@@ -1,5 +1,6 @@
 class EveAsset < ActiveRecord::Base
   has_ancestry
+  has_paper_trail
 
   # Update Attributes of current MT object from 
   def attributes_from_row(params = {})

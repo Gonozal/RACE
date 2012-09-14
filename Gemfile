@@ -56,6 +56,9 @@ gem 'carrierwave'
 # Ancestry for recursive assets in containers
 gem 'ancestry'
 
+# Auditing / Diffs
+gem 'paper_trail'
+
 group :strange_dependencies do
   gem 'ruby_parser' # wird benötigt von resque
   # gem 'json'
